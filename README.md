@@ -1,4 +1,4 @@
-# Projekt zespołowy dyplomowy - specjalizacja IO / grupa lab. 2
+# Projekt zespołowy dyplomowy - spec. IO / grupa lab. 2
 
 <b>Członkowie grupy:</b>\
 Mariusz Jędrzejewski\
