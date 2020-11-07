@@ -3,4 +3,5 @@
 <b>Członkowie grupy:</b>\
 Mariusz Jędrzejewski\
 Kamil Grodzki\
-Piotr Bednarek
+Piotr Bednarek\
+Wiktor Powązka
