@@ -6,20 +6,26 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { HomeComponent } from './home/home.component';
-import { CounterComponent } from './counter/counter.component';
-import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.module';
 import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
 import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
+import { AktualnosciComponent } from './aktualnosci/aktualnosci/aktualnosci.component';
+import { StronaGlownaComponent } from './strona-glowna/strona-glowna/strona-glowna.component';
+import { WyszukiwarkaGrobowComponent } from './wyszukiwarka-grobow/wyszukiwarka-grobow/wyszukiwarka-grobow.component';
+import { NekrologiComponent } from './nekrologi/nekrologi/nekrologi.component';
+import { InformacjeComponent } from './informacje/informacje/informacje.component';
+import { KontaktComponent } from './kontakt/kontakt/kontakt.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
-    HomeComponent,
-    CounterComponent,
-    FetchDataComponent
+    AktualnosciComponent,
+    StronaGlownaComponent,
+    WyszukiwarkaGrobowComponent,
+    NekrologiComponent,
+    InformacjeComponent,
+    KontaktComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -27,9 +33,13 @@ import { AuthorizeInterceptor } from 'src/api-authorization/authorize.intercepto
     FormsModule,
     ApiAuthorizationModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent, canActivate: [AuthorizeGuard] },
+      { path: '', component: StronaGlownaComponent, pathMatch: 'full' },
+      { path: 'strona-glowna', component: StronaGlownaComponent, pathMatch: 'full' },
+      { path: 'aktualnosci', component: AktualnosciComponent },
+      { path: 'informacje', component: InformacjeComponent },
+      { path: 'wyszukiwarka-grobow', component: WyszukiwarkaGrobowComponent },
+      { path: 'nekrologi', component: NekrologiComponent },
+      { path: 'kontakt', component: KontaktComponent },
     ])
   ],
   providers: [
