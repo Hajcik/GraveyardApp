@@ -15,6 +15,7 @@ import { WyszukiwarkaGrobowComponent } from './wyszukiwarka-grobow/wyszukiwarka-
 import { NekrologiComponent } from './nekrologi/nekrologi/nekrologi.component';
 import { InformacjeComponent } from './informacje/informacje/informacje.component';
 import { KontaktComponent } from './kontakt/kontakt/kontakt.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { KontaktComponent } from './kontakt/kontakt/kontakt.component';
       { path: 'wyszukiwarka-grobow', component: WyszukiwarkaGrobowComponent },
       { path: 'nekrologi', component: NekrologiComponent },
       { path: 'kontakt', component: KontaktComponent },
-    ])
+    ]),
+    BrowserAnimationsModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
