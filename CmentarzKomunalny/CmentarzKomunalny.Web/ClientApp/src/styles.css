@@ -23,9 +23,9 @@ body{
 
 img{
   position: fixed;
-  width: 100vw;
-  height: auto;
-  left: 0px;
+  width: auto;
+  height: 100vh;
+  left: -240px;
   top:0px;
   z-index: -1;
 

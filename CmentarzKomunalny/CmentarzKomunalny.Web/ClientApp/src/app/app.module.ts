@@ -17,6 +17,13 @@ import { InformacjeComponent } from './informacje/informacje/informacje.componen
 import { KontaktComponent } from './kontakt/kontakt/kontakt.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatDividerModule } from '@angular/material/divider';
+
+
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,6 +38,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
+    MatIconModule,
+    MatCardModule,
+    MatDividerModule,
     FormsModule,
     ApiAuthorizationModule,
     RouterModule.forRoot([

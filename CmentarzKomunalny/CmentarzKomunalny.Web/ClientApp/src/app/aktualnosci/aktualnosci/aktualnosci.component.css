@@ -2,8 +2,8 @@ body.active{
     background-color: rgba(0, 0, 0, 0);
 }
 
-.container-aktualnosci{
-    margin-top: 50px;
+.card{
+    margin: 20px 0px 20px 0px;
     padding: 20px;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.9);
 }
