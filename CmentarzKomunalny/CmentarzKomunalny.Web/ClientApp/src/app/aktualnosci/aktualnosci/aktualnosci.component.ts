@@ -12,4 +12,12 @@ export class AktualnosciComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngAfterViewInit() {
+    document.querySelector('body').classList.add('styles');
+  }
+
+  ngOnDestroy() {
+    document.querySelector('body').classList.remove('styles');
+  }
+
 }

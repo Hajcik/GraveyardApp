@@ -1,7 +1,7 @@
 <header>
-  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+  <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-transparent  box-shadow mb-3">
     <div class="container">
-      <a class="navbar-brand" [routerLink]="['/']">Cmentarz Komunalny</a>
+      <a class="navbar-brand text-light" [routerLink]="['/']">Cmentarz Komunalny</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
         aria-label="Toggle navigation" [attr.aria-expanded]="isExpanded" (click)="toggle()">
         <span class="navbar-toggler-icon"></span>
@@ -10,22 +10,23 @@
         <!--<app-login-menu></app-login-menu>-->
         <ul class="navbar-nav flex-grow">
           <li class="nav-item" [routerLinkActive]="['link-active']" [routerLinkActiveOptions]="{ exact: true }">
-            <a class="nav-link text-dark" [routerLink]="['/']">Strona główna</a>
+            <a class="nav-link text-light" [routerLink]="['/']" (click)="toggle()">Strona główna</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/aktualnosci']">Aktualności</a>
+            <a class="nav-link text-light" [routerLink]="['/aktualnosci']" (click)="toggle()">Aktualności</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/nekrologi']">Nekrologi</a>
+            <a class="nav-link text-light" [routerLink]="['/nekrologi']" (click)="toggle()">Nekrologi</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/informacje']">Informacje</a>
+            <a class="nav-link text-light" [routerLink]="['/informacje']" (click)="toggle()">Informacje</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/wyszukiwarka-grobow']">Wyszukiwarka grobów</a>
+            <a class="nav-link text-light" [routerLink]="['/wyszukiwarka-grobow']" (click)="toggle()">Wyszukiwarka
+              grobów</a>
           </li>
           <li class="nav-item" [routerLinkActive]="['link-active']">
-            <a class="nav-link text-dark" [routerLink]="['/kontakt']">Kontakt</a>
+            <a class="nav-link text-light" [routerLink]="['/kontakt']" (click)="toggle()">Kontakt</a>
           </li>
         </ul>
       </div>
