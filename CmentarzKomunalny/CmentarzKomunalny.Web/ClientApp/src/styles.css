@@ -1,5 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
 
+*{
+  margin: 0px;
+  padding: 0px;
+}
+
 /* Provide sufficient contrast against white background */
 a {
   color: #0366d6;
