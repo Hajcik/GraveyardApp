@@ -4,6 +4,10 @@ a.navbar-brand {
   word-break: break-all;
 }
 
+header{
+  background-color: rgba(0, 0, 0, 0.8);
+}
+
 html {
   font-size: 14px;
 }
@@ -15,4 +19,12 @@ html {
 
 .box-shadow {
   box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05);
+}
+
+a{
+  font-size: 18px;
+}
+
+.logo{
+  font-size: 24px;
 }

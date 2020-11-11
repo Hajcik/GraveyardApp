@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'app';
-  myImage: string = "/assets/bgimage.jpg"
+  myImage: string = "/assets/cemetery.jpg"
 }

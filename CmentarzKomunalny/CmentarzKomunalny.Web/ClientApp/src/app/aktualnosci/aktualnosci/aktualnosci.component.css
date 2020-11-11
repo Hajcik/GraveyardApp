@@ -1,7 +1,9 @@
-:host{
-    background: rgba(0, 0, 0, 0);
+body.active{
+    background-color: rgba(0, 0, 0, 0);
 }
 
-body.styles {
-    background-color: rgba(0, 0, 0, 0);;
+.container-aktualnosci{
+    margin-top: 50px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.4);
 }

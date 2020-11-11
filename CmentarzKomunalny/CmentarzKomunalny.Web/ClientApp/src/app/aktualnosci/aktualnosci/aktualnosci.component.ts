@@ -13,11 +13,11 @@ export class AktualnosciComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    document.querySelector('body').classList.add('styles');
+    document.querySelector('body').classList.add('active');
   }
 
   ngOnDestroy() {
-    document.querySelector('body').classList.remove('styles');
+    document.querySelector('body').classList.remove('active');
   }
 
 }
