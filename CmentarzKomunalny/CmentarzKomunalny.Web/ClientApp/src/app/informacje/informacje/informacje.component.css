@@ -1,0 +1,9 @@
+.card{
+    margin: 20px 0px 20px 0px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.card-container-center{
+  display: inline-block;
+}

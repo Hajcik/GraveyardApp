@@ -1,0 +1,90 @@
+.label{
+    display: none;
+    color: white;
+}
+
+.card{
+    margin: 20px 0px 20px 0px;
+    padding: 0px;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.stepper{
+    background-color: rgba(0, 0, 0, 0);
+}
+
+table {
+  width: 100%;
+}
+
+.mat-row:nth-child(even){
+  background-color:#005d95;
+}
+
+.mat-row:nth-child(odd){
+  background-color:#00295f;
+}
+.mat-header-row{
+  background-color:#00295f;
+}
+mat-header-cell{
+  color:"white";
+}
+.mat-cell{
+    color: white;
+}
+.mat-header-cell {
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+
+.mat-cell {
+  text-align: center;
+  justify-content:center;
+}
+
+.mat-checkbox-inner-container {
+  margin: 2px 8px auto 0 !important;
+}
+
+.buttons{
+  margin-top: 20px;
+}
+button{
+  margin: 0px 8px 0px 0px;
+}
+
+
+
+
+ ::ng-deep .mat-focused .mat-form-field-label{
+  color: white !important;
+ }
+
+ ::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: white !important;
+} 
+
+::ng-deep.mat-form-field-ripple {
+ /*change color of underline when focused*/
+ background-color: white !important;;
+}
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: white;
+  opacity: 1; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: white;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+  color: white;
+}
+
+::ng-deep input.mat-input-element {
+  color: white;
+}

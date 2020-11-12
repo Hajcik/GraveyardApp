@@ -1,0 +1,24 @@
+.contact-content {
+  position: absolute;
+  /* z-index: 2; */
+}
+.card{
+    margin: 50px 0px 20px 0px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+
+p {
+  margin: 10px 0px 0px 0px;
+  font-weight: 300;
+  font-size: var(--font-size-7);
+}
+
+a,span {
+  text-decoration: none;
+  color: #eee;
+  font-weight: 500;
+  font-size: var(--font-size-3);
+  cursor: pointer;
+}

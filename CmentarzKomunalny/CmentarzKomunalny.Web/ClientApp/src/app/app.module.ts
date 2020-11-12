@@ -16,11 +16,18 @@ import { NekrologiComponent } from './nekrologi/nekrologi/nekrologi.component';
 import { InformacjeComponent } from './informacje/informacje/informacje.component';
 import { KontaktComponent } from './kontakt/kontakt/kontakt.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ReactiveFormsModule} from '@angular/forms';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
+import {MatStepperModule} from '@angular/material/stepper';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatButtonModule} from '@angular/material/button';
+import {MatTableModule} from '@angular/material/table';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 
 
@@ -41,7 +48,14 @@ import { MatDividerModule } from '@angular/material/divider';
     MatIconModule,
     MatCardModule,
     MatDividerModule,
+    MatStepperModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatButtonModule,
+    MatTableModule,
+    MatCheckboxModule,
     FormsModule,
+    ReactiveFormsModule,
     ApiAuthorizationModule,
     RouterModule.forRoot([
       { path: '', component: StronaGlownaComponent, pathMatch: 'full' },
