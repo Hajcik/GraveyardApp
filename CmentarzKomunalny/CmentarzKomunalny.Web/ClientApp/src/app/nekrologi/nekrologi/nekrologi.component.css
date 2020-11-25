@@ -7,3 +7,17 @@
 .card-container-center{
   display: inline-block;
 }
+
+.mat-paginator{
+  background-color: rgba(0,0,0,0.7);
+  margin-bottom: 50px;
+  color: white;
+}
+
+.mat-select-arrow{
+  color: white;
+}
+
+.mat-select-value{
+  color: white;
+}
