@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace CmentarzKomunalny.Web.DTOs
+﻿namespace CmentarzKomunalny.Web.DTOs
 {
     public class CommandReadDto
     {
