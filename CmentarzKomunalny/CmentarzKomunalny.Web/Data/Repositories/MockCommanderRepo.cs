@@ -8,6 +8,16 @@ namespace CmentarzKomunalny.Web.Data.Repositories
 {
     public class MockCommanderRepo : ICommandRepo
     {
+        public void CreateCommand(Command cmd)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void DeleteCommand(Command cmd)
+        {
+            throw new System.NotImplementedException();
+        }
+
         public IEnumerable<Command> GetAllCommands()
         {
             var commands = new List<Command>
@@ -28,6 +38,16 @@ namespace CmentarzKomunalny.Web.Data.Repositories
                 Line = "testbla",
                 Platform = "bla and bla"
             };
+        }
+
+        public bool SaveChanges()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public void UpdateCommand(Command cmd)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

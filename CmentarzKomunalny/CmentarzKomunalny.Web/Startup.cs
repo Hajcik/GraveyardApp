@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json.Serialization;
 using System;
 
 namespace CmentarzKomunalny.Web
@@ -41,7 +42,11 @@ namespace CmentarzKomunalny.Web
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
 
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(s => 
+            {   // needed to get PATCH working
+                s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
+
             //        services.AddScoped<ICommandRepo, MockCommanderRepo>();
             services.AddScoped<ICommandRepo, SqlCommanderRepo>();
 
