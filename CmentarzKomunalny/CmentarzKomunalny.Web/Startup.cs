@@ -7,6 +7,7 @@ using CmentarzKomunalny.Web.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -53,7 +54,50 @@ namespace CmentarzKomunalny.Web
             // DTOs
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+            // Authorization (admin, employee etc...)
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admins", policy =>
+                {
+                    policy.RequireRole("Admin");
+                });
 
+                options.AddPolicy("Employees", policy =>
+                {
+                    policy.RequireRole("Employee");
+                });
+            });
+
+            services.AddRazorPages(options =>
+            {   // later edit pages that needs admin auth to be used by admin
+                // like Index.cshtml and others, make folders like /Admin and stuff
+                options.Conventions.AuthorizeFolder("/Admin");
+                options.Conventions.AuthorizeFolder("/Admin/Users", "Admins");
+            });
+            // check page https://kenhaggerty.com/articles/article/aspnet-core-31-admin-role
+
+            // Configuring Identity services
+            services.Configure<IdentityOptions>(options =>
+            {
+                // password settings
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 8;
+                options.Password.RequiredUniqueChars = 1;
+
+                // lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(4); // 4 minutes to logout
+                options.Lockout.MaxFailedAccessAttempts = 3;
+                options.Lockout.AllowedForNewUsers = false; // check it later, only admin can create new user, you can't register by yourself
+
+                // user settings
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = true; // check it later
+              
+            });
+            
             services.AddAuthentication()
                 .AddIdentityServerJwt();
             services.AddControllersWithViews();
