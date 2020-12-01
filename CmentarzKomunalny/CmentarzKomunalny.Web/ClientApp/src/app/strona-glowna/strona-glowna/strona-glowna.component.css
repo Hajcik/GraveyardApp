@@ -1,0 +1,15 @@
+.card{
+    margin: 20px 0px 20px 0px;
+    padding: 0px;
+    background-color: rgba(0, 0, 0, 0);
+    height: 80vh;
+}
+.card-content{
+    height: 80%;
+}
+
+.button{
+    display:block;
+    margin: 0 auto;
+}
+
