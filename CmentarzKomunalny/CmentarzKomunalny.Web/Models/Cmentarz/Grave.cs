@@ -1,11 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace CmentarzKomunalny.Web.Models.Cmentarz
 {
+    public enum GraveType
+    {
+        Empty = 0,
+        Coffin = 1,
+        Urn = 2
+    }
     public class Grave
     {
+        [Required]
+        public bool isReserved { get; set; }
+
+//        [Required]
+//        public bool isBricked { get; set; }
+
+        [Required]
+        public GraveType graveType { get; set; }
+
     }
 }

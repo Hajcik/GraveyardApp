@@ -4,6 +4,7 @@ using CmentarzKomunalny.Web.Data.Contexts;
 using CmentarzKomunalny.Web.Data.Interfaces;
 using CmentarzKomunalny.Web.Data.Repositories;
 using CmentarzKomunalny.Web.Models;
+using CmentarzKomunalny.Web.Models.Cmentarz;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -32,15 +33,17 @@ namespace CmentarzKomunalny.Web
         {
             // we're adding context over here !!!!!!!!!!
             // switch it up for CmentarzContext when it will be ready to go
-            services.AddDbContext<CommanderContext>(options =>
+            services.AddDbContext<CmentarzContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("CommanderConnection")));
+                    Configuration.GetConnectionString("CmentarzConnection")));
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
+                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(); 
+                // if something doesnt work change back to "ApplicationUser, ApplicationDbContext"
+                // and check why it doesnt work
 
 
             services.AddControllers().AddNewtonsoftJson(s => 
@@ -54,6 +57,13 @@ namespace CmentarzKomunalny.Web
             // DTOs
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+            services.AddIdentity<User, Role>()
+                .AddRoles<Role>()
+                .AddRoleManager<RoleManager<Role>>()
+                .AddEntityFrameworkStores<UserContext>() // basing on UserContext it creates identity
+                .AddSignInManager<SignInManager<User>>()
+                .AddDefaultUI()
+                .AddDefaultTokenProviders();
             // Authorization (admin, employee etc...)
             services.AddAuthorization(options =>
             {
