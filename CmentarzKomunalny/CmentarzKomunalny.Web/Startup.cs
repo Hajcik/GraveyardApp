@@ -35,37 +35,32 @@ namespace CmentarzKomunalny.Web
             // switch it up for CmentarzContext when it will be ready to go
             services.AddDbContext<CmentarzContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("CmentarzConnection")));
+                    Configuration.GetConnectionString("CmentarzConnectionTEST")));
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
                 .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(); 
-                // if something doesnt work change back to "ApplicationUser, ApplicationDbContext"
-                // and check why it doesnt work
-
-
+               
             services.AddControllers().AddNewtonsoftJson(s => 
             {   // needed to get PATCH working
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
 
-            //        services.AddScoped<ICommandRepo, MockCommanderRepo>();
-            services.AddScoped<ICommandRepo, SqlCommanderRepo>();
+
+
+            // Adding repos and interfaces of them
+        //  services.AddScoped<ICommandRepo, MockCommanderRepo>();
+        //  services.AddScoped<ICommandRepo, SqlCommanderRepo>();
+
+            services.AddScoped<IDeadPeopleRepo, MockDeadPeopleRepo>();
 
             // DTOs
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-            services.AddIdentity<User, Role>()
-                .AddRoles<Role>()
-                .AddRoleManager<RoleManager<Role>>()
-                .AddEntityFrameworkStores<UserContext>() // basing on UserContext it creates identity
-                .AddSignInManager<SignInManager<User>>()
-                .AddDefaultUI()
-                .AddDefaultTokenProviders();
             // Authorization (admin, employee etc...)
-            services.AddAuthorization(options =>
+     /*       services.AddAuthorization(options =>
             {
                 options.AddPolicy("Admins", policy =>
                 {
@@ -77,18 +72,18 @@ namespace CmentarzKomunalny.Web
                     policy.RequireRole("Employee");
                 });
             });
-
-            services.AddRazorPages(options =>
-            {   // later edit pages that needs admin auth to be used by admin
-                // like Index.cshtml and others, make folders like /Admin and stuff
-                options.Conventions.AuthorizeFolder("/Admin");
-                options.Conventions.AuthorizeFolder("/Admin/Users", "Admins");
-            });
+     */
+            
             // check page https://kenhaggerty.com/articles/article/aspnet-core-31-admin-role
 
             // Configuring Identity services
             services.Configure<IdentityOptions>(options =>
             {
+                // !!!!!!!!!!!!!!!!!
+                // CHECK IF WE NEED THIS, DELETE IF NEEDED
+                // CONFIGURE LATER ON WHEN USERS ARE READY
+                // !!!!!!!!!!!!!!!!!
+
                 // password settings
                 options.Password.RequireDigit = true;
                 options.Password.RequireLowercase = true;

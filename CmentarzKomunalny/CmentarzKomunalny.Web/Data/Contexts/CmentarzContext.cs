@@ -9,20 +9,18 @@ namespace CmentarzKomunalny.Web.Data.Contexts
 
         }
 
-        public virtual DbSet<Employee> Employees { get; set; } // we need to do the mapping
-        public virtual DbSet<DeadPerson> DeadPeople { get; set; }
+ //       public virtual DbSet<Employee> Employees { get; set; } // we need to do the mapping
+        public DbSet<DeadPerson> DeadPeople { get; set; }
+        public DbSet<Lodging> Lodgings { get; set; }
+        public DbSet<Obituary> Obituaries { get; set; }
+        public DbSet<News> News { get; set; }
         // other models to do
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
             // fluent api commands
-            modelBuilder.Entity<User>()
-                .ToTable("AspNetUsers")
-                .HasDiscriminator<int>("UserType")
-                .HasValue<User>((int)RoleValue.User)
-                .HasValue<Employee>((int)RoleValue.Employee)
-                .HasValue<Administrator>((int)RoleValue.Admin);
+            
         }
     }
 }

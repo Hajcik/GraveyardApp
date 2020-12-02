@@ -7,28 +7,22 @@ namespace CmentarzKomunalny.Web.Models.Cmentarz
     {
         // persons Id
         [Key]
-        public int Id { get; set; }
+        public int IdDeadPerson { get; set; }
 
-        [ForeignKey("Lodging")]
-        [Required]
-        public int? LodgingId { get; set; }
-
-        [Required]
-        [MaxLength(30)]
-        public string FirstName { get; set; }
+        // how to connect with Lodging id?
+  //      [Key]
+  //      [ForeignKey("Lodging")]
+  //      [Required]
+  //      public int LodgingId { get; set; }
 
         [Required]
-        [MaxLength(45)]
-        public string LastName { get; set; }
+        [MaxLength(75)]
+        public string Name { get; set; }
 
-        [DataType(DataType.DateTime)]
-        [Range(typeof(DateTime), "01/01/1900", "01/01/2100", ErrorMessage = "Date is out of range")]
-        public DateTime DateOfBirth { get; set; }
+        public string DateOfBirth { get; set; }
        
         [Required]
-        [DataType(DataType.DateTime)]
-        [Range(typeof(DateTime), "01/01/1900", "01/01/2100", ErrorMessage = "Date is out of range")]
-        public DateTime? DateOfDeath { get; set; }
+        public string DateOfDeath { get; set; }
     }
 }
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CmentarzKomunalny.Web.Models.Cmentarz
 {   // Lodging - Kwatera
@@ -12,8 +13,12 @@ namespace CmentarzKomunalny.Web.Models.Cmentarz
         }
 
         [Key]
-        public int Id { get; set; }
+        public int IdLodge { get; set; }
         // searching for it will be based on Identifier of exact lodging
+       
+        [ForeignKey("IdDeadPerson")]
+        [Required]
+        public int DeadPersonId { get; set; }
 
         [Required]
         public Type LodgingType { get; set; }

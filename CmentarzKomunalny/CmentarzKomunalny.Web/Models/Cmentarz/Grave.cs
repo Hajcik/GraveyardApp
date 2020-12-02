@@ -10,7 +10,10 @@ namespace CmentarzKomunalny.Web.Models.Cmentarz
         Urn = 2
     }
     public class Grave
-    {
+    { 
+        [Key]
+        public int IdGrave { get; set; }
+
         [Required]
         public bool isReserved { get; set; }
 
