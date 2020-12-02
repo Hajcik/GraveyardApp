@@ -9,7 +9,7 @@ body.active{
 }
 
 .mat-paginator{
-    background-color: rgba(0,0,0,0.7);
+    background-color: rgba(0, 0, 0, 0.6);
     margin-bottom: 50px;
     color: white;
 }

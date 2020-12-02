@@ -3,6 +3,8 @@
     padding: 0px;
     background-color: rgba(0, 0, 0, 0);
     height: 80vh;
+    border: 0px;
+    box-shadow: 0px;
 }
 .card-content{
     height: 80%;
@@ -11,5 +13,8 @@
 .button{
     display:block;
     margin: 0 auto;
+    color: white;
+    border: 1px solid white;
+    background-color: rgba(0, 0, 0, 0.2);
 }
 

@@ -1,24 +1,23 @@
 import { Component, OnInit } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {MatTableDataSource} from '@angular/material/table';
-import {SelectionModel} from '@angular/cdk/collections';
+import { MatTableDataSource } from '@angular/material/table';
 
 export interface PeriodicElement {
-  position: number;
-  name: string;
-  number: number;
-  date: string;
+  imie: string;
+  nrkwatery: number;
+  datazgonu: string;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Jan Kowalski', number: 1, date: '12-12-2020'},
-  {position: 2, name: 'Adam Nowak', number: 4, date: '13-12-2020'},
-  {position: 3, name: 'Kamil Pawlak', number: 6, date: '14-12-2020'},
-  {position: 4, name: 'Andrzej Dudowski', number: 9, date: '15-12-2020'},
-  {position: 5, name: 'Janina Nowak', number: 10, date: '16-12-2020'},
-  {position: 6, name: 'Karolina Kowalska', number: 12, date: '17-12-2020'},
-  {position: 7, name: 'Julia Pawlak', number: 14, date: '18-12-2020'},
-  {position: 8, name: 'Krystyna Dudowska', number: 15, date: '19-12-2020'},
+  { nrkwatery: 123456, imie: 'Jan Nowak', datazgonu: '12.12.1997' },
+  { nrkwatery: 323142, imie: 'Aneta Nowak', datazgonu: '12.12.1999' },
+  { nrkwatery: 423512, imie: 'Kamil Grodzki', datazgonu: '12.12.2020' },
+  { nrkwatery: 412678, imie: 'Anna Kowalska', datazgonu: '12.10.1993' },
+  { nrkwatery: 412678, imie: 'Jan Kowalski', datazgonu: '12.8.2020' },
+  { nrkwatery: 936492, imie: 'Krystian Noga', datazgonu: '12.12.2017' },
+  { nrkwatery: 712341, imie: 'Piotr Dworski', datazgonu: '12.12.1990' },
+  { nrkwatery: 832523, imie: 'Anna Dworska', datazgonu: '2.2.1997' },
+  { nrkwatery: 932214, imie: 'Krystian Nowak', datazgonu: '10.12.1997' },
+  { nrkwatery: 101231, imie: 'Jan Krojec', datazgonu: '12.12.1998' },
 ];
 
 @Component({
@@ -27,43 +26,17 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./wyszukiwarka-grobow.component.css']
 })
 export class WyszukiwarkaGrobowComponent implements OnInit {
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
-  isEditable = true;
+  displayedColumns: string[] = ['nrkwatery', 'imie', 'datazgonu'];
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
 
-  displayedColumns: string[] = ['select', 'name', 'number', 'date'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
-selection = new SelectionModel<PeriodicElement>(true, []);
-/** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
-
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
-  }
-
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: PeriodicElement): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
-  }
-  constructor(private _formBuilder: FormBuilder) { }
+  constructor() { }
 
   ngOnInit() {
-    this.firstFormGroup = this._formBuilder.group({
-      firstCtrl: ['', Validators.required]
-    });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
-    });
+
   }
 
 }

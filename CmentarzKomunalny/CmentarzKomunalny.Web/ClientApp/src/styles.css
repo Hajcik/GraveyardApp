@@ -21,7 +21,7 @@ body{
   overflow: auto;
 
   /* The image used */
-  background-image: url("/assets/newphoto.jpg");
+  background-image: url("/assets/bg.jpg");
   /* Full height */
   height: 100%;
   /* Center and scale the image nicely */
