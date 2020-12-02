@@ -9,7 +9,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 export class NekrologiComponent implements OnInit {
 
   list = [];
-  pageSize = 5;
+  pageSize = 4;
   tempList = [];
 
   constructor() { }

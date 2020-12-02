@@ -9,7 +9,7 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 export class AktualnosciComponent implements OnInit {
 
   list = [];
-  pageSize = 5;
+  pageSize = 6;
   tempList = [];
 
   constructor() { }

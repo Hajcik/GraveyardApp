@@ -1,4 +1,4 @@
-<div>
+<div class="component-container">
     <mat-card class="card" *ngFor="let item of tempList">
         <mat-card-content>
             <p style="color:white; font-size:16px;text-align: center;">{{item.title}}</p>
@@ -14,6 +14,6 @@
     </mat-card>
 </div>
 
-<mat-paginator [length]="list.length" [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]"
+<mat-paginator [length]="list.length" [pageSize]="pageSize" [pageSizeOptions]="[4, 8, 24, 48]"
     (page)="onPageChange($event)">
 </mat-paginator>

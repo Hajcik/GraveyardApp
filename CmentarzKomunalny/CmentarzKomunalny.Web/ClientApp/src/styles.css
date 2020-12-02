@@ -21,14 +21,14 @@ body{
   overflow: auto;
 
   /* The image used */
-  background-image: url("/assets/bgimage.jpg");
+  background-image: url("/assets/newphoto.jpg");
   /* Full height */
   height: 100%;
   /* Center and scale the image nicely */
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-  filter: sepia(80%) hue-rotate(190deg) saturate(400%);
+  /*filter: sepia(80%) hue-rotate(190deg) saturate(400%);*/
 
 }
 .mat-card-header-text{
