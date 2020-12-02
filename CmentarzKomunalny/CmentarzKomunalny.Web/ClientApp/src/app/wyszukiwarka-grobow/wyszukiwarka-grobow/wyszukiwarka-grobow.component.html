@@ -1,11 +1,24 @@
-<mat-card class="card">
-  <mat-card-header>
-    <mat-card-title style="color: white;">Znajdź zmarłego</mat-card-title>
-  </mat-card-header>
+<mat-card class="card" style="max-width: 510px; margin: auto;">
   <mat-card-content>
-    <mat-form-field>
-      <mat-label>Filter</mat-label>
-      <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+    <p style="color:white; font-size:16px;text-align: center;">Jak to działa?</p>
+    <p>
+      Aby znaleźć grób swojego bliskiego, musisz postępować zgodnie z poniższymi krokami:
+      <br>
+      1. Podaj dane zmarłego (tj. imię lub nazwisko etc.)
+      <br>
+      2. Z tabeli wybierz zmarłego, na temat którego chcesz otrzymać powyższe informacje.
+      <br>
+      3. Po wybraniu zmarłego poniżej tabeli otrzymasz informacje na temat lokalizacji grobu.
+    </p>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="card">
+
+  <mat-card-content>
+    <mat-form-field style="margin-left: 30px;">
+      <mat-label>Dane zmarłego</mat-label>
+      <input matInput (keyup)=" applyFilter($event)" placeholder="Jan Kowalski" #input>
     </mat-form-field>
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
@@ -45,8 +58,8 @@
   <mat-card-header>
   </mat-card-header>
   <mat-card-content>
-    <p>Sektor x numer x.</p>
+    <p style="font-size: 24px;text-align: center;">Sektor x numer x.</p>
     <br>
-    <img src="../../../assets/cm2.jpg">
+    <img src="../../../assets/cm1.PNG">
   </mat-card-content>
 </mat-card>

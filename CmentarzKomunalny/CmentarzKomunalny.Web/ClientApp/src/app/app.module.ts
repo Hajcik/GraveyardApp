@@ -29,6 +29,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MapaComponent } from './mapa/mapa/mapa.component';
 
 
 
@@ -41,7 +42,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     WyszukiwarkaGrobowComponent,
     NekrologiComponent,
     InformacjeComponent,
-    KontaktComponent
+    KontaktComponent,
+    MapaComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -66,6 +68,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
       { path: 'informacje', component: InformacjeComponent },
       { path: 'wyszukiwarka-grobow', component: WyszukiwarkaGrobowComponent },
       { path: 'nekrologi', component: NekrologiComponent },
+      { path: 'mapa', component: MapaComponent },
       { path: 'kontakt', component: KontaktComponent },
     ]),
     BrowserAnimationsModule
