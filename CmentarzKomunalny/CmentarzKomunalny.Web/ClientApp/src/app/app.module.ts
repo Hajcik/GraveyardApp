@@ -16,18 +16,20 @@ import { NekrologiComponent } from './nekrologi/nekrologi/nekrologi.component';
 import { InformacjeComponent } from './informacje/informacje/informacje.component';
 import { KontaktComponent } from './kontakt/kontakt/kontakt.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ReactiveFormsModule} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
-import {MatStepperModule} from '@angular/material/stepper';
+import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatButtonModule} from '@angular/material/button';
-import {MatTableModule} from '@angular/material/table';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTableModule } from '@angular/material/table';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MapaComponent } from './mapa/mapa/mapa.component';
 
 
 
@@ -40,7 +42,8 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     WyszukiwarkaGrobowComponent,
     NekrologiComponent,
     InformacjeComponent,
-    KontaktComponent
+    KontaktComponent,
+    MapaComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -54,6 +57,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
     MatButtonModule,
     MatTableModule,
     MatCheckboxModule,
+    MatPaginatorModule,
     FormsModule,
     ReactiveFormsModule,
     ApiAuthorizationModule,
@@ -64,6 +68,7 @@ import {MatCheckboxModule} from '@angular/material/checkbox';
       { path: 'informacje', component: InformacjeComponent },
       { path: 'wyszukiwarka-grobow', component: WyszukiwarkaGrobowComponent },
       { path: 'nekrologi', component: NekrologiComponent },
+      { path: 'mapa', component: MapaComponent },
       { path: 'kontakt', component: KontaktComponent },
     ]),
     BrowserAnimationsModule
