@@ -4,9 +4,11 @@ using CmentarzKomunalny.Web.Data.Contexts;
 using CmentarzKomunalny.Web.Data.Interfaces;
 using CmentarzKomunalny.Web.Data.Repositories;
 using CmentarzKomunalny.Web.Models;
+using CmentarzKomunalny.Web.Models.Cmentarz;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -31,29 +33,76 @@ namespace CmentarzKomunalny.Web
         {
             // we're adding context over here !!!!!!!!!!
             // switch it up for CmentarzContext when it will be ready to go
-            services.AddDbContext<CommanderContext>(options =>
+            services.AddDbContext<CmentarzContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("CommanderConnection")));
+                    Configuration.GetConnectionString("CmentarzConnectionTEST")));
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>();
-
-
+                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(); 
+               
             services.AddControllers().AddNewtonsoftJson(s => 
             {   // needed to get PATCH working
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
 
-            //        services.AddScoped<ICommandRepo, MockCommanderRepo>();
-            services.AddScoped<ICommandRepo, SqlCommanderRepo>();
+
+
+            // Adding repos and interfaces of them
+        //  services.AddScoped<ICommandRepo, MockCommanderRepo>();
+        //  services.AddScoped<ICommandRepo, SqlCommanderRepo>();
+
+            services.AddScoped<IDeadPeopleRepo, MockDeadPeopleRepo>();
 
             // DTOs
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
+            // Authorization (admin, employee etc...)
+     /*       services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admins", policy =>
+                {
+                    policy.RequireRole("Admin");
+                });
 
+                options.AddPolicy("Employees", policy =>
+                {
+                    policy.RequireRole("Employee");
+                });
+            });
+     */
+            
+            // check page https://kenhaggerty.com/articles/article/aspnet-core-31-admin-role
+
+            // Configuring Identity services
+            services.Configure<IdentityOptions>(options =>
+            {
+                // !!!!!!!!!!!!!!!!!
+                // CHECK IF WE NEED THIS, DELETE IF NEEDED
+                // CONFIGURE LATER ON WHEN USERS ARE READY
+                // !!!!!!!!!!!!!!!!!
+
+                // password settings
+                options.Password.RequireDigit = true;
+                options.Password.RequireLowercase = true;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+                options.Password.RequiredLength = 8;
+                options.Password.RequiredUniqueChars = 1;
+
+                // lockout settings
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(4); // 4 minutes to logout
+                options.Lockout.MaxFailedAccessAttempts = 3;
+                options.Lockout.AllowedForNewUsers = false; // check it later, only admin can create new user, you can't register by yourself
+
+                // user settings
+                options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+                options.User.RequireUniqueEmail = true; // check it later
+              
+            });
+            
             services.AddAuthentication()
                 .AddIdentityServerJwt();
             services.AddControllersWithViews();

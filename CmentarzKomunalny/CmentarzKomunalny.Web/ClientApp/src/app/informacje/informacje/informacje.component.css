@@ -1,9 +1,14 @@
 .card{
     margin: 20px 0px 20px 0px;
     padding: 20px;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
 .card-container-center{
   display: inline-block;
+}
+
+.button{
+  display:block;
+  margin: 0 auto;
 }
