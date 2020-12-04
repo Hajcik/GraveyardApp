@@ -48,14 +48,16 @@ namespace CmentarzKomunalny.Web
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
 
-
-
-            // Adding repos and interfaces of them
+            // Mock repositories - for testing purposes
         //  services.AddScoped<ICommandRepo, MockCommanderRepo>();
-        //  services.AddScoped<ICommandRepo, SqlCommanderRepo>();
+        //  services.AddScoped<IDeadPeopleRepo, MockDeadPeopleRepo>();
 
-            services.AddScoped<IDeadPeopleRepo, MockDeadPeopleRepo>();
-
+            // SQL repositories
+            //  services.AddScoped<ICommandRepo, SqlCommanderRepo>();
+            services.AddScoped<IDeadPeopleRepo, SqlDeadPeopleRepo>();
+            services.AddScoped<ILodgingsRepo, SqlLodgingsRepo>();
+            services.AddScoped<INewsRepo, SqlNewsRepo>();
+            services.AddScoped<IObituaryRepo, SqlObituaryRepo>();
             // DTOs
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -137,15 +139,27 @@ namespace CmentarzKomunalny.Web
             }
 
             app.UseRouting();
+            
 
             app.UseAuthentication();
             app.UseIdentityServer();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
+                endpoints.MapControllerRoute( // configure later for our main page
                     name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
+                    pattern: "{controller}/{action=Index}/{id?}" //,
+                 //   defaults: new {controller = "Home", action = "Index"}
+                    );
+                endpoints.MapControllerRoute(
+                    name: "api",
+                    pattern: "{controller}/{id?}"
+                    );
+                endpoints.MapControllerRoute(
+                    name: "deadpeopleLodgeId",        // change later to DeadPeople
+                    pattern: "{controller=DeadPerson}/{action=GetDeadPersonByLodgeId}/{id}"
+                    );
+                
                 endpoints.MapRazorPages();
             });
 

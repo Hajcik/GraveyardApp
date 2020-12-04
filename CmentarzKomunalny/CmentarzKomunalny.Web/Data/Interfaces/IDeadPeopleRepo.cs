@@ -10,6 +10,7 @@ namespace CmentarzKomunalny.Web.Data.Interfaces
     {
         IEnumerable<DeadPerson> GetAllDeadPeople();
         DeadPerson GetDeadPersonById(int id);
+        IEnumerable<DeadPerson> GetDeadPeopleByLodgeId(int id);
         void AddDeadPersonToDb(DeadPerson deadp);
         void DeleteDeadPersonFromDb(DeadPerson deadp);
         void UpdateDeadPerson(DeadPerson deadp);

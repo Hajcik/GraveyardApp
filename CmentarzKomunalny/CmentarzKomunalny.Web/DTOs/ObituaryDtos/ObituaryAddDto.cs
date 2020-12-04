@@ -1,13 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace CmentarzKomunalny.Web.Models.Cmentarz
+namespace CmentarzKomunalny.Web.DTOs.ObituaryDtos
 {
-    // en - nekrolog
-    public class Obituary
+    public class ObituaryAddDto
     {
-        [Key]
-        public int Id { get; set; }
-
         [Required]
         [MaxLength(70)]
         public string Name { get; set; }
@@ -17,6 +13,5 @@ namespace CmentarzKomunalny.Web.Models.Cmentarz
 
         [Required]
         public string DateOfDeath_Obituary { get; set; }
-        
     }
 }

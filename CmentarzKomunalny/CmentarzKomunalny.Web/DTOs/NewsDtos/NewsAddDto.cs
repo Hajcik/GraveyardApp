@@ -1,18 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-
-namespace CmentarzKomunalny.Web.Models.Cmentarz
+namespace CmentarzKomunalny.Web.DTOs.NewsDtos
 {
-    public class News
+    public class NewsAddDto
     {
-        [Key]
-        public int Id { get; set; }
         [Required]
         public string Title { get; set; }
         [Required]
         public string NewsContent { get; set; }
-
         [Required]
         public string DateOfPublication { get; set; }
     }

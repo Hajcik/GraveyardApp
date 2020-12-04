@@ -5,11 +5,10 @@ namespace CmentarzKomunalny.Web.Models.Cmentarz
 {
     public class Graveyard
     {
-        private static int limitLodgings;
-        private static int limitColumbariums;
-
+        public int LimitLodgings { get; set; }
+        public int LimitColumbariums { get; set; }
         // check if they needs "static" later on
-        [Required]
+  /*      [Required]
         public int AmountLodgings
         { 
             get => limitLodgings;
@@ -27,6 +26,7 @@ namespace CmentarzKomunalny.Web.Models.Cmentarz
                 ? value
                 : throw new ArgumentOutOfRangeException("More or less columbariums than expected");
         }
+    */
         // you can count up the amount by adding up all the IDs of columbariums on graveyard
     }
     // check if we need [Required] status later on

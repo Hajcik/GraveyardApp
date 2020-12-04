@@ -3,14 +3,16 @@ using CmentarzKomunalny.Web.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CmentarzKomunalny.Web.Migrations.Cmentarz
 {
     [DbContext(typeof(CmentarzContext))]
-    partial class CmentarzContextModelSnapshot : ModelSnapshot
+    [Migration("20201203114752_Fix2Lodging_and_DeadPeople")]
+    partial class Fix2Lodging_and_DeadPeople
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -76,11 +78,11 @@ namespace CmentarzKomunalny.Web.Migrations.Cmentarz
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("DateOfPublication")
+                    b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("NewsContent")
+                    b.Property<string>("DateOfPublication")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -100,6 +102,10 @@ namespace CmentarzKomunalny.Web.Migrations.Cmentarz
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("DateOfDeath_Obituary")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -108,10 +114,6 @@ namespace CmentarzKomunalny.Web.Migrations.Cmentarz
                         .IsRequired()
                         .HasColumnType("nvarchar(70)")
                         .HasMaxLength(70);
-
-                    b.Property<string>("ObituaryContent")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
