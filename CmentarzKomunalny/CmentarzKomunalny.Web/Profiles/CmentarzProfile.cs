@@ -3,6 +3,7 @@ using CmentarzKomunalny.Web.DTOs.DeadPersonDtos;
 using CmentarzKomunalny.Web.DTOs.LodgingDtos;
 using CmentarzKomunalny.Web.DTOs.NewsDtos;
 using CmentarzKomunalny.Web.DTOs.ObituaryDtos;
+using CmentarzKomunalny.Web.DTOs.GraveyardDtos;
 using CmentarzKomunalny.Web.Models.Cmentarz;
 
 namespace CmentarzKomunalny.Web.Profiles
@@ -12,6 +13,11 @@ namespace CmentarzKomunalny.Web.Profiles
         
         public CmentarzProfile()
         {
+            // Graveyard mapping
+            CreateMap<Graveyard, GraveyardReadDto>();       // get
+            CreateMap<GraveyardUpdateDto, Graveyard>();     // update
+            CreateMap<Graveyard, GraveyardUpdateDto>();     // patch
+
             // Dead People mapping
             // source -> target (deadperson -> read dto)
             CreateMap<DeadPerson, DeadPersonReadDto>();     // get
@@ -32,6 +38,7 @@ namespace CmentarzKomunalny.Web.Profiles
             CreateMap<Obituary, ObituaryReadDto>();         // get
             CreateMap<ObituaryAddDto, Obituary>();          // put / update
             CreateMap<Obituary, ObituaryAddDto>();          // patch
+            
         }
     }
 }

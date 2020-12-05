@@ -3,14 +3,16 @@ using CmentarzKomunalny.Web.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CmentarzKomunalny.Web.Migrations.Cmentarz
 {
     [DbContext(typeof(CmentarzContext))]
-    partial class CmentarzContextModelSnapshot : ModelSnapshot
+    [Migration("20201205141228_UpdateGraveyardTable")]
+    partial class UpdateGraveyardTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -47,11 +49,6 @@ namespace CmentarzKomunalny.Web.Migrations.Cmentarz
 
             modelBuilder.Entity("CmentarzKomunalny.Web.Models.Cmentarz.Graveyard", b =>
                 {
-                    b.Property<int>("IdGraveyard")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
                     b.Property<int>("LimitColumbariums")
                         .HasColumnType("int");
 
@@ -60,8 +57,6 @@ namespace CmentarzKomunalny.Web.Migrations.Cmentarz
 
                     b.Property<int>("LimitSectors")
                         .HasColumnType("int");
-
-                    b.HasKey("IdGraveyard");
 
                     b.ToTable("GraveyardLimits");
                 });

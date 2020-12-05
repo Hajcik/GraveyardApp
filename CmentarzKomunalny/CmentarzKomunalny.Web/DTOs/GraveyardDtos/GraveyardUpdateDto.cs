@@ -1,9 +1,8 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace CmentarzKomunalny.Web.Models.Cmentarz
+namespace CmentarzKomunalny.Web.DTOs.GraveyardDtos
 {
-    public class Graveyard
+    public class GraveyardUpdateDto
     {
         [Key]
         public int IdGraveyard { get; set; }
@@ -14,4 +13,4 @@ namespace CmentarzKomunalny.Web.Models.Cmentarz
         [Required]
         public int LimitSectors { get; set; }
     }
-}   
+}

@@ -43,6 +43,12 @@
   <ItemGroup>
     <Compile Remove="Migrations\Cmentarz\20201202163424_Test.cs" />
     <Compile Remove="Migrations\Cmentarz\20201202163424_Test.Designer.cs" />
+    <Compile Remove="Migrations\Cmentarz\20201205140233_AddGraveyardTable.cs" />
+    <Compile Remove="Migrations\Cmentarz\20201205140233_AddGraveyardTable.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Controllers\ApiControllers\" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">

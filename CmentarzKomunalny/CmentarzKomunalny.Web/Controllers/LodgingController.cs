@@ -42,10 +42,12 @@ namespace CmentarzKomunalny.Web.Controllers
             return NotFound();
         }
 
+        // add new lodge
         //POST api/lodging/
         [HttpPost]
         public ActionResult<LodgingAddDto> AddLodgeToDb(LodgingAddDto lodgeAddDto)
         {
+            
             var lodgeModel = _mapper.Map<Lodging>(lodgeAddDto);
             _repository.AddLodgeToDb(lodgeModel);
             _repository.SaveChanges();
