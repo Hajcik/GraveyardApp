@@ -32,7 +32,7 @@ namespace CmentarzKomunalny.Web.Controllers
 
         // search news by its ID
         //GET api/news
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetNewsById")]
         public ActionResult <NewsReadDto> GetNewsById(int id)
         {
             var newsId = _repository.GetNewsById(id);
@@ -46,9 +46,9 @@ namespace CmentarzKomunalny.Web.Controllers
         public ActionResult<NewsAddDto> AddNews(NewsAddDto newsAddDto)
         {
             var newsModel = _mapper.Map<News>(newsAddDto);
-            var newsReadDto = _mapper.Map<NewsReadDto>(newsModel);
             _repository.AddNews(newsModel);
             _repository.SaveChanges();
+            var newsReadDto = _mapper.Map<NewsReadDto>(newsModel);
 
             return CreatedAtRoute(nameof(GetNewsById), new { Id = newsReadDto.Id }, newsReadDto);
         }

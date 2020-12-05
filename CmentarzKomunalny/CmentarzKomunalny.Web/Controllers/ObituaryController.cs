@@ -31,7 +31,7 @@ namespace CmentarzKomunalny.Web.Controllers
 
         // search obituary by its ID
         //GET api/obituary
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "GetObituaryById")]
         public ActionResult<ObituaryReadDto> GetObituaryById(int id)
         {
             var obituaryId = _repository.GetObituaryById(id);

@@ -14,6 +14,7 @@ namespace CmentarzKomunalny.Web.Data.Contexts
         public DbSet<Lodging> Lodgings { get; set; }
         public DbSet<Obituary> Obituaries { get; set; }
         public DbSet<News> News { get; set; }
+        public DbSet<Graveyard> GraveyardLimits { get; set; }
         // other models to do
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
