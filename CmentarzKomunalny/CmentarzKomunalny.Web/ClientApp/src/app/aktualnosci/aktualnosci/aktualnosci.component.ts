@@ -1,4 +1,7 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+/* IMPORT */
+import { SharedService } from '../../shared.service'
+
 
 @Component({
   selector: 'app-aktualnosci',
@@ -8,25 +11,34 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class AktualnosciComponent implements OnInit {
 
-  list = [];
-  pageSize = 6;
-  tempList = [];
+  aktualnosciList: any = []; // BAZA DANYCH W FORMACIE JSON
+  pageSize = 6; // ILOŚĆ AKTUALNOŚCI NA STRONIE
+  templateList = []; // SEGREGACJA BAZY NA SEGMENTY - PAGINACJA
 
-  constructor() { }
+  constructor(private service: SharedService) { }
+
+
+  /* WCIĄGANIE BAZY DO TABLICY */
+  refreshAktualnosciList() {
+    this.service.getAktualnosciList().subscribe(data => {
+      this.aktualnosciList = data;
+    });
+  }
+
+
+
 
   ngOnInit() {
-    // get your list from api
-    for (let i = 1; i < 1000; i++) {
-      this.list.push({
-        title: "item " + i
-      });
-    }
+    /* WCIĄGANIE BAZY DO TABLICY */
+    this.service.getAktualnosciList().subscribe(data => {
+      this.aktualnosciList = data;
+    });
 
-    this.tempList = this.list.slice(0, this.pageSize);
+    this.templateList = this.aktualnosciList.slice(0, this.pageSize);
   }
 
   onPageChange(e) {
-    this.tempList = this.list.slice(e.pageIndex * e.pageSize, (e.pageIndex + 1) * e.pageSize);
+    this.templateList = this.aktualnosciList.slice(e.pageIndex * e.pageSize, (e.pageIndex + 1) * e.pageSize);
   }
   ngAfterViewInit() {
     document.querySelector('body').classList.add('active');

@@ -30,7 +30,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MapaComponent } from './mapa/mapa/mapa.component';
-
+import { SharedService } from './shared.service';
 
 
 @NgModule({
@@ -74,7 +74,8 @@ import { MapaComponent } from './mapa/mapa/mapa.component';
     BrowserAnimationsModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
+    SharedService
   ],
   bootstrap: [AppComponent]
 })
