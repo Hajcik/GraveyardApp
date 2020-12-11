@@ -11,7 +11,7 @@ import { SharedService } from '../../shared.service'
 })
 export class AktualnosciComponent implements OnInit {
 
-  aktualnosciList: any = []; // BAZA DANYCH W FORMACIE JSON
+  aktualnosciLists = []; // BAZA DANYCH W FORMACIE JSON
   pageSize = 6; // ILOŚĆ AKTUALNOŚCI NA STRONIE
   templateList = []; // SEGREGACJA BAZY NA SEGMENTY - PAGINACJA
 
@@ -21,7 +21,8 @@ export class AktualnosciComponent implements OnInit {
   /* WCIĄGANIE BAZY DO TABLICY */
   refreshAktualnosciList() {
     this.service.getAktualnosciList().subscribe(data => {
-      this.aktualnosciList = data;
+      this.aktualnosciLists = data;
+      console.log("data:" );
     });
   }
 
@@ -29,16 +30,16 @@ export class AktualnosciComponent implements OnInit {
 
 
   ngOnInit() {
-    /* WCIĄGANIE BAZY DO TABLICY */
-    this.service.getAktualnosciList().subscribe(data => {
-      this.aktualnosciList = data;
-    });
-
-    this.templateList = this.aktualnosciList.slice(0, this.pageSize);
+  /* WCIĄGANIE BAZY DO TABLICY */
+    
+    this.refreshAktualnosciList();
+    
+    this.templateList = this.aktualnosciLists.slice(0, this.pageSize);
+    console.log("DATA:");
   }
 
   onPageChange(e) {
-    this.templateList = this.aktualnosciList.slice(e.pageIndex * e.pageSize, (e.pageIndex + 1) * e.pageSize);
+    this.templateList = this.aktualnosciLists.slice(e.pageIndex * e.pageSize, (e.pageIndex + 1) * e.pageSize);
   }
   ngAfterViewInit() {
     document.querySelector('body').classList.add('active');

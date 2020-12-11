@@ -1,18 +1,18 @@
 <div class="component-container">
-    <mat-card class="card" *ngFor="let item of aktualnosciList">
-        <mat-card-header>
-            <mat-card-title style="color: white;">{{item.Title}}</mat-card-title>
-        </mat-card-header>
-        <mat-card-content>
-            <p>
-                {{item.NewsContent}}
-            </p>
-        </mat-card-content>
-        <mat-divider style="border-top-color: white;"></mat-divider>
-        <mat-card-footer style="color: white; padding-top: 8px;">{{item.DateOfPublication}}</mat-card-footer>
-    </mat-card>
+  <mat-card class="card" *ngFor="let aktualnosciList of aktualnosciLists">
+    <mat-card-header>
+      <mat-card-title style="color: white;">{{aktualnosciList.Title}}</mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p>
+        {{aktualnosciList.NewsContent}}
+      </p>
+    </mat-card-content>
+    <mat-divider style="border-top-color: white;"></mat-divider>
+    <mat-card-footer style="color: white; padding-top: 8px;">{{aktualnosciList.DateOfPublication}}</mat-card-footer>
+  </mat-card>
 </div>
 
-<mat-paginator [length]="list.length" [pageSize]="pageSize" [pageSizeOptions]="[6, 12, 24, 48]"
-    (page)="onPageChange($event)">
+<mat-paginator [length]="aktualnosciLists.length" [pageSize]="pageSize" [pageSizeOptions]="[6, 12, 24, 48]"
+               (page)="onPageChange($event)">
 </mat-paginator>

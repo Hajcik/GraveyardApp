@@ -16,6 +16,7 @@ namespace CmentarzKomunalny.Web
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    
                 })
             // need to work on that
                 .ConfigureLogging((hostingContext, logging) =>

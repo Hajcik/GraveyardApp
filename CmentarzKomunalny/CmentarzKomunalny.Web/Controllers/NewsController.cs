@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using AutoMapper;
+using System.Data.SqlClient;
+using System.Data;
 using CmentarzKomunalny.Web.DTOs.NewsDtos;
 using CmentarzKomunalny.Web.Data.Interfaces;
 using CmentarzKomunalny.Web.Models.Cmentarz;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.Extensions.Configuration;
 
 namespace CmentarzKomunalny.Web.Controllers
 {
@@ -13,22 +16,49 @@ namespace CmentarzKomunalny.Web.Controllers
     [ApiController]
     public class NewsController : ControllerBase
     {
+        private readonly IConfiguration _configuration;
         private readonly INewsRepo _repository;
         private readonly IMapper _mapper;
         
-        public NewsController(INewsRepo repository, IMapper mapper)
+        public NewsController(IConfiguration configuration, INewsRepo repository, IMapper mapper)
         {
+            _configuration = configuration;
             _repository = repository;
             _mapper = mapper;
         }
+
+        [HttpGet]
+
+        public JsonResult Get()
+        {
+            string query = @"
+                select Title, DateOfPublication, NewsContent from dbo.News";
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("CmentarzConnectionTEST");
+            SqlDataReader myReader;
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (SqlCommand myCommand = new SqlCommand(query, myCon))
+                {
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader); ;
+
+                    myReader.Close();
+                    myCon.Close();
+                }
+                return new JsonResult(table);
+            }
+        }
+
         // get all news
         //GET api/news
-        [HttpGet]
-        public ActionResult <IEnumerable<NewsReadDto>> GetAllNews()
-        {
-            var news = _repository.GetAllNews();
-            return Ok(_mapper.Map<IEnumerable<NewsReadDto>>(news));
-        }
+    //    [HttpGet]
+    //    public ActionResult <IEnumerable<NewsReadDto>> GetAllNews()
+    //    {
+    //        var news = _repository.GetAllNews();
+    //        return Ok(_mapper.Map<IEnumerable<NewsReadDto>>(news));
+    //    }
 
         // search news by its ID
         //GET api/news

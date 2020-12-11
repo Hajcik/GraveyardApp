@@ -15,6 +15,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
+using System.Net.Http;
+using System.Net;
 using System;
 
 
@@ -22,6 +24,7 @@ namespace CmentarzKomunalny.Web
 {
     public class Startup
     {
+        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -48,6 +51,25 @@ namespace CmentarzKomunalny.Web
             services.AddControllers().AddNewtonsoftJson(s => 
             {   // needed to get PATCH working
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+            });
+
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft
+                .Json.ReferenceLoopHandling.Ignore)
+
+                .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver
+                                    = new DefaultContractResolver());
+            
+            
+
+            // enable CORS
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options =>
+                             options.AllowAnyOrigin()
+                                    .AllowAnyMethod()
+                                    .AllowAnyHeader());
             });
 
             // Mock repositories - for testing purposes
@@ -117,8 +139,10 @@ namespace CmentarzKomunalny.Web
             });
 
 
-            services.AddAuthentication()
+           services.AddAuthentication()
                 .AddIdentityServerJwt();
+
+            
             services.AddControllersWithViews();
             services.AddRazorPages();
             // In production, the Angular files will be served from this directory
@@ -132,6 +156,8 @@ namespace CmentarzKomunalny.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -151,11 +177,14 @@ namespace CmentarzKomunalny.Web
                 app.UseSpaStaticFiles();
             }
 
+            app.UseCors(options => options.WithOrigins("https://localhost:44357/api").AllowAnyMethod().AllowAnyHeader());
             app.UseRouting();
             
 
             app.UseAuthentication();
-    //        app.UseIdentityServer();
+          //  app.UseIdentityServer();
+
+           
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
@@ -166,11 +195,7 @@ namespace CmentarzKomunalny.Web
                     );
                 endpoints.MapControllerRoute(
                     name: "api",
-                    pattern: "{controller}/{id?}"
-                    );
-                endpoints.MapControllerRoute(
-                    name: "deadpeopleLodgeId",        // change later to DeadPeople
-                    pattern: "{controller=DeadPerson}/{action=GetDeadPersonByLodgeId}/{id}"
+                    pattern: "api/{controller}/{id?}"
                     );
                 
                 endpoints.MapRazorPages();

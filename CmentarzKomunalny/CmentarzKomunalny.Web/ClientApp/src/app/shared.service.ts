@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SharedService {
-  readonly APIUrl = "http://localhost:53535/"; /*Adres API - Adres po uruchomieniu przez .net*/
+  readonly APIUrl = "https://localhost:44357/api"; /*Adres API - Adres po uruchomieniu przez .net*/
 
   constructor(private http: HttpClient) { }
 
@@ -17,20 +17,21 @@ export class SharedService {
   /* AKTUALNOŚCI */
 
   /* METODA KONSUMUJĄCA DANE Z API */
+  
   getAktualnosciList(): Observable<any[]> {
-    return this.http.get<any>(this.APIUrl + '/news');
+    return this.http.get<any>(this.APIUrl + "/news");
   }
   /* METODA DODAJĄCA DANE DO BAZY */
   addAktualnosci(val: any) {
-    return this.http.post(this.APIUrl + '/news', val);
+    return this.http.post(this.APIUrl + 'api/news', val);
   }
   /* METODA AKTUALIZUJĄCA DANE DO BAZY */
   putAktualnosci(val: any) {
-    return this.http.put(this.APIUrl + '/news', val);
+    return this.http.put(this.APIUrl + 'api/news', val);
   }
   /* METODA AKTUALIZUJĄCA DANE DO BAZY (usuwanie po ID aktualnosci)*/
   deleteAktualnosci(val: any) {
-    return this.http.delete(this.APIUrl + '/news/' + val);
+    return this.http.delete(this.APIUrl + 'api/news' + val);
   }
 
   /* NEKROLOGI */
