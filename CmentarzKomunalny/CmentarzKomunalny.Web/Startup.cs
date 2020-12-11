@@ -17,6 +17,7 @@ using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
 using System;
 
+
 namespace CmentarzKomunalny.Web
 {
     public class Startup
@@ -36,13 +37,14 @@ namespace CmentarzKomunalny.Web
             services.AddDbContext<CmentarzContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("CmentarzConnectionTEST")));
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("CmentarzConnectionTEST")));
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<ApplicationUser, IdentityRole>()
+                .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
-            services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(); 
-               
             services.AddControllers().AddNewtonsoftJson(s => 
             {   // needed to get PATCH working
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
@@ -104,7 +106,17 @@ namespace CmentarzKomunalny.Web
                 options.User.RequireUniqueEmail = true; // check it later
               
             });
-            
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireAdministratorRole",
+                    policy => policy.RequireRole("Administrator"));
+
+                options.AddPolicy("RequireEmployeeRole",
+                    policy => policy.RequireRole("Employee"));
+            });
+
+
             services.AddAuthentication()
                 .AddIdentityServerJwt();
             services.AddControllersWithViews();
@@ -114,6 +126,7 @@ namespace CmentarzKomunalny.Web
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -142,7 +155,7 @@ namespace CmentarzKomunalny.Web
             
 
             app.UseAuthentication();
-            app.UseIdentityServer();
+    //        app.UseIdentityServer();
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {

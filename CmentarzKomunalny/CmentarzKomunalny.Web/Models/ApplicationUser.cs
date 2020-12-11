@@ -4,5 +4,6 @@ namespace CmentarzKomunalny.Web.Models
 {
     public class ApplicationUser : IdentityUser
     {
+        
     }
 }
