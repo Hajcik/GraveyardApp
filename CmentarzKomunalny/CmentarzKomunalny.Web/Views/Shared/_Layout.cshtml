@@ -34,14 +34,14 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
 
-                    @if (User.IsInRole("Employee") || User.IsInRole("Admin"))
+                    
                     {
                         <li><a asp-area="" asp-controller="News" asp-action="Index">Aktualności</a></li>
                         <li><a asp-area="" asp-controller="Obituary" asp-action="Index">Nekrologi</a></li>
                         <li><a asp-area="" asp-controller="DeadPerson" asp-action="Index">Martwi ludzie</a></li>
                         <li><a asp-area="" asp-controller="Lodging" asp-action="Index">Kwatery</a></li>
                     }
-                    @if (User.IsInRole("Admin"))
+                    
                     {
                         <li><a asp-area="" asp-controller="Graveyard" asp-action="Index">Informacje o cmentarzu</a></li>
                         <li><a asp-area="" asp-controller="Account" asp-action="Index">Dodaj pracownika</a></li>

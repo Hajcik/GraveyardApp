@@ -41,8 +41,8 @@ namespace CmentarzKomunalny.Web
                 options.UseSqlServer(
                     Configuration.GetConnectionString("CmentarzConnectionTEST")));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>()
+            services.AddIdentity<IdentityUser, IdentityRole>()
+               .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
             services.AddControllers().AddNewtonsoftJson(s => 
