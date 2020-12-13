@@ -1,0 +1,37 @@
+thinking about interfaces should be divorced from thinking about implementation
+we should be thinking genetically and theoritacally about interfaces
+
+
+differences between PUT and PATCH request
+
+// if it's a primary key you don't can't update it, it's not going to be updated
+// you need to supply the stuff that its needed
+
+PUT Request:
+"full" update, need to supply the entire object
+inefficient (error prone for larger objects)
+not used so much, PATCH is the favoured approach currently
+it's a traditional way of updating
+
+PATCH Request:
+use of a patch document
+json Patch standard:
+- Add, Remove, Replace, Copy, Move, Test (6 operations) - specified in RFC 6902
+adding new attributes is able to do with dynamic objects
+
+example of PATCH document:
+
+[
+	{
+	  "op": "replace",
+	  "path": "/howto",
+	  "value": "Some new value"
+	},
+	{
+	  "op": "test",
+	  "path": "/line",
+	  "value": "dotnet new"
+	}
+]
+
+note: all operations NEED to complete succesfully
