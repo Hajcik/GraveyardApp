@@ -5,7 +5,10 @@ using CmentarzKomunalny.Web.DTOs.NewsDtos;
 using CmentarzKomunalny.Web.Data.Interfaces;
 using CmentarzKomunalny.Web.Models.Cmentarz;
 using Microsoft.AspNetCore.JsonPatch;
+using Microsoft.Extensions.Configuration;
 using CmentarzKomunalny.Web.DTOs.ObituaryDtos;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace CmentarzKomunalny.Web.Controllers
 {
@@ -14,20 +17,45 @@ namespace CmentarzKomunalny.Web.Controllers
     [ApiController]
     public class ObituaryController : ControllerBase
     {
+        private readonly IConfiguration _configuration;
         private readonly IObituaryRepo _repository;
         private readonly IMapper _mapper;
-        public ObituaryController(IObituaryRepo repository, IMapper mapper)
+        public ObituaryController(IConfiguration configuration, IObituaryRepo repository, IMapper mapper)
         {
+            _configuration = configuration;
             _repository = repository;
             _mapper = mapper;
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<ObituaryReadDto>> GetAllObituaries()
+        public JsonResult Get()
         {
-            var obituaries = _repository.GetAllObituaries();
-            return Ok(_mapper.Map<IEnumerable<ObituaryReadDto>>(obituaries));
+            string query = @"
+                select Name, DateOfDeath_Obituary, ObituaryContent from dbo.Obituaries";
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("CmentarzConnectionTEST");
+            SqlDataReader myReader;
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (SqlCommand myCommand = new SqlCommand(query, myCon))
+                {
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader); ;
+
+                    myReader.Close();
+                    myCon.Close();
+                }
+                return new JsonResult(table);
+            }
         }
+
+        //      [HttpGet]
+        //      public ActionResult<IEnumerable<ObituaryReadDto>> GetAllObituaries()
+        //      {
+        //          var obituaries = _repository.GetAllObituaries();
+        //          return Ok(_mapper.Map<IEnumerable<ObituaryReadDto>>(obituaries));
+        //     }
 
         // search obituary by its ID
         //GET api/obituary

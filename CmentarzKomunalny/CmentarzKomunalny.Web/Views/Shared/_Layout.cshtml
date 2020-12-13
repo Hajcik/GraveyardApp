@@ -29,35 +29,29 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Subject" asp-action="Index" class="navbar-brand">Cmentarz Komunalny</a>
+                <a asp-area="" asp-controller="Admin" asp-action="Index" class="navbar-brand">Cmentarz Komunalny</a>
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
 
+                  
+                    <li><a asp-area="" asp-controller="Obituary" asp-action="Index"></a>Panel obsługi administratora</li>
+                    <li><a asp-area="" asp-controller="DeadPerson" asp-action="Index">Panel obsługi pracownika</a></li>
+                    <li><a asp-area="" asp-controller="News" asp-action="Index">Powrót do strony głównej cmentarza</a></li>
+                    <li><a asp-area="" asp-controller="Graveyard" asp-action="Index">Informacje o cmentarzu</a></li>
+
                     
-                    {
-                        <li><a asp-area="" asp-controller="News" asp-action="Index">Aktualności</a></li>
-                        <li><a asp-area="" asp-controller="Obituary" asp-action="Index">Nekrologi</a></li>
-                        <li><a asp-area="" asp-controller="DeadPerson" asp-action="Index">Martwi ludzie</a></li>
-                        <li><a asp-area="" asp-controller="Lodging" asp-action="Index">Kwatery</a></li>
-                    }
-                    
-                    {
-                        <li><a asp-area="" asp-controller="Graveyard" asp-action="Index">Informacje o cmentarzu</a></li>
-                        <li><a asp-area="" asp-controller="Account" asp-action="Index">Dodaj pracownika</a></li>
-                    }
-                        <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
-                        <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
 
                 </ul>
-                @await Html.PartialAsync("_LoginPartial") 
-                <!--<partial name="_LoginPartial" />-->
+
             </div>
         </div>
     </nav>
 
-    <partial name="_CookieConsentPartial" />
+
 
     <div class="container body-content">
         @RenderBody()
@@ -88,6 +82,6 @@
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 
-    @RenderSection("Scripts", required: false)
-</body>
-</html> 
+    
+    </body>
+</html>

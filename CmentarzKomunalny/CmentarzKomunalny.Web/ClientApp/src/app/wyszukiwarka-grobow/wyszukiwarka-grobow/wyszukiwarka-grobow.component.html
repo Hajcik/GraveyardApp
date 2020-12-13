@@ -18,27 +18,27 @@
   <mat-card-content>
     <mat-form-field style="margin-left: 30px;">
       <mat-label>Dane zmarłego</mat-label>
-      <input matInput (keyup)=" applyFilter($event)" placeholder="Jan Kowalski" #input>
+      <input matInput type="text" (keyup)=" applyFilter($event.target.value)" placeholder="Jan Kowalski" #input>
     </mat-form-field>
 
     <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-      <!-- nrkwatery Column -->
-      <ng-container matColumnDef="nrkwatery">
-        <th mat-header-cell *matHeaderCellDef> No. </th>
-        <td mat-cell *matCellDef="let element"> {{element.nrkwatery}} </td>
-      </ng-container>
-
       <!-- imie Column -->
-      <ng-container matColumnDef="imie">
-        <th mat-header-cell *matHeaderCellDef> Imie </th>
-        <td mat-cell *matCellDef="let element"> {{element.imie}} </td>
+      <ng-container matColumnDef="Name">
+        <th mat-header-cell *matHeaderCellDef> Imię </th>
+        <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
       </ng-container>
 
       <!-- Weight Column -->
-      <ng-container matColumnDef="datazgonu">
+      <ng-container matColumnDef="DateOfBirth">
+        <th mat-header-cell *matHeaderCellDef> Data urodzenia </th>
+        <td mat-cell *matCellDef="let element"> {{element.DateOfBirth}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
+      <ng-container matColumnDef="DateOfDeath">
         <th mat-header-cell *matHeaderCellDef> Data zgonu </th>
-        <td mat-cell *matCellDef="let element"> {{element.datazgonu}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.DateOfDeath}} </td>
       </ng-container>
 
 

@@ -1,24 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
+import { SharedService } from '../../shared.service'
 
-export interface PeriodicElement {
-  imie: string;
-  nrkwatery: number;
-  datazgonu: string;
+export interface DeadPerson {
+  Name: string,
+  DateOfBrith: string,
+  DateOfDeath: string
 }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { nrkwatery: 123, imie: 'Jan Nowak', datazgonu: '12.12.1997' },
-  { nrkwatery: 323, imie: 'Aneta Nowak', datazgonu: '12.12.1999' },
-  { nrkwatery: 423, imie: 'Kamil Grodzki', datazgonu: '12.12.2020' },
-  { nrkwatery: 412, imie: 'Anna Kowalska', datazgonu: '12.10.1993' },
-  { nrkwatery: 412, imie: 'Jan Kowalski', datazgonu: '12.8.2020' },
-  { nrkwatery: 936, imie: 'Krystian Noga', datazgonu: '12.12.2017' },
-  { nrkwatery: 712, imie: 'Piotr Dworski', datazgonu: '12.12.1990' },
-  { nrkwatery: 832, imie: 'Anna Dworska', datazgonu: '2.2.1997' },
-  { nrkwatery: 932, imie: 'Krystian Nowak', datazgonu: '10.12.1997' },
-  { nrkwatery: 101, imie: 'Jan Krojec', datazgonu: '12.12.1998' },
-];
 
 @Component({
   selector: 'app-wyszukiwarka-grobow',
@@ -26,17 +14,26 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./wyszukiwarka-grobow.component.css']
 })
 export class WyszukiwarkaGrobowComponent implements OnInit {
-  displayedColumns: string[] = ['nrkwatery', 'imie', 'datazgonu'];
-  dataSource = new MatTableDataSource(ELEMENT_DATA);
 
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+  refreshZmarliList() {
+    this.service.getZmarliList().subscribe(res => {
+      this.dataSource.data = res as DeadPerson[];
+    });
   }
-  constructor() { }
+
+  public dataSource = new MatTableDataSource<DeadPerson>();
+  
+
+  displayedColumns: string[] = ['Name','DateOfBirth', 'DateOfDeath'];
+
+  public applyFilter(value: Event) {
+    const valueFilter = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = valueFilter.trim().toLowerCase();
+  }
+  constructor(private service: SharedService) { }
 
   ngOnInit() {
-
+    this.refreshZmarliList();
   }
 
 }

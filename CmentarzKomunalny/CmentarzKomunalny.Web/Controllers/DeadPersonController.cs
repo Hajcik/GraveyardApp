@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -9,7 +11,7 @@ using CmentarzKomunalny.Web.DTOs.DeadPersonDtos;
 using CmentarzKomunalny.Web.Models.Cmentarz;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.Extensions.Configuration;
 namespace CmentarzKomunalny.Web.Controllers
 {   // api/deadperson
     [Route("api/[controller]")] // tutaj chyba nazwa "wyszukiwarka-grobow"
@@ -18,23 +20,47 @@ namespace CmentarzKomunalny.Web.Controllers
     public class DeadPersonController : ControllerBase
     {
         private readonly MockDeadPeopleRepo _mockRepo = new MockDeadPeopleRepo();
+        private readonly IConfiguration _configuration;
         private readonly IDeadPeopleRepo _repository; // dependency injection
         private readonly IMapper _mapper;
 
-        public DeadPersonController(IDeadPeopleRepo repository, IMapper mapper)
+        public DeadPersonController(IConfiguration configuration, IDeadPeopleRepo repository, IMapper mapper)
         {
+            _configuration = configuration;
             _repository = repository;
             _mapper = mapper;
         }
 
+        [HttpGet]
+        public JsonResult Get()
+        {
+            string query = @"
+                select LodgingId, Name, DateOfBirth, DateOfDeath from dbo.DeadPeople";
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("CmentarzConnectionTEST");
+            SqlDataReader myReader;
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (SqlCommand myCommand = new SqlCommand(query, myCon))
+                {
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader); ;
+
+                    myReader.Close();
+                    myCon.Close();
+                }
+                return new JsonResult(table);
+            }
+        }
         // SEARCHING ALL DEAD PEOPLE IN DB
         //GET api/deadperson
-        [HttpGet]
-        public ActionResult<IEnumerable<DeadPersonReadDto>> GetAllDeadPeople()
-        {
-            var deadPeople = _repository.GetAllDeadPeople();
-            return Ok(_mapper.Map<IEnumerable<DeadPersonReadDto>>(deadPeople));
-        }
+  //      [HttpGet]
+  //      public ActionResult<IEnumerable<DeadPersonReadDto>> GetAllDeadPeople()
+  //      {
+  //          var deadPeople = _repository.GetAllDeadPeople();
+  //          return Ok(_mapper.Map<IEnumerable<DeadPersonReadDto>>(deadPeople));
+  //      }
        
         // SEARCHING DEAD PERSON BY ITS ID
         //GET api/deadperson
