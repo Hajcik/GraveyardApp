@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { SharedService } from '../../shared.service'
 
 @Component({
   selector: 'app-nekrologi',
@@ -8,25 +9,29 @@ import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 })
 export class NekrologiComponent implements OnInit {
 
-  list = [];
+  nekrologiLists = [];
   pageSize = 4;
-  tempList = [];
+  templateList = [];
 
-  constructor() { }
+  constructor(private service: SharedService) { }
+
+  refreshNekrologiList() {
+    this.service.getNekrologiList().subscribe(data => {
+      this.nekrologiLists = data;
+      console.log("data:");
+    });
+  }
 
   ngOnInit() {
-    // get your list from api
-    for (let i = 1; i < 1000; i++) {
-      this.list.push({
-        title: "item " + i
-      });
-    }
 
-    this.tempList = this.list.slice(0, this.pageSize);
+    this.refreshNekrologiList();
+
+    this.templateList = this.nekrologiLists.slice(0, this.pageSize);
+
   }
 
   onPageChange(e) {
-    this.tempList = this.list.slice(e.pageIndex * e.pageSize, (e.pageIndex + 1) * e.pageSize);
+    this.templateList = this.nekrologiLists.slice(e.pageIndex * e.pageSize, (e.pageIndex + 1) * e.pageSize);
   }
 
 }

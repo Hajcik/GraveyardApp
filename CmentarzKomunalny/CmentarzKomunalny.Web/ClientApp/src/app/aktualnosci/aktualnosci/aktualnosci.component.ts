@@ -22,7 +22,6 @@ export class AktualnosciComponent implements OnInit {
   refreshAktualnosciList() {
     this.service.getAktualnosciList().subscribe(data => {
       this.aktualnosciLists = data;
-      console.log("data:" );
     });
   }
 
@@ -35,7 +34,6 @@ export class AktualnosciComponent implements OnInit {
     this.refreshAktualnosciList();
     
     this.templateList = this.aktualnosciLists.slice(0, this.pageSize);
-    console.log("DATA:");
   }
 
   onPageChange(e) {

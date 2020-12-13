@@ -24,7 +24,6 @@ namespace CmentarzKomunalny.Web
 {
     public class Startup
     {
-        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -47,6 +46,7 @@ namespace CmentarzKomunalny.Web
             services.AddIdentity<IdentityUser, IdentityRole>()
                .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
+        //    services.AddDefaultIdentity<IdentityUser>();    
 
             services.AddControllers().AddNewtonsoftJson(s => 
             {   // needed to get PATCH working
@@ -61,8 +61,6 @@ namespace CmentarzKomunalny.Web
                 .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver
                                     = new DefaultContractResolver());
             
-            
-
             // enable CORS
             services.AddCors(c =>
             {
@@ -72,10 +70,6 @@ namespace CmentarzKomunalny.Web
                                     .AllowAnyHeader());
             });
 
-            // Mock repositories - for testing purposes
-        //  services.AddScoped<ICommandRepo, MockCommanderRepo>();
-        //  services.AddScoped<IDeadPeopleRepo, MockDeadPeopleRepo>();
-
             // SQL repositories
             //  services.AddScoped<ICommandRepo, SqlCommanderRepo>();
             services.AddScoped<IDeadPeopleRepo, SqlDeadPeopleRepo>();
@@ -84,21 +78,6 @@ namespace CmentarzKomunalny.Web
             services.AddScoped<IObituaryRepo, SqlObituaryRepo>();
             // DTOs
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-
-            // Authorization (admin, employee etc...)
-     /*       services.AddAuthorization(options =>
-            {
-                options.AddPolicy("Admins", policy =>
-                {
-                    policy.RequireRole("Admin");
-                });
-
-                options.AddPolicy("Employees", policy =>
-                {
-                    policy.RequireRole("Employee");
-                });
-            });
-     */
             
             // check page https://kenhaggerty.com/articles/article/aspnet-core-31-admin-role
 
@@ -156,7 +135,6 @@ namespace CmentarzKomunalny.Web
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            
 
             if (env.IsDevelopment())
             {

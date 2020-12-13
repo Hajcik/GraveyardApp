@@ -24,6 +24,12 @@ namespace CmentarzKomunalny.Web.Controllers
         }
 
         [HttpGet]
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
         public IActionResult CreateRole()
         {
             return View();    
@@ -43,7 +49,7 @@ namespace CmentarzKomunalny.Web.Controllers
 
                 if(result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Admin");
+                    return RedirectToAction("ListRoles", "Admin");
                 }
 
                 foreach(IdentityError error in result.Errors)
@@ -63,15 +69,19 @@ namespace CmentarzKomunalny.Web.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Register(RegisterViewModel model)
+        public async Task<IActionResult> Register(RegisterViewModel model, string roleId)
         {
             if (ModelState.IsValid)
             {
+                ViewBag.roleId = roleId;
+                var role = await roleManager.FindByIdAsync(roleId);
+
                 var user = new IdentityUser { UserName = model.Email, Email = model.Email };
                 var result = await userManager.CreateAsync(user, model.Password);
 
                 if(result.Succeeded)
                 {
+                 //   await userManager.AddToRoleAsync(user, model.Role); // dodanie roli dla uzytkownika
                     await signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Admin");
                 }
@@ -81,6 +91,46 @@ namespace CmentarzKomunalny.Web.Controllers
                 }
             }
             return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult ListRoles()
+        {
+            var roles = roleManager.Roles;
+            return View(roles);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditUsersInRole(string roleId)
+        {
+            ViewBag.RoleId = roleId;
+            var role = await roleManager.FindByIdAsync(roleId);
+
+            if(role == null)
+            {
+                ViewBag.ErrorMessage = $"Rola o ID = {roleId} nie znaleziona";
+                return View("NotFound");
+            }
+
+            var model = new List<UserRoleViewModel>();
+            foreach(var user in userManager.Users)
+            {
+                var userRoleViewModel = new UserRoleViewModel
+                {
+                    UserId = user.Id,
+                    UserName = user.UserName
+                };
+
+                if (await userManager.IsInRoleAsync(user, role.Name))
+                    userRoleViewModel.IsSelected = true;
+                else
+                    userRoleViewModel.IsSelected = false;
+
+                model.Add(userRoleViewModel);
+            }
+
+            return View(model);
+
         }
     }
 }
