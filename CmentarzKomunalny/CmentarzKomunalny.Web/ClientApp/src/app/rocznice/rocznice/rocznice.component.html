@@ -1,1 +1,15 @@
-<p>rocznice works!</p>
+<div class="component-container">
+    <mat-card class="card" *ngFor="let aktualnaRocznicaList of aktualnaRocznicaLists">
+        <mat-card-content>
+            <p style="color:white; font-size:16px;text-align: center;">Dnia {{aktualnaRocznicaList.DateOfDeath}}
+                przypada x rocznica śmierci
+            </p>
+            <p style="color:white; font-size:24px; text-align: center">Ś.P. {{aktualnaRocznicaList.Name}}</p>
+        </mat-card-content>
+        <mat-divider style="border-top-color: white;"></mat-divider>
+    </mat-card>
+</div>
+
+<mat-paginator [length]="aktualnaRocznicaList.length" [pageSize]="pageSize" [pageSizeOptions]="[4, 8, 24, 48]"
+    (page)="onPageChange($event)">
+</mat-paginator>

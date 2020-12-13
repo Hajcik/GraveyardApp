@@ -9,7 +9,7 @@ import { SharedService } from '../../shared.service'
 })
 export class NekrologiComponent implements OnInit {
 
-  nekrologiLists = [];
+  nekrologiLists = []; // TABLICA BAZY
   pageSize = 4;
   templateList = [];
 

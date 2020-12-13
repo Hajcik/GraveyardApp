@@ -28,12 +28,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MapaComponent } from './mapa/mapa/mapa.component';
-<<<<<<< HEAD
 import { SharedService } from './shared.service';
-=======
-import { RoczniceComponent } from './rocznice/rocznice/rocznice.component';
->>>>>>> origin/Piotr
-
+import { RoczniceComponent } from './rocznice/rocznice/rocznice.component'
 
 @NgModule({
   declarations: [
@@ -76,10 +72,10 @@ import { RoczniceComponent } from './rocznice/rocznice/rocznice.component';
     ]),
     BrowserAnimationsModule
   ],
- // providers: [
- //   { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
- //   SharedService
- // ],
+  // providers: [
+  //   { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
+  //   SharedService
+  // ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
