@@ -28,7 +28,6 @@ namespace CmentarzKomunalny.Web.Controllers
         }
 
         [HttpGet]
-
         public JsonResult Get()
         {
             string query = @"

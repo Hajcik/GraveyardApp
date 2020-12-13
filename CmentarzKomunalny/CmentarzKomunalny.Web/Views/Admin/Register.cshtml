@@ -1,6 +1,7 @@
 ﻿@model CmentarzKomunalny.Web.ViewModels.RegisterViewModel
 @{
     ViewData["Title"] = "Register";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <h2>@ViewData["Title"]</h2>
 <div class="row">
@@ -24,7 +25,10 @@
                 <input asp-for="ConfirmPassword" class="form-control" />
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
-            <button type="submit" class="btn btn-default">Register</button>
+            <div class="form-group">
+                @Html.DropDownList("Role", (IEnumerable<SelectListItem>)ViewBag.Roles, "Wybierz rolę")
+            </div>
+            <button type="submit" class="btn btn-default">Stwórz użytkownika</button>
         </form>
     </div>
 </div>

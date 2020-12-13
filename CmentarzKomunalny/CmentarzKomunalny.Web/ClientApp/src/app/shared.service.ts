@@ -17,7 +17,7 @@ export class SharedService {
   /* AKTUALNOŚCI */
 
   /* METODA KONSUMUJĄCA DANE Z API */
-  
+
   getAktualnosciList(): Observable<any[]> {
     return this.http.get<any>(this.APIUrl + "/news");
   }
@@ -38,7 +38,7 @@ export class SharedService {
 
   /* METODA KONSUMUJĄCA DANE Z API */
   getNekrologiList(): Observable<any[]> {
-    return this.http.get<any>(this.APIUrl + '/nekrologi');
+    return this.http.get<any>(this.APIUrl + '/obituary');
   }
   /* METODA DODAJĄCA DANE DO BAZY */
   addNekrologi(val: any) {
@@ -53,4 +53,7 @@ export class SharedService {
     return this.http.delete(this.APIUrl + '/nekrologi/' + val);
   }
 
+  getZmarliList(): Observable<any[]> {
+    return this.http.get<any>(this.APIUrl + '/deadperson');
+  }
 }
