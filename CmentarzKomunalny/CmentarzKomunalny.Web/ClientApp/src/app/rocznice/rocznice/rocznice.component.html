@@ -1,1 +1,15 @@
-<p>rocznice works!</p>
+<div class="component-container">
+    <mat-card class="card" *ngFor="let item of tempList">
+        <mat-card-content>
+            <p style="color:white; font-size:16px;text-align: center;">{{item.title}}</p>
+            <p style="color:white; font-size:24px; text-align: center">Ś.P. PIOTR KOWALSKI</p>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore ratione quibusdam blanditiis odio
+                nihil, minima ad sequi quo itaque voluptates officiis, incidunt possimus, minus hic ipsum facilis labore
+                esse tempore.
+            </p>
+        </mat-card-content>
+        <mat-divider style="border-top-color: white;"></mat-divider>
+        <mat-card-footer style="color: white; padding-top: 8px;">12-12-2020</mat-card-footer>
+    </mat-card>
+</div>
