@@ -8,39 +8,25 @@ namespace CmentarzKomunalny.Web.Models.Cmentarz
     {
         public enum Type
         {
-            Single = 0,
-            Double = 1
+            Single = 0, // maximum 3 people for 20 years /without monument 2
+            Double = 1  // maximum 6 people for 20 years /without monument 4
         }
 
         [Key]
         public int IdLodge { get; set; }
         // searching for it will be based on Identifier of exact lodging
-       
-        [ForeignKey("IdDeadPerson")]
-        [Required]
-        public int DeadPersonId { get; set; }
-
         [Required]
         public Type LodgingType { get; set; }
 
         [Required]
-        public Grave grave { get; set; }
-
-        private static int limitOsob;
+        public bool isReserved { get; set; }
        
         [Required]
         public bool isMonument { get; set; }
 
-        // check later for changes if it doesnt work properly
         [Required]
-        public static int LimitOsob
-        {
-
-            get => limitOsob;
-            set => limitOsob = value >= 0 && value <= 6
-                    ? value 
-                    : throw new ArgumentOutOfRangeException("Za dużo osób w grobie");
-        }
+        public int PeopleLimit { get; set; }
+        
     }
 }
 

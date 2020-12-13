@@ -11,10 +11,9 @@ namespace CmentarzKomunalny.Web.Models.Cmentarz
         [Required]
         public string Title { get; set; }
         [Required]
-        public string Content { get; set; }
+        public string NewsContent { get; set; }
 
-        [DataType(DataType.DateTime)]
-        [Range(typeof(DateTime), "01/01/1900", "01/01/2100", ErrorMessage = "Date is out of range")]
-        public DateTime DateOfPublication { get; set; }
+        [Required]
+        public string DateOfPublication { get; set; }
     }
 }

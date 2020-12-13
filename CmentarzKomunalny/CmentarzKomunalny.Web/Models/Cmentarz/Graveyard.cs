@@ -1,34 +1,16 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CmentarzKomunalny.Web.Models.Cmentarz
 {
     public class Graveyard
     {
-        private static int limitLodgings;
-        private static int limitColumbariums;
-
-        // check if they needs "static" later on
+        [Key]
+        public int IdGraveyard { get; set; }
         [Required]
-        public int AmountLodgings
-        { 
-            get => limitLodgings;
-            set => limitLodgings = value >= 1 && value <= 200
-                ? value
-                : throw new ArgumentOutOfRangeException("More or less lodgings than expected");
-        }
-        // you can count up the amount by adding up all the IDs of lodgings on graveyard
-
+        public int LimitLodgings { get; set; }
         [Required]
-        public int AmountColumbariums
-        {
-            get => limitColumbariums;
-            set => limitColumbariums = value >= 0 && value <= 5
-                ? value
-                : throw new ArgumentOutOfRangeException("More or less columbariums than expected");
-        }
-        // you can count up the amount by adding up all the IDs of columbariums on graveyard
+        public int LimitColumbariums { get; set; }
+        [Required]
+        public int LimitSectors { get; set; }
     }
-    // check if we need [Required] status later on
-
 }   

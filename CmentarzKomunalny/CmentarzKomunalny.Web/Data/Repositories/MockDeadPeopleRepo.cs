@@ -48,6 +48,11 @@ namespace CmentarzKomunalny.Web.Data.Repositories
             throw new NotImplementedException();
         }
 
+        public IEnumerable<DeadPerson> GetDeadPeopleByLodgeId(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool SaveChanges()
         {
             throw new NotImplementedException();

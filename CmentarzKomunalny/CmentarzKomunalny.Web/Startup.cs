@@ -15,12 +15,16 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
+using System.Net.Http;
+using System.Net;
 using System;
+
 
 namespace CmentarzKomunalny.Web
 {
     public class Startup
     {
+        
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -36,26 +40,48 @@ namespace CmentarzKomunalny.Web
             services.AddDbContext<CmentarzContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("CmentarzConnectionTEST")));
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("CmentarzConnectionTEST")));
 
-            services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            services.AddIdentity<IdentityUser, IdentityRole>()
+               .AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
-            services.AddIdentityServer()
-                .AddApiAuthorization<ApplicationUser, ApplicationDbContext>(); 
-               
             services.AddControllers().AddNewtonsoftJson(s => 
             {   // needed to get PATCH working
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
 
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft
+                .Json.ReferenceLoopHandling.Ignore)
 
+                .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver
+                                    = new DefaultContractResolver());
+            
+            
 
-            // Adding repos and interfaces of them
+            // enable CORS
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options =>
+                             options.AllowAnyOrigin()
+                                    .AllowAnyMethod()
+                                    .AllowAnyHeader());
+            });
+
+            // Mock repositories - for testing purposes
         //  services.AddScoped<ICommandRepo, MockCommanderRepo>();
-        //  services.AddScoped<ICommandRepo, SqlCommanderRepo>();
+        //  services.AddScoped<IDeadPeopleRepo, MockDeadPeopleRepo>();
 
-            services.AddScoped<IDeadPeopleRepo, MockDeadPeopleRepo>();
-
+            // SQL repositories
+            //  services.AddScoped<ICommandRepo, SqlCommanderRepo>();
+            services.AddScoped<IDeadPeopleRepo, SqlDeadPeopleRepo>();
+            services.AddScoped<ILodgingsRepo, SqlLodgingsRepo>();
+            services.AddScoped<INewsRepo, SqlNewsRepo>();
+            services.AddScoped<IObituaryRepo, SqlObituaryRepo>();
             // DTOs
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
@@ -102,9 +128,21 @@ namespace CmentarzKomunalny.Web
                 options.User.RequireUniqueEmail = true; // check it later
               
             });
-            
-            services.AddAuthentication()
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("RequireAdministratorRole",
+                    policy => policy.RequireRole("Administrator"));
+
+                options.AddPolicy("RequireEmployeeRole",
+                    policy => policy.RequireRole("Employee"));
+            });
+
+
+           services.AddAuthentication()
                 .AddIdentityServerJwt();
+
+            
             services.AddControllersWithViews();
             services.AddRazorPages();
             // In production, the Angular files will be served from this directory
@@ -112,11 +150,14 @@ namespace CmentarzKomunalny.Web
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -136,16 +177,27 @@ namespace CmentarzKomunalny.Web
                 app.UseSpaStaticFiles();
             }
 
+            app.UseCors(options => options.WithOrigins("https://localhost:44357/api").AllowAnyMethod().AllowAnyHeader());
             app.UseRouting();
+            
 
             app.UseAuthentication();
-            app.UseIdentityServer();
+          //  app.UseIdentityServer();
+
+           
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
+                endpoints.MapControllerRoute( // configure later for our main page
                     name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
+                    pattern: "{controller}/{action=Index}/{id?}" //,
+                 //   defaults: new {controller = "Home", action = "Index"}
+                    );
+                endpoints.MapControllerRoute(
+                    name: "api",
+                    pattern: "api/{controller}/{id?}"
+                    );
+                
                 endpoints.MapRazorPages();
             });
 

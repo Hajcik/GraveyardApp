@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
+
 namespace CmentarzKomunalny.Web.Models.Cmentarz
 {
     public class DeadPerson
@@ -9,11 +12,9 @@ namespace CmentarzKomunalny.Web.Models.Cmentarz
         [Key]
         public int IdDeadPerson { get; set; }
 
-        // how to connect with Lodging id?
-  //      [Key]
-  //      [ForeignKey("Lodging")]
-  //      [Required]
-  //      public int LodgingId { get; set; }
+        [ForeignKey("IdLodge")]
+        [Required]
+        public int LodgingId { get; set; }
 
         [Required]
         [MaxLength(75)]
@@ -23,6 +24,7 @@ namespace CmentarzKomunalny.Web.Models.Cmentarz
        
         [Required]
         public string DateOfDeath { get; set; }
+
     }
 }
 

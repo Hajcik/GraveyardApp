@@ -6,9 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { ApiAuthorizationModule } from 'src/api-authorization/api-authorization.module';
-import { AuthorizeGuard } from 'src/api-authorization/authorize.guard';
-import { AuthorizeInterceptor } from 'src/api-authorization/authorize.interceptor';
+
 import { AktualnosciComponent } from './aktualnosci/aktualnosci/aktualnosci.component';
 import { StronaGlownaComponent } from './strona-glowna/strona-glowna/strona-glowna.component';
 import { WyszukiwarkaGrobowComponent } from './wyszukiwarka-grobow/wyszukiwarka-grobow/wyszukiwarka-grobow.component';
@@ -61,7 +59,6 @@ import { RoczniceComponent } from './rocznice/rocznice/rocznice.component';
     MatPaginatorModule,
     FormsModule,
     ReactiveFormsModule,
-    ApiAuthorizationModule,
     RouterModule.forRoot([
       { path: '', component: StronaGlownaComponent, pathMatch: 'full' },
       { path: 'strona-glowna', component: StronaGlownaComponent, pathMatch: 'full' },
@@ -75,9 +72,10 @@ import { RoczniceComponent } from './rocznice/rocznice/rocznice.component';
     ]),
     BrowserAnimationsModule
   ],
-  providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true }
-  ],
+ // providers: [
+ //   { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
+ //   SharedService
+ // ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
