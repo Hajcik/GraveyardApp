@@ -18,7 +18,10 @@ export class SharedService {
 
   /* METODA KONSUMUJĄCA DANE Z API */
   getAktualnosciList(): Observable<any[]> {
-    return this.http.get<any>(this.APIUrl + '/news');
+    return this.http.get<any>("http://localhost:53535/" + '/news');
+  }
+  getdata() {
+    return this.http.get(this.APIUrl);
   }
   /* METODA DODAJĄCA DANE DO BAZY */
   addAktualnosci(val: any) {
