@@ -29,6 +29,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MapaComponent } from './mapa/mapa/mapa.component';
 import { SharedService } from './shared.service';
+import { RoczniceComponent } from './rocznice/rocznice/rocznice.component';
 
 
 @NgModule({
@@ -41,7 +42,8 @@ import { SharedService } from './shared.service';
     NekrologiComponent,
     InformacjeComponent,
     KontaktComponent,
-    MapaComponent
+    MapaComponent,
+    RoczniceComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -67,6 +69,7 @@ import { SharedService } from './shared.service';
       { path: 'nekrologi', component: NekrologiComponent },
       { path: 'mapa', component: MapaComponent },
       { path: 'kontakt', component: KontaktComponent },
+      { path: 'rocznice', component: RoczniceComponent },
     ]),
     BrowserAnimationsModule
   ],

@@ -17,7 +17,7 @@ export class SharedService {
   /* AKTUALNOŚCI */
 
   /* METODA KONSUMUJĄCA DANE Z API */
-  
+
   getAktualnosciList(): Observable<any[]> {
     return this.http.get<any>(this.APIUrl + "/news");
   }
