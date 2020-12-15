@@ -186,10 +186,8 @@ namespace CmentarzKomunalny.Web
 
                 spa.Options.SourcePath = "ClientApp";
 
-                if (env.IsDevelopment())
-                {
-                    spa.UseAngularCliServer(npmScript: "start");
-                }
+                spa.Options.StartupTimeout = new TimeSpan(0, 0, 360);
+                spa.UseAngularCliServer(npmScript: "start");
             });
         }
     }
