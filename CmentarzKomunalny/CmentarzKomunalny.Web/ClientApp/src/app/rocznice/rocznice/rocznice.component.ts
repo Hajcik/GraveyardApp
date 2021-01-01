@@ -12,7 +12,7 @@ import { SharedService } from '../../shared.service'
 export class RoczniceComponent implements OnInit {
   public date: Date = new Date();
   roczniceLists = [];
-  aktualnaRocznicaLists = [];
+  aktualnaRocznica = [];
   pageSize = 4;
   templateList = [];
 
@@ -32,7 +32,6 @@ export class RoczniceComponent implements OnInit {
 
   constructor(private service: SharedService) { }
 
-
   refreshRoczniceList() {
     this.service.getZmarliList().subscribe(data => {
       this.roczniceLists = data;
@@ -48,20 +47,14 @@ export class RoczniceComponent implements OnInit {
     const curTimeDayMonth = this.DDMM(new Date());
     console.log(curTimeDayMonth);
 
-    this.roczniceLists.forEach(function (element) {
-      if (this.element['dateOfDeath'] == curTimeDayMonth) {
-        this.aktualnaRocznicaLists += element;
-      }
-    })
-
 
     this.refreshRoczniceList();
-    this.templateList = this.aktualnaRocznicaLists.slice(0, this.pageSize);
+    this.templateList = this.roczniceLists.slice(0, this.pageSize);
 
   }
 
   onPageChange(e) {
-    this.templateList = this.aktualnaRocznicaLists.slice(e.pageIndex * e.pageSize, (e.pageIndex + 1) * e.pageSize);
+    this.templateList = this.roczniceLists.slice(e.pageIndex * e.pageSize, (e.pageIndex + 1) * e.pageSize);
   }
 
 }

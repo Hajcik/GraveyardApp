@@ -29,7 +29,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MapaComponent } from './mapa/mapa/mapa.component';
 import { SharedService } from './shared.service';
-import { RoczniceComponent } from './rocznice/rocznice/rocznice.component'
+import { RoczniceComponent } from './rocznice/rocznice/rocznice.component';
+
 
 @NgModule({
   declarations: [
