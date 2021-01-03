@@ -4,7 +4,14 @@
   margin: 0px;
   padding: 0px;
 }
-
+.hello-text{
+  -webkit-text-stroke: 0.5px black; /* width and color */
+  font-size: 50px;
+  font-family: 'Sawarabi Mincho';
+  letter-spacing: 1px;
+  font-weight: 500;
+  color: rgb(255, 255, 255);
+}
 /* Provide sufficient contrast against white background */
 a {
   color: #0366d6;
