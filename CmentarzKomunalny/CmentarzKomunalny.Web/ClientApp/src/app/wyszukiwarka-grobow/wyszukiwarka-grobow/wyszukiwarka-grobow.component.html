@@ -53,13 +53,38 @@
     </table>
   </mat-card-content>
 </mat-card>
-
-<mat-card class="card">
+<br>
+<p style="font-size: 24px;text-align: center;">Sektor x numer x.</p>
+<mat-card class="card mat-elevation-z0" style="background-color: rgba(0,0,0,0); padding:
+0px;">
   <mat-card-header>
   </mat-card-header>
   <mat-card-content>
-    <p style="font-size: 24px;text-align: center;">Sektor x numer x.</p>
+
     <br>
-    <img src="../../../assets/cm1.PNG">
+    <mat-accordion>
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header class="specific-class">
+          <mat-panel-title>
+            Układ sektora
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <img src="../../../assets/map.png" alt="">
+      </mat-expansion-panel>
+    </mat-accordion>
+
+    <br>
+    <mat-accordion>
+      <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+        <mat-expansion-panel-header class="specific-class">
+          <mat-panel-title>
+            Mapa cmentarza
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <img src="../../../assets/map.png" alt="">
+      </mat-expansion-panel>
+    </mat-accordion>
+
+
   </mat-card-content>
 </mat-card>

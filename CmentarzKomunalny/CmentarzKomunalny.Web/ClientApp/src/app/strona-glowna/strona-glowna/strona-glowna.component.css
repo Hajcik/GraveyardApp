@@ -2,12 +2,14 @@
     margin: 20px 0px 0px 0px;
     padding: 0px;
     background-color: rgba(0, 0, 0, 0);
-    height: 80vh;
+    height: 90vh;
     border: 0px;
     box-shadow: 0px;
 }
 .card-content{
     height: 80%;
+    display: flex;
+    flex-direction: column-reverse;
 }
 
 .button{
@@ -19,9 +21,6 @@
 }
 .hello-text-container{
     width: 80%;
-    height: 50%;
+    height: 30%;
 }
 
-.hello-text{
-    font-size: 24px;
-}

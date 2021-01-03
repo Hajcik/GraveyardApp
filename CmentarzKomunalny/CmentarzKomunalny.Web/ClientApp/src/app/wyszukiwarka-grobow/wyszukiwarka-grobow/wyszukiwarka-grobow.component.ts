@@ -14,6 +14,7 @@ export interface DeadPerson {
   styleUrls: ['./wyszukiwarka-grobow.component.css']
 })
 export class WyszukiwarkaGrobowComponent implements OnInit {
+  panelOpenState = false;
 
   refreshZmarliList() {
     this.service.getZmarliList().subscribe(res => {
@@ -22,9 +23,9 @@ export class WyszukiwarkaGrobowComponent implements OnInit {
   }
 
   public dataSource = new MatTableDataSource<DeadPerson>();
-  
 
-  displayedColumns: string[] = ['Name','DateOfBirth', 'DateOfDeath'];
+
+  displayedColumns: string[] = ['Name', 'DateOfBirth', 'DateOfDeath'];
 
   public applyFilter(value: Event) {
     const valueFilter = (event.target as HTMLInputElement).value;
