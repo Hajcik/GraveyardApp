@@ -73,10 +73,10 @@ import { RoczniceComponent } from './rocznice/rocznice/rocznice.component';
     ]),
     BrowserAnimationsModule
   ],
-  // providers: [
-  //   { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
-  //   SharedService
-  // ],
+ // providers: [
+ //   { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
+ //   SharedService
+ // ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
