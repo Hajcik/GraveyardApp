@@ -1,59 +1,70 @@
-mat-expansion-panel{
-    background-color: rgba(0, 0, 0, 0.8);
-  }
-  mat-panel-title {
-    color: white;
-  }
-  mat-panel-description{
-    color: white;
-  }
-  ::ng-deep .specific-class > .mat-expansion-indicator:after {
-    color: white;
-  }
-  .example-form {
-    min-width: 150px;
-    max-width: 500px;
-    width: 100%;
-  }
-  
-  .example-full-width {
-    width: 100%;
-  }
-
-
-  ::ng-deep .mat-focused .mat-form-field-label {
-    /*change color of label*/
-    color: white !important;
-   }
-  
-   ::ng-deep.mat-form-field-underline {
-    /*change color of underline*/
-    background-color: white !important;
-  } 
-  
-  ::ng-deep.mat-form-field-ripple {
-   /*change color of underline when focused*/
-   background-color: white !important;;
-  }
-
-  strong{
-      color: white;
-  }
-
-  input, textarea{
-      color: white;
-  }
-
-  .name-surname{
-      margin: 0px 20px;
-  }
-#dodaj-zmarłego{
-    margin-left: 20px;
+mat-expansion-panel {
+  background-color: rgba(0, 0, 0, 0.8);
 }
-table {
-    width: 100%;
-  }
 
-  #usun{
-    margin-left: 10px;
-  }
+mat-panel-title {
+  color: white;
+}
+
+mat-panel-description {
+  color: white;
+}
+
+::ng-deep .specific-class > .mat-expansion-indicator:after {
+  color: white;
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}
+
+
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: white !important;
+}
+
+::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: white !important;
+}
+
+::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: white !important;
+  ;
+}
+
+strong {
+  color: white;
+}
+
+input, textarea {
+  color: white;
+}
+
+.name-surname {
+  margin: 0px 20px;
+}
+
+#dodaj-zmarłego {
+  margin-left: 20px;
+}
+
+table {
+  width: 100%;
+}
+
+#usun {
+  margin-left: 10px;
+}
+
+#zablokuj {
+  margin-left: 10px;
+}
