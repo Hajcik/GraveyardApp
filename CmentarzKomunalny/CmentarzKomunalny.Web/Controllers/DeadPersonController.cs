@@ -192,7 +192,6 @@ namespace CmentarzKomunalny.Web.Controllers
          _repository.AddDeadPersonToDb(deadPersonModel);
          _repository.SaveChanges();
          var deadPersonReadDto = _mapper.Map<DeadPersonReadDto>(deadPersonModel);
-
          return CreatedAtRoute(nameof(GetDeadPersonById), new { Id = deadPersonReadDto.IdDeadPerson }, deadPersonReadDto);
      }
 */
@@ -204,7 +203,6 @@ namespace CmentarzKomunalny.Web.Controllers
          var deadPersonFromRepo = _repository.GetDeadPersonById(id);
          if (deadPersonFromRepo == null)
              return NotFound();
-
          _mapper.Map(deadPersonAddDto, deadPersonFromRepo);
          _repository.UpdateDeadPerson(deadPersonFromRepo);
          _repository.SaveChanges();
@@ -220,10 +218,8 @@ namespace CmentarzKomunalny.Web.Controllers
           var deadPersonFromRepo = _repository.GetDeadPersonById(id);
           if (deadPersonFromRepo == null)
               return NotFound();
-
           _repository.DeleteDeadPersonFromDb(deadPersonFromRepo);
           _repository.SaveChanges();
-
           return NoContent();
       }
   }

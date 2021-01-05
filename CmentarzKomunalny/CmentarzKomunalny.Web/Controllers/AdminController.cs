@@ -33,13 +33,13 @@ namespace CmentarzKomunalny.Web.Controllers
         [HttpGet]
         public IActionResult CreateRole()
         {
-            return View();    
+            return View();
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateRole(CreateRoleViewModel model)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 IdentityRole identityRole = new IdentityRole
                 {
@@ -48,12 +48,12 @@ namespace CmentarzKomunalny.Web.Controllers
 
                 IdentityResult result = await roleManager.CreateAsync(identityRole);
 
-                if(result.Succeeded)
+                if (result.Succeeded)
                 {
                     return RedirectToAction("ListRoles", "Admin");
                 }
 
-                foreach(IdentityError error in result.Errors)
+                foreach (IdentityError error in result.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
                 }
@@ -89,13 +89,13 @@ namespace CmentarzKomunalny.Web.Controllers
                 var user = new IdentityUser { UserName = model.Email, Email = model.Email };
                 var result = await userManager.CreateAsync(user, model.Password);
 
-                if(result.Succeeded)
+                if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(user, roleId);
                     await signInManager.SignInAsync(user, isPersistent: false);
                     return RedirectToAction("Index", "Admin");
                 }
-                foreach(var error in result.Errors)
+                foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError("", error.Description);
                 }
@@ -108,7 +108,7 @@ namespace CmentarzKomunalny.Web.Controllers
         public IActionResult ListRoles()
         {
             var roles = roleManager.Roles;
-            
+
             return View(roles);
         }
 
@@ -118,14 +118,14 @@ namespace CmentarzKomunalny.Web.Controllers
             ViewBag.RoleId = roleId;
             var role = await roleManager.FindByIdAsync(roleId);
 
-            if(role == null)
+            if (role == null)
             {
                 ViewBag.ErrorMessage = $"Rola o ID = {roleId} nie znaleziona";
                 return View("NotFound");
             }
 
             var model = new List<UserRoleViewModel>();
-            foreach(var user in userManager.Users)
+            foreach (var user in userManager.Users)
             {
                 var userRoleViewModel = new UserRoleViewModel
                 {
