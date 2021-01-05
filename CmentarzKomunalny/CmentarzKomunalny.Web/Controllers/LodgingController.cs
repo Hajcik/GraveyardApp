@@ -1,13 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Data;
-using System.Data.SqlClient;
 using AutoMapper;
 using CmentarzKomunalny.Web.Data.Interfaces;
 using CmentarzKomunalny.Web.DTOs.LodgingDtos;
 using CmentarzKomunalny.Web.Models.Cmentarz;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 
 namespace CmentarzKomunalny.Web.Controllers
 {
@@ -17,39 +14,20 @@ namespace CmentarzKomunalny.Web.Controllers
     public class LodgingController : ControllerBase
     {
         private readonly ILodgingsRepo _repository; // dependency injection
-        private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
-        public LodgingController(ILodgingsRepo repository, IMapper mapper, IConfiguration configuration)
+        public LodgingController(ILodgingsRepo repository, IMapper mapper)
         {
-            _configuration = configuration;
             _repository = repository;
             _mapper = mapper;
         }
         // get all lodgings
         //GET api/lodging
         [HttpGet]
-        public JsonResult Get()
+        public ActionResult<IEnumerable<LodgingReadDto>> GetAllLodgings()
         {
-            string query = @"
-                select IdLodge, LodgingType, isMonument, PeopleLimit, isReserved from dbo.Lodgings";
-            DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("CmentarzConnectionTEST");
-            SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
-            {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader); ;
-
-                    myReader.Close();
-                    myCon.Close();
-                }
-                return new JsonResult(table);
-            }
+            var lodgings = _repository.GetAllLodgings();
+            return Ok(_mapper.Map<IEnumerable<LodgingReadDto>>(lodgings));
         }
-
         // SEARCHING LODGING BY ITS ID
         //GET api/lodging/LodgeById
         [HttpGet("LodgeById/{id}")]
@@ -62,12 +40,12 @@ namespace CmentarzKomunalny.Web.Controllers
         }
 
         [HttpPost]
-        public JsonResult Post(Lodging lodge)
+        public JsonResult Post(DeadPerson deadp)
         {
             string query = @"
-                insert into dbo.Lodgings values
-                ('" + lodge.LodgingType + @"', N'" + lodge.isMonument + @"',
-                 N'" + lodge.PeopleLimit + @"', '" + lodge.isReserved + @"')";
+                insert into dbo.DeadPeople values
+                (N'" + deadp.Name + @"', N'" + deadp.DateOfBirth + @"',
+                 N'" + deadp.DateOfDeath + @"', '" + deadp.LodgingId + @"')";
 
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("CmentarzConnectionTEST");
@@ -87,58 +65,34 @@ namespace CmentarzKomunalny.Web.Controllers
             }
         }
 
-        [HttpPut]
-        public JsonResult Put(Lodging lodge)
+
+        // add new lodge
+        //POST api/lodging/
+        [HttpPost]
+        public ActionResult<LodgingAddDto> AddLodgeToDb(LodgingAddDto lodgeAddDto)
         {
-            string query = @"
-                update dbo.DeadPeople set
-                LodgingType = '" + lodge.LodgingType + @"',
-                isMonument = '" + lodge.isMonument + @"',
-                PeopleLimit = '" + lodge.PeopleLimit + @"',
-                isReserved = '" + lodge.isReserved + @"'
-                where IdLodge = " + lodge.IdLodge + @"";
+            
+            var lodgeModel = _mapper.Map<Lodging>(lodgeAddDto);
+            _repository.AddLodgeToDb(lodgeModel);
+            _repository.SaveChanges();
+            var lodgeReadDto = _mapper.Map<LodgingReadDto>(lodgeModel);
 
-            DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("CmentarzConnectionTEST");
-            SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
-            {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader); ;
-
-                    myReader.Close();
-                    myCon.Close();
-                }
-                return new JsonResult("Zaktualizowano pomyślnie");
-            }
+            return CreatedAtRoute(nameof(GetLodgeById), new { Id = lodgeReadDto.IdLodge }, lodgeReadDto);
         }
 
-        [HttpDelete("{id}")]
-        public JsonResult Delete(int id)
+        // UPDATE LODGE CONTENT BY ITS ID
+        //PUT api/lodging/LodgeById
+        [HttpPut("LodgeById/{id}")]
+        public ActionResult UpdateLodge(int id, LodgingAddDto lodgingAddDto)
         {
-            string query = @"
-                delete from dbo.Lodgings
-                where IdLodge = " + id + @"";
+            var lodgeFromRepo = _repository.GetLodgeById(id);
+            if (lodgeFromRepo == null)
+                return NotFound();
 
-            DataTable table = new DataTable();
-            string sqlDataSource = _configuration.GetConnectionString("CmentarzConnectionTEST");
-            SqlDataReader myReader;
-            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
-            {
-                myCon.Open();
-                using (SqlCommand myCommand = new SqlCommand(query, myCon))
-                {
-                    myReader = myCommand.ExecuteReader();
-                    table.Load(myReader); ;
-
-                    myReader.Close();
-                    myCon.Close();
-                }
-                return new JsonResult("Zaktualizowano pomyślnie");
-            }
+            _mapper.Map(lodgingAddDto, lodgeFromRepo);
+            _repository.UpdateLodge(lodgeFromRepo);
+            _repository.SaveChanges();
+            return NoContent();
         }
 
         // PATCH
@@ -158,47 +112,7 @@ namespace CmentarzKomunalny.Web.Controllers
             _repository.SaveChanges();
             return NoContent();
         }
-        
-    }
-}
-
-/*
- * public ActionResult<IEnumerable<LodgingReadDto>> GetAllLodgings()
-        {
-            var lodgings = _repository.GetAllLodgings();
-            return Ok(_mapper.Map<IEnumerable<LodgingReadDto>>(lodgings));
-        }
-
-// add new lodge
-        //POST api/lodging/
-        [HttpPost]
-        public ActionResult<LodgingAddDto> AddLodgeToDb(LodgingAddDto lodgeAddDto)
-        {
-            
-            var lodgeModel = _mapper.Map<Lodging>(lodgeAddDto);
-            _repository.AddLodgeToDb(lodgeModel);
-            _repository.SaveChanges();
-            var lodgeReadDto = _mapper.Map<LodgingReadDto>(lodgeModel);
-
-            return CreatedAtRoute(nameof(GetLodgeById), new { Id = lodgeReadDto.IdLodge }, lodgeReadDto);
-        }
-
-// UPDATE LODGE CONTENT BY ITS ID
-        //PUT api/lodging/LodgeById
-        [HttpPut("LodgeById/{id}")]
-        public ActionResult UpdateLodge(int id, LodgingAddDto lodgingAddDto)
-        {
-            var lodgeFromRepo = _repository.GetLodgeById(id);
-            if (lodgeFromRepo == null)
-                return NotFound();
-
-            _mapper.Map(lodgingAddDto, lodgeFromRepo);
-            _repository.UpdateLodge(lodgeFromRepo);
-            _repository.SaveChanges();
-            return NoContent();
-        }
-
-//DELETE api/lodging/LodgeById
+        //DELETE api/lodging/LodgeById
         [HttpDelete("LodgeById/{id}")]
         public ActionResult DeleteLodgeFromDb(int id)
         {
@@ -211,4 +125,5 @@ namespace CmentarzKomunalny.Web.Controllers
 
             return NoContent();
         }
-*/
+    }
+}
