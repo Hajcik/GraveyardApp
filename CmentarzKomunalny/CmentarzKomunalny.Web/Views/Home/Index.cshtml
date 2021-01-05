@@ -1,6 +1,18 @@
-﻿@{
+﻿@using System.Collections.Generic
+@using System.Linq
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Authentication
+
+@{
     ViewData["Title"] = "Home";
+    ViewData["DefaultPage"] = "~/";
+    ViewData["PanelAdministratora"] = "~/paneladministratora";
 }
 
 <h1>"Welcome"</h1>
 <h3>"Continue" <a asp-area="Identity" asp-page="/Account/Login">"Login"</a></h3>
+<div>Użytkownik: @Context.User.Identity.Name</div>
+<div>@if (User.IsInRole("Administrator")) { <div>Admin</div>}</div>
+<div>@if (User.IsInRole("Employee"))  {<div>Pracownik</div>}</div>
+<div>@if (User.IsInRole("BlockedEmployee"))  {<div>Zablokowany Pracownik</div>}</div>
+<div>@if (Context.User.Identity.Name == "admin@admin.pl") { <div>xD</div> }</div>

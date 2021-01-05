@@ -39,6 +39,33 @@ namespace CmentarzKomunalny.Web.Controllers
             return NotFound();
         }
 
+        [HttpPost]
+        public JsonResult Post(DeadPerson deadp)
+        {
+            string query = @"
+                insert into dbo.DeadPeople values
+                (N'" + deadp.Name + @"', N'" + deadp.DateOfBirth + @"',
+                 N'" + deadp.DateOfDeath + @"', '" + deadp.LodgingId + @"')";
+
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("CmentarzConnectionTEST");
+            SqlDataReader myReader;
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (SqlCommand myCommand = new SqlCommand(query, myCon))
+                {
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader); ;
+
+                    myReader.Close();
+                    myCon.Close();
+                }
+                return new JsonResult("Dodano pomyślnie");
+            }
+        }
+
+
         // add new lodge
         //POST api/lodging/
         [HttpPost]
