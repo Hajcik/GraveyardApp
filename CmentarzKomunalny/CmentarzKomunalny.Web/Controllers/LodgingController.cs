@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using AutoMapper;
@@ -64,9 +65,10 @@ namespace CmentarzKomunalny.Web.Controllers
         [HttpPost]
         public JsonResult Post(Lodging lodge)
         {
+            
             string query = @"
                 insert into dbo.Lodgings values
-                ('" + lodge.LodgingType + @"', N'" + lodge.isMonument + @"',
+                ('" + Convert.ToInt32(lodge.LodgingType) + @"', N'" + lodge.isMonument + @"',
                  N'" + lodge.PeopleLimit + @"', '" + lodge.isReserved + @"')";
 
             DataTable table = new DataTable();
@@ -83,7 +85,7 @@ namespace CmentarzKomunalny.Web.Controllers
                     myReader.Close();
                     myCon.Close();
                 }
-                return new JsonResult("Dodano pomyślnie");
+                return new JsonResult("Dodano kwaterę pomyślnie");
             }
         }
 
@@ -112,7 +114,7 @@ namespace CmentarzKomunalny.Web.Controllers
                     myReader.Close();
                     myCon.Close();
                 }
-                return new JsonResult("Zaktualizowano pomyślnie");
+                return new JsonResult("Zaktualizowano kwaterę pomyślnie");
             }
         }
 
@@ -137,7 +139,7 @@ namespace CmentarzKomunalny.Web.Controllers
                     myReader.Close();
                     myCon.Close();
                 }
-                return new JsonResult("Zaktualizowano pomyślnie");
+                return new JsonResult("Kwatera usunięta pomyślnie");
             }
         }
 

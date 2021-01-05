@@ -31,7 +31,7 @@ namespace CmentarzKomunalny.Web.Controllers
         public JsonResult Get()
         {
             string query = @"
-                select Name, DateOfDeath_Obituary, ObituaryContent from dbo.Obituaries";
+                select Id, Name, DateOfDeath_Obituary, ObituaryContent from dbo.Obituaries";
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("CmentarzConnectionTEST");
             SqlDataReader myReader;
@@ -50,12 +50,82 @@ namespace CmentarzKomunalny.Web.Controllers
             }
         }
 
-        //      [HttpGet]
-        //      public ActionResult<IEnumerable<ObituaryReadDto>> GetAllObituaries()
-        //      {
-        //          var obituaries = _repository.GetAllObituaries();
-        //          return Ok(_mapper.Map<IEnumerable<ObituaryReadDto>>(obituaries));
-        //     }
+        [HttpPost]
+        public JsonResult Post(Obituary ob)
+        {
+            string query = @"
+                insert into dbo.Obituaries values
+                (N'" + ob.Name + @"', N'" + ob.DateOfDeath_Obituary + @"',
+                 N'" + ob.ObituaryContent + @"')";
+
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("CmentarzConnectionTEST");
+            SqlDataReader myReader;
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (SqlCommand myCommand = new SqlCommand(query, myCon))
+                {
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader); ;
+
+                    myReader.Close();
+                    myCon.Close();
+                }
+                return new JsonResult("Dodano nekrolog pomyślnie");
+            }
+        }
+        [HttpPut]
+        public JsonResult Put(Obituary ob)
+        {
+            string query = @"
+                update dbo.Obituaries set
+                Name = N'" + ob.Name + @"',
+                DateOfDeath_Obituary = '" + ob.DateOfDeath_Obituary + @"',
+                ObituaryContent = '" + ob.ObituaryContent + @"'
+                where Id = " + ob.Id + @"";
+
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("CmentarzConnectionTEST");
+            SqlDataReader myReader;
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (SqlCommand myCommand = new SqlCommand(query, myCon))
+                {
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader); ;
+
+                    myReader.Close();
+                    myCon.Close();
+                }
+                return new JsonResult("Zaktualizowano nekrolog pomyślnie");
+            }
+        }
+        [HttpDelete("{id}")]
+        public JsonResult Delete(int id)
+        {
+            string query = @"
+                delete from dbo.Obituaries
+                where Id = " + id + @"";
+
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("CmentarzConnectionTEST");
+            SqlDataReader myReader;
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (SqlCommand myCommand = new SqlCommand(query, myCon))
+                {
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader); ;
+
+                    myReader.Close();
+                    myCon.Close();
+                }
+                return new JsonResult("Usunięto nekrolog pomyślnie");
+            }
+        }
 
         // search obituary by its ID
         //GET api/obituary
@@ -66,33 +136,6 @@ namespace CmentarzKomunalny.Web.Controllers
             if (obituaryId != null)
                 return Ok(_mapper.Map<ObituaryReadDto>(obituaryId));
             return NotFound();
-        }
-        // add new obituary
-        //POST api/obituary
-        [HttpPost]
-        public ActionResult<ObituaryAddDto> AddObituary(ObituaryAddDto obituaryAddDto)
-        {
-            var obituaryModel = _mapper.Map<Obituary>(obituaryAddDto);
-            var obituaryReadDto = _mapper.Map<NewsReadDto>(obituaryModel);
-            _repository.AddObituary(obituaryModel);
-            _repository.SaveChanges();
-
-            return CreatedAtRoute(nameof(GetObituaryById), new { Id = obituaryReadDto.Id }, obituaryReadDto);
-        }
-
-        // update obituary content by its id
-        //PUT api/obituary
-        [HttpPut("{id}")]
-        public ActionResult UpdateObituary(int id, ObituaryAddDto obituaryAddDto)
-        {
-            var obituaryFromRepo = _repository.GetObituaryById(id);
-            if (obituaryFromRepo == null)
-                return NotFound();
-
-            _mapper.Map(obituaryAddDto, obituaryFromRepo);
-            _repository.UpdateObituary(obituaryFromRepo);
-            _repository.SaveChanges();
-            return NoContent();
         }
 
         // PATCH
@@ -113,7 +156,47 @@ namespace CmentarzKomunalny.Web.Controllers
             return NoContent();
         }
 
-        //DELETE api/obituary
+
+    }
+}
+
+/*
+ * //      [HttpGet]
+        //      public ActionResult<IEnumerable<ObituaryReadDto>> GetAllObituaries()
+        //      {
+        //          var obituaries = _repository.GetAllObituaries();
+        //          return Ok(_mapper.Map<IEnumerable<ObituaryReadDto>>(obituaries));
+        //     }
+
+// add new obituary
+        //POST api/obituary
+        [HttpPost]
+        public ActionResult<ObituaryAddDto> AddObituary(ObituaryAddDto obituaryAddDto)
+        {
+            var obituaryModel = _mapper.Map<Obituary>(obituaryAddDto);
+            var obituaryReadDto = _mapper.Map<NewsReadDto>(obituaryModel);
+            _repository.AddObituary(obituaryModel);
+            _repository.SaveChanges();
+
+            return CreatedAtRoute(nameof(GetObituaryById), new { Id = obituaryReadDto.Id }, obituaryReadDto);
+        }
+
+// update obituary content by its id
+        //PUT api/obituary
+        [HttpPut("{id}")]
+        public ActionResult UpdateObituary(int id, ObituaryAddDto obituaryAddDto)
+        {
+            var obituaryFromRepo = _repository.GetObituaryById(id);
+            if (obituaryFromRepo == null)
+                return NotFound();
+
+            _mapper.Map(obituaryAddDto, obituaryFromRepo);
+            _repository.UpdateObituary(obituaryFromRepo);
+            _repository.SaveChanges();
+            return NoContent();
+        }
+
+     //DELETE api/obituary
         [HttpDelete("{id}")]
         public ActionResult DeleteObituary(int id)
         {
@@ -127,4 +210,4 @@ namespace CmentarzKomunalny.Web.Controllers
             return NoContent();
         }
     }
-}
+ */
