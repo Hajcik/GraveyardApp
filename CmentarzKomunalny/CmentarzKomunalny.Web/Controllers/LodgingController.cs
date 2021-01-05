@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using AutoMapper;
 using CmentarzKomunalny.Web.Data.Interfaces;
 using CmentarzKomunalny.Web.DTOs.LodgingDtos;
 using CmentarzKomunalny.Web.Models.Cmentarz;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-
+using Microsoft.Extensions.Configuration;
 namespace CmentarzKomunalny.Web.Controllers
 {
     // api/lodging
@@ -14,9 +16,11 @@ namespace CmentarzKomunalny.Web.Controllers
     public class LodgingController : ControllerBase
     {
         private readonly ILodgingsRepo _repository; // dependency injection
+        private readonly IConfiguration _configuration;
         private readonly IMapper _mapper;
-        public LodgingController(ILodgingsRepo repository, IMapper mapper)
+        public LodgingController(IConfiguration configuration, ILodgingsRepo repository, IMapper mapper)
         {
+            _configuration = configuration;
             _repository = repository;
             _mapper = mapper;
         }
