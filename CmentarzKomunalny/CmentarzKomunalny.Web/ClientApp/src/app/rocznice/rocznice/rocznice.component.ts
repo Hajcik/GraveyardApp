@@ -25,7 +25,6 @@ export class RoczniceComponent implements OnInit {
       + '/' + this.leftpad(date.getMonth() + 1, 2);
   }
 
-
   leftpad(val, resultLength = 2, leftpadChar = '0'): string {
     return (String(leftpadChar).repeat(resultLength)
       + String(val)).slice(String(val).length);

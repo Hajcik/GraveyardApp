@@ -85,7 +85,7 @@ export class AdminPanelComponent implements OnInit {
   dataSourceNekrologi = new MatTableDataSource<Necrologs>(NECROLOGS_DATA);
   selectionNekrologi = new SelectionModel<Necrologs>(true, []);
 
-  //TABELA Pracownicy
+  //TABELA NEKROLOGI
   displayedColumnsPracownicy: string[] = ['select', 'position', 'name', 'surname'];
   dataSourcePracownicy = new MatTableDataSource<Workers>(WORKERS_DATA);
   selectionPracownicy = new SelectionModel<Workers>(true, []);

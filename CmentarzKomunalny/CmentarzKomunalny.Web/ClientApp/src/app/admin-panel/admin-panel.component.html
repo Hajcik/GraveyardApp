@@ -91,84 +91,6 @@
     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
         <mat-expansion-panel-header class="specific-class">
             <mat-panel-title>
-                Edytuj "Aktualność"
-            </mat-panel-title>
-        </mat-expansion-panel-header>
-        <form class="example-form">
-            <mat-form-field class="example-full-width">
-                <mat-label>Tytuł</mat-label>
-                <input matInput #message>
-                <mat-hint align="start"><strong>Podaj tytuł aktualności</strong> </mat-hint>
-            </mat-form-field>
-        </form>
-        <br>
-        <form class="example-form">
-            <mat-form-field class="example-full-width">
-                <mat-label>Treść</mat-label>
-                <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
-                    cdkAutosizeMaxRows="5"></textarea>
-                <mat-hint align="start"><strong>Podaj treść aktualności</strong> </mat-hint>
-            </mat-form-field>
-        </form>
-        <br><br>
-        <table mat-table [dataSource]="dataSourceAktualnosci" class="mat-elevation-z8">
-
-            <!-- Checkbox Column -->
-            <ng-container matColumnDef="select">
-                <th mat-header-cell *matHeaderCellDef>
-                    <mat-checkbox (change)="$event ? masterToggleAktualnosci() : null"
-                        [checked]="selectionAktualnosci.hasValue() && isAllSelectedAktualnosci()"
-                        [indeterminate]="selectionAktualnosci.hasValue() && !isAllSelectedAktualnosci()"
-                        [aria-label]="checkboxLabelAktualnosci()">
-                    </mat-checkbox>
-                </th>
-                <td mat-cell *matCellDef="let row">
-                    <mat-checkbox (click)="$event.stopPropagation()"
-                        (change)="$event ? selectionAktualnosci.toggle(row) : null"
-                        [checked]="selectionAktualnosci.isSelected(row)" [aria-label]="checkboxLabelAktualnosci(row)">
-                    </mat-checkbox>
-                </td>
-            </ng-container>
-
-            <!-- Position Column -->
-            <ng-container matColumnDef="position">
-                <th mat-header-cell *matHeaderCellDef> No. </th>
-                <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-            </ng-container>
-
-            <!-- Title Column -->
-            <ng-container matColumnDef="tytul">
-                <th mat-header-cell *matHeaderCellDef> Tytuł </th>
-                <td mat-cell *matCellDef="let element"> {{element.tytul}} </td>
-            </ng-container>
-
-            <!-- Weight Column -->
-            <ng-container matColumnDef="tresc">
-                <th mat-header-cell *matHeaderCellDef> Treść </th>
-                <td mat-cell *matCellDef="let element"> {{element.tresc}} </td>
-            </ng-container>
-
-            <!-- date Column -->
-            <ng-container matColumnDef="data">
-                <th mat-header-cell *matHeaderCellDef> Data </th>
-                <td mat-cell *matCellDef="let element"> {{element.data}} </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumnsAktualnosci"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumnsAktualnosci;"
-                (click)="selectionAktualnosci.toggle(row)">
-            </tr>
-        </table>
-        <br>
-        <button mat-raised-button color="primary">Dodaj</button>
-    </mat-expansion-panel>
-
-</mat-accordion>
-<br>
-<mat-accordion>
-    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-        <mat-expansion-panel-header class="specific-class">
-            <mat-panel-title>
                 Dodaj "Nekrolog"
             </mat-panel-title>
         </mat-expansion-panel-header>
@@ -259,83 +181,6 @@
     <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
         <mat-expansion-panel-header class="specific-class">
             <mat-panel-title>
-                Edytuj "Nekrolog"
-            </mat-panel-title>
-        </mat-expansion-panel-header>
-        <form class="example-form">
-            <mat-form-field class="example-full-width">
-                <mat-label>Tytuł</mat-label>
-                <input matInput #message disabled>
-                <mat-hint align="start"><strong>Podaj tytuł nekrologu</strong> </mat-hint>
-            </mat-form-field>
-        </form>
-        <br>
-        <form class="example-form">
-            <mat-form-field class="example-full-width">
-                <mat-label>Treść</mat-label>
-                <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
-                    cdkAutosizeMaxRows="5" disabled></textarea>
-                <mat-hint align="start"><strong>Podaj treść nekrologu</strong> </mat-hint>
-            </mat-form-field>
-        </form>
-        <br>
-        <table mat-table [dataSource]="dataSourceNekrologi" class="mat-elevation-z8">
-
-            <!-- Checkbox Column -->
-            <ng-container matColumnDef="select">
-                <th mat-header-cell *matHeaderCellDef>
-                    <mat-checkbox (change)="$event ? masterToggleNekrologi() : null"
-                        [checked]="selectionNekrologi.hasValue() && isAllSelectedNekrologi()"
-                        [indeterminate]="selectionNekrologi.hasValue() && !isAllSelectedNekrologi()"
-                        [aria-label]="checkboxLabelNekrologi()">
-                    </mat-checkbox>
-                </th>
-                <td mat-cell *matCellDef="let row">
-                    <mat-checkbox (click)="$event.stopPropagation()"
-                        (change)="$event ? selectionNekrologi.toggle(row) : null"
-                        [checked]="selectionNekrologi.isSelected(row)" [aria-label]="checkboxLabelNekrologi(row)">
-                    </mat-checkbox>
-                </td>
-            </ng-container>
-
-            <!-- Position Column -->
-            <ng-container matColumnDef="position">
-                <th mat-header-cell *matHeaderCellDef> No. </th>
-                <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-            </ng-container>
-
-            <!-- Title Column -->
-            <ng-container matColumnDef="tytul">
-                <th mat-header-cell *matHeaderCellDef> Tytuł </th>
-                <td mat-cell *matCellDef="let element"> {{element.tytul}} </td>
-            </ng-container>
-
-            <!-- Weight Column -->
-            <ng-container matColumnDef="tresc">
-                <th mat-header-cell *matHeaderCellDef> Treść </th>
-                <td mat-cell *matCellDef="let element"> {{element.tresc}} </td>
-            </ng-container>
-
-            <!-- date Column -->
-            <ng-container matColumnDef="data">
-                <th mat-header-cell *matHeaderCellDef> Data </th>
-                <td mat-cell *matCellDef="let element"> {{element.data}} </td>
-            </ng-container>
-
-            <tr mat-header-row *matHeaderRowDef="displayedColumnsNekrologi"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumnsNekrologi;"
-                (click)="selectionNekrologi.toggle(row)">
-            </tr>
-        </table>
-        <br>
-        <button mat-raised-button color="primary">Edytuj</button>
-    </mat-expansion-panel>
-</mat-accordion>
-<br>
-<mat-accordion>
-    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-        <mat-expansion-panel-header class="specific-class">
-            <mat-panel-title>
                 Pracownicy
             </mat-panel-title>
         </mat-expansion-panel-header>
@@ -387,7 +232,6 @@
 
         <br><br>
         <button mat-raised-button color="warn">Usuń</button>
-        <button mat-raised-button color="accent" id="zablokuj">Zablokuj</button>
     </mat-expansion-panel>
 </mat-accordion>
 <br>
@@ -419,64 +263,6 @@
             <mat-label>Numer grobu</mat-label>
             <input matInput type="number">
         </mat-form-field>
-        <br><br>
-        <button mat-raised-button color="primary">Dodaj</button>
-        <button mat-raised-button color="warn" id="usun">Usuń</button>
-    </mat-expansion-panel>
-</mat-accordion>
-<br>
-<mat-accordion>
-    <mat-expansion-panel (opened)="panelOpenState = true" (closed)="panelOpenState = false">
-        <mat-expansion-panel-header class="specific-class">
-            <mat-panel-title>
-                Eytuj dane znarłego
-            </mat-panel-title>
-        </mat-expansion-panel-header>
-        <table cellspacing="0">
-            <tr>
-                <td>
-                    <mat-form-field class="name-surname">
-                        <mat-label>Imię</mat-label>
-                        <input matInput>
-                    </mat-form-field>
-                </td>
-                <td>
-                    <mat-form-field class="name-surname">
-                        <mat-label>Nazwisko</mat-label>
-                        <input matInput>
-                    </mat-form-field>
-                </td>
-            </tr>
-        </table>
-
-        <mat-form-field id="dodaj-zmarłego">
-            <mat-label>Numer grobu</mat-label>
-            <input matInput type="number">
-        </mat-form-field>
-        <br><br>
-        <mat-divider></mat-divider>
-        <table cellspacing="0">
-            <tr>
-                <td>
-                    <mat-form-field class="name-surname">
-                        <mat-label>Imię</mat-label>
-                        <input matInput>
-                    </mat-form-field>
-                </td>
-                <td>
-                    <mat-form-field class="name-surname">
-                        <mat-label>Nazwisko</mat-label>
-                        <input matInput>
-                    </mat-form-field>
-                </td>
-            </tr>
-        </table>
-
-        <mat-form-field id="dodaj-zmarłego">
-            <mat-label>Numer grobu</mat-label>
-            <input matInput type="number">
-        </mat-form-field>
-        <br>
         <br><br>
         <button mat-raised-button color="primary">Dodaj</button>
         <button mat-raised-button color="warn" id="usun">Usuń</button>
