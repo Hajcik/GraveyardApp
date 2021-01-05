@@ -1,5 +1,5 @@
-<!-- <div class="component-container">
-    <mat-card class="card" *ngFor="let nekrologiList of nekrologiLists">
+<div class="component-container">
+    <mat-card class="card" *ngIf="curTimeDayMonth == DZIEŃ/MIESIĄĆ z bazy" *ngFor="let nekrologiList of nekrologiLists">
         <mat-card-content>
             <p style="color:white; font-size:16px;text-align: center;">Dnia {{nekrologiList.DateOfDeath_Obituary}}
                 przypada x rocznica śmierci
@@ -15,4 +15,4 @@
 
 <mat-paginator [length]="nekrologiLists.length" [pageSize]="pageSize" [pageSizeOptions]="[4, 8, 24, 48]"
     (page)="onPageChange($event)">
-</mat-paginator> -->
+</mat-paginator>
