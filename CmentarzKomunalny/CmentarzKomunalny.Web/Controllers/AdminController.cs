@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using CmentarzKomunalny.Web.ViewModels;
@@ -7,6 +8,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Configuration;
+using System.Data.SqlClient;
 
 namespace CmentarzKomunalny.Web.Controllers
 {
@@ -15,9 +18,11 @@ namespace CmentarzKomunalny.Web.Controllers
         public SignInManager<IdentityUser> signInManager;
         public UserManager<IdentityUser> userManager;
         public RoleManager<IdentityRole> roleManager;
+        public IConfiguration _configuration;
         private readonly ILogger logger;
-        public AdminController(SignInManager<IdentityUser> _signInManager, UserManager<IdentityUser> _userManager, RoleManager<IdentityRole> _roleManager, ILogger<AdminController> _logger)
+        public AdminController(IConfiguration configuration, SignInManager<IdentityUser> _signInManager, UserManager<IdentityUser> _userManager, RoleManager<IdentityRole> _roleManager, ILogger<AdminController> _logger)
         {
+            _configuration = configuration;
             signInManager = _signInManager;
             userManager = _userManager;
             roleManager = _roleManager;
