@@ -1,14 +1,25 @@
 <mat-card class="card mat-elevation-z0">
 
+
+
+    <!-- Reszta strony -->
+
     <mat-card-content class="card-content">
-        <div class="hello-text-container">
-            <p class="hello-text">Zadbamy o twoich <br> bliskich.</p>
+        <!-- Galeria -->
+
+        <div [@thumbState]="idx === counter ? 'active' : 'inactive'" class="tmb"
+            *ngFor="let img of images; let idx = index">
+            <img [src]="img" (click)="onClickThumb($event)" />
         </div>
+
+
     </mat-card-content>
     <mat-card-footer style="justify-content: center">
         <mat-divider style="border-top-color: white; border-top-width: 2px;"></mat-divider>
         <br>
         <button mat-stroked-button class="button" [routerLink]="['/kontakt']">Skontaktuj
             się</button>
+        <button mat-stroked-button type="button" (click)="onNext()">Next</button>
+        <button mat-stroked-button type="button" (click)="onPrevious()">Previous</button>
     </mat-card-footer>
 </mat-card>
