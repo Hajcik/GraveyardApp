@@ -17,7 +17,7 @@
       <mat-form-field class="example-full-width">
         <mat-label>Treść</mat-label>
         <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
-                  cdkAutosizeMaxRows="5"></textarea>
+          cdkAutosizeMaxRows="5"></textarea>
         <mat-hint align="start"><strong>Podaj treść aktualności</strong> </mat-hint>
       </mat-form-field>
     </form>
@@ -40,15 +40,14 @@
       <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
           <mat-checkbox (change)="$event ? masterToggleAktualnosci() : null"
-                        [checked]="selectionAktualnosci.hasValue() && isAllSelectedAktualnosci()"
-                        [indeterminate]="selectionAktualnosci.hasValue() && !isAllSelectedAktualnosci()"
-                        [aria-label]="checkboxLabelAktualnosci()">
+            [checked]="selectionAktualnosci.hasValue() && isAllSelectedAktualnosci()"
+            [indeterminate]="selectionAktualnosci.hasValue() && !isAllSelectedAktualnosci()"
+            [aria-label]="checkboxLabelAktualnosci()">
           </mat-checkbox>
         </th>
         <td mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="$event.stopPropagation()"
-                        (change)="$event ? selectionAktualnosci.toggle(row) : null"
-                        [checked]="selectionAktualnosci.isSelected(row)" [aria-label]="checkboxLabelAktualnosci(row)">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selectionAktualnosci.toggle(row) : null"
+            [checked]="selectionAktualnosci.isSelected(row)" [aria-label]="checkboxLabelAktualnosci(row)">
           </mat-checkbox>
         </td>
       </ng-container>
@@ -79,7 +78,7 @@
 
       <tr mat-header-row *matHeaderRowDef="displayedColumnsAktualnosci"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumnsAktualnosci;"
-          (click)="selectionAktualnosci.toggle(row)">
+        (click)="selectionAktualnosci.toggle(row)">
       </tr>
     </table>
     <br><br>
@@ -106,7 +105,7 @@
       <mat-form-field class="example-full-width">
         <mat-label>Treść</mat-label>
         <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
-                  cdkAutosizeMaxRows="5"></textarea>
+          cdkAutosizeMaxRows="5"></textarea>
         <mat-hint align="start"><strong>Podaj treść aktualności</strong> </mat-hint>
       </mat-form-field>
     </form>
@@ -117,15 +116,14 @@
       <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
           <mat-checkbox (change)="$event ? masterToggleAktualnosci() : null"
-                        [checked]="selectionAktualnosci.hasValue() && isAllSelectedAktualnosci()"
-                        [indeterminate]="selectionAktualnosci.hasValue() && !isAllSelectedAktualnosci()"
-                        [aria-label]="checkboxLabelAktualnosci()">
+            [checked]="selectionAktualnosci.hasValue() && isAllSelectedAktualnosci()"
+            [indeterminate]="selectionAktualnosci.hasValue() && !isAllSelectedAktualnosci()"
+            [aria-label]="checkboxLabelAktualnosci()">
           </mat-checkbox>
         </th>
         <td mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="$event.stopPropagation()"
-                        (change)="$event ? selectionAktualnosci.toggle(row) : null"
-                        [checked]="selectionAktualnosci.isSelected(row)" [aria-label]="checkboxLabelAktualnosci(row)">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selectionAktualnosci.toggle(row) : null"
+            [checked]="selectionAktualnosci.isSelected(row)" [aria-label]="checkboxLabelAktualnosci(row)">
           </mat-checkbox>
         </td>
       </ng-container>
@@ -156,7 +154,7 @@
 
       <tr mat-header-row *matHeaderRowDef="displayedColumnsAktualnosci"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumnsAktualnosci;"
-          (click)="selectionAktualnosci.toggle(row)">
+        (click)="selectionAktualnosci.toggle(row)">
       </tr>
     </table>
     <br>
@@ -184,7 +182,7 @@
       <mat-form-field class="example-full-width">
         <mat-label>Treść</mat-label>
         <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
-                  cdkAutosizeMaxRows="5"></textarea>
+          cdkAutosizeMaxRows="5"></textarea>
         <mat-hint align="start"><strong>Podaj treść nekrologu</strong> </mat-hint>
       </mat-form-field>
     </form>
@@ -206,15 +204,14 @@
       <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
           <mat-checkbox (change)="$event ? masterToggleNekrologi() : null"
-                        [checked]="selectionNekrologi.hasValue() && isAllSelectedNekrologi()"
-                        [indeterminate]="selectionNekrologi.hasValue() && !isAllSelectedNekrologi()"
-                        [aria-label]="checkboxLabelNekrologi()">
+            [checked]="selectionNekrologi.hasValue() && isAllSelectedNekrologi()"
+            [indeterminate]="selectionNekrologi.hasValue() && !isAllSelectedNekrologi()"
+            [aria-label]="checkboxLabelNekrologi()">
           </mat-checkbox>
         </th>
         <td mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="$event.stopPropagation()"
-                        (change)="$event ? selectionNekrologi.toggle(row) : null"
-                        [checked]="selectionNekrologi.isSelected(row)" [aria-label]="checkboxLabelNekrologi(row)">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selectionNekrologi.toggle(row) : null"
+            [checked]="selectionNekrologi.isSelected(row)" [aria-label]="checkboxLabelNekrologi(row)">
           </mat-checkbox>
         </td>
       </ng-container>
@@ -244,8 +241,7 @@
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumnsNekrologi"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumnsNekrologi;"
-          (click)="selectionNekrologi.toggle(row)">
+      <tr mat-row *matRowDef="let row; columns: displayedColumnsNekrologi;" (click)="selectionNekrologi.toggle(row)">
       </tr>
     </table>
 
@@ -274,10 +270,16 @@
       <mat-form-field class="example-full-width">
         <mat-label>Treść</mat-label>
         <textarea matInput cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="1"
-                  cdkAutosizeMaxRows="5" disabled></textarea>
+          cdkAutosizeMaxRows="5" disabled></textarea>
         <mat-hint align="start"><strong>Podaj treść nekrologu</strong> </mat-hint>
       </mat-form-field>
     </form>
+    <br>
+    <mat-form-field style="margin-left: 30px;">
+      <mat-label>Dane pracownika</mat-label>
+      <input matInput type="text" (keyup)="   public applyFilterNekrologi(value: Event) {
+        ($event.target.value)" placeholder="Jan Kowalski" #input>
+    </mat-form-field>
     <br>
     <table mat-table [dataSource]="dataSourceNekrologi" class="mat-elevation-z8">
 
@@ -285,48 +287,47 @@
       <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
           <mat-checkbox (change)="$event ? masterToggleNekrologi() : null"
-                        [checked]="selectionNekrologi.hasValue() && isAllSelectedNekrologi()"
-                        [indeterminate]="selectionNekrologi.hasValue() && !isAllSelectedNekrologi()"
-                        [aria-label]="checkboxLabelNekrologi()">
+            [checked]="selectionNekrologi.hasValue() && isAllSelectedNekrologi()"
+            [indeterminate]="selectionNekrologi.hasValue() && !isAllSelectedNekrologi()"
+            [aria-label]="checkboxLabelNekrologi()">
           </mat-checkbox>
         </th>
         <td mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="$event.stopPropagation()"
-                        (change)="$event ? selectionNekrologi.toggle(row) : null"
-                        [checked]="selectionNekrologi.isSelected(row)" [aria-label]="checkboxLabelNekrologi(row)">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selectionNekrologi.toggle(row) : null"
+            [checked]="selectionNekrologi.isSelected(row)" [aria-label]="checkboxLabelNekrologi(row)">
           </mat-checkbox>
         </td>
       </ng-container>
 
       <!-- Position Column -->
       <ng-container matColumnDef="Id">
-        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
         <td mat-cell *matCellDef="let element"> {{element.Id}} </td>
       </ng-container>
 
       <!-- Title Column -->
       <ng-container matColumnDef="Name">
-        <th mat-header-cell *matHeaderCellDef> Imię i nazwisko </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Imię i nazwisko </th>
         <td mat-cell *matCellDef="let element"> {{element.Name}} </td>
       </ng-container>
 
       <!-- Weight Column -->
       <ng-container matColumnDef="ObituaryContent">
-        <th mat-header-cell *matHeaderCellDef> Treść nekrologu </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Treść nekrologu </th>
         <td mat-cell *matCellDef="let element"> {{element.ObituaryContent}} </td>
       </ng-container>
 
       <!-- date Column -->
       <ng-container matColumnDef="DateOfDeath_Obituary">
-        <th mat-header-cell *matHeaderCellDef> Data śmierci </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Data śmierci </th>
         <td mat-cell *matCellDef="let element"> {{element.DateOfDeath_Obituary}} </td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumnsNekrologi"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumnsNekrologi;"
-          (click)="selectionNekrologi.toggle(row)">
+      <tr mat-row *matRowDef="let row; columns: displayedColumnsNekrologi;" (click)="selectionNekrologi.toggle(row)">
       </tr>
     </table>
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
     <br>
     <button mat-raised-button color="primary">Edytuj</button>
   </mat-expansion-panel>
@@ -339,51 +340,53 @@
         Pracownicy
       </mat-panel-title>
     </mat-expansion-panel-header>
-
+    <mat-form-field style="margin-left: 30px;">
+      <mat-label>Dane pracownika</mat-label>
+      <input matInput type="text" (keyup)=" applyFilterPracownicy($event.target.value)" placeholder="Jan Kowalski"
+        #input>
+    </mat-form-field>
     <table mat-table [dataSource]="dataSourcePracownicy" class="mat-elevation-z8">
 
       <!-- Checkbox Column -->
       <ng-container matColumnDef="select">
         <th mat-header-cell *matHeaderCellDef>
           <mat-checkbox (change)="$event ? masterTogglePracownicy() : null"
-                        [checked]="selectionPracownicy.hasValue() && isAllSelectedPracownicy()"
-                        [indeterminate]="selectionPracownicy.hasValue() && !isAllSelectedPracownicy()"
-                        [aria-label]="checkboxLabelPracownicy()">
+            [checked]="selectionPracownicy.hasValue() && isAllSelectedPracownicy()"
+            [indeterminate]="selectionPracownicy.hasValue() && !isAllSelectedPracownicy()"
+            [aria-label]="checkboxLabelPracownicy()">
           </mat-checkbox>
         </th>
         <td mat-cell *matCellDef="let row">
-          <mat-checkbox (click)="$event.stopPropagation()"
-                        (change)="$event ? selectionPracownicy.toggle(row) : null"
-                        [checked]="selectionPracownicy.isSelected(row)" [aria-label]="checkboxLabelPracownicy(row)">
+          <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selectionPracownicy.toggle(row) : null"
+            [checked]="selectionPracownicy.isSelected(row)" [aria-label]="checkboxLabelPracownicy(row)">
           </mat-checkbox>
         </td>
       </ng-container>
 
       <!-- Position Column -->
       <ng-container matColumnDef="Id">
-        <th mat-header-cell *matHeaderCellDef> No. </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
         <td mat-cell *matCellDef="let element"> {{element.Id}} </td>
       </ng-container>
 
       <!-- Title Column -->
       <ng-container matColumnDef="UserName">
-        <th mat-header-cell *matHeaderCellDef> Nazwa pracownika </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nazwa pracownika </th>
         <td mat-cell *matCellDef="let element"> {{element.UserName}} </td>
       </ng-container>
 
       <!-- Weight Column -->
       <ng-container matColumnDef="Email">
-        <th mat-header-cell *matHeaderCellDef> Email </th>
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
         <td mat-cell *matCellDef="let element"> {{element.Email}} </td>
       </ng-container>
 
 
       <tr mat-header-row *matHeaderRowDef="displayedColumnsPracownicy"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumnsPracownicy;"
-          (click)="selectionPracownicy.toggle(row)">
+      <tr mat-row *matRowDef="let row; columns: displayedColumnsPracownicy;" (click)="selectionPracownicy.toggle(row)">
       </tr>
     </table>
-
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
 
     <br><br>
     <button mat-raised-button color="warn">Usuń</button>
