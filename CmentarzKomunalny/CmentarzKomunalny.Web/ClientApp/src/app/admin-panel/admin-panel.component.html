@@ -110,6 +110,7 @@
       </mat-form-field>
     </form>
     <br><br>
+
     <table mat-table [dataSource]="dataSourceAktualnosci" class="mat-elevation-z8">
 
       <!-- Checkbox Column -->
@@ -275,11 +276,7 @@
       </mat-form-field>
     </form>
     <br>
-    <mat-form-field style="margin-left: 30px;">
-      <mat-label>Dane pracownika</mat-label>
-      <input matInput type="text" (keyup)="   public applyFilterNekrologi(value: Event) {
-        ($event.target.value)" placeholder="Jan Kowalski" #input>
-    </mat-form-field>
+
     <br>
     <table mat-table [dataSource]="dataSourceNekrologi" class="mat-elevation-z8">
 
