@@ -76,103 +76,153 @@ namespace CmentarzKomunalny.Web.Controllers
         [HttpGet]
         public IActionResult BlockEmployee()
         {
-            string employeeStr = "EMPLOYEE";
-          //  var employees = userManager.GetUsersInRoleAsync(employeeStr);
-            var users = context.Users.ToList();
 
+            var users = context.Users.ToList();
+            var userRoles = context.UserRoles.ToList();
             List<RegisterViewModel> newList = new List<RegisterViewModel>();
-            foreach(var user in users)
+            foreach (var user in users)
             {
-                RegisterViewModel listItem = new RegisterViewModel();
-                
-                    listItem.Email = user.Email;
-                    listItem.UserId = user.Id;
-                    newList.Add(listItem);    
+                foreach (var userRole in userRoles)
+                {
+                    RegisterViewModel listItem = new RegisterViewModel();
+
+                    if (user.Id == userRole.UserId)
+                    {
+                        if (userRole.RoleId == "52538efa-ebb1-4ae9-b264-5ed1cc656056")
+                        {
+                            listItem.Email = user.Email;
+                            listItem.UserId = user.Id;
+                            newList.Add(listItem);
+                        }
+                    }
+                }
             }
             return View(newList);
         }
 
         [HttpPost]
-        public async Task<IActionResult> BlockEmployee(RegisterViewModel model)
+        public async Task<IActionResult> BlockEmployee(List<RegisterViewModel> model)
         {
-          //  if (ModelState.IsValid)
-            
-            //  var allUsers = context.Users.ToList();
             string blockedEmployee = "BLOCKEDEMPLOYEE";
             string employee = "EMPLOYEE";
-            var allUsers = await userManager.GetUsersInRoleAsync(employee);
-            var viewModels = new List<RegisterViewModel>();
-                
-            // print all users having role "Employee"
-            foreach (var user in allUsers)
+
+            for (int i = 0; i < model.Count; i++)
             {
-                var currentRoles = await userManager.GetRolesAsync(user);
-                    //  viewModels.Add(new RegisterViewModel { Email = user.Email, });
-                var userViewModel = new RegisterViewModel
+                model[i].Role = employee;
+                var users = await userManager.GetUsersInRoleAsync(employee);
+                var user = await userManager.FindByEmailAsync(model[i].Email);
+                //var user = await userManager.FindByIdAsync(model[i].UserId);
+                IdentityResult result = null;
+                // 
+                if (model[i].IsSelected && !(await userManager.IsInRoleAsync(user, blockedEmployee)))
                 {
-                        UserId = user.Id,
-                        Email = user.Email,
-                };
-
-                if (await userManager.IsInRoleAsync(user, employee))
-                    userViewModel.IsSelected = true;
-                else
-                    userViewModel.IsSelected = false;
-
-                    
-                if (userViewModel.IsSelected == true)
-                {
-                    var resultRemove = await userManager.RemoveFromRolesAsync(user, currentRoles);
-                    var resultAdd = await userManager.AddToRoleAsync(user, blockedEmployee);
-
-                    if (resultRemove.Succeeded)
-                    {
-                        if(resultAdd.Succeeded)
-                        {
-                            await userManager.AddToRoleAsync(user, blockedEmployee);
-                            return RedirectToAction("Index", "Admin");
-                        }
-                    }
+                    await userManager.RemoveFromRoleAsync(user, employee);
+                    result = await userManager.AddToRoleAsync(user, blockedEmployee);
                 }
-                viewModels.Add(userViewModel);
-                
+                else if (model[i].IsSelected && model[i].Role == null)
+                {
+                    await userManager.AddToRoleAsync(user, blockedEmployee);
+                }
+                //  else if (!model[i].IsSelected && await userManager.IsInRoleAsync(user, role.Name))
+                //  {
+                //      result2 = await userManager.RemoveFromRoleAsync(user, role.Name);
+                //      // usunac go z roli, to ten if powinien trafic do unblock
+                //  }
+                else
+                {
+                    continue;
+                }
+                if (result.Succeeded)
+                {
+                    if (i < (model.Count - 1))
+                        continue;
+                    else
+                        return RedirectToAction("BlockEmployee", "Admin");
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
             }
-            
+
             return View(model);
         }
 
         [HttpGet]
         public IActionResult UnblockEmployee()
         {
-            return View();
+
+            var users = context.Users.ToList();
+            var userRoles = context.UserRoles.ToList();
+            List<RegisterViewModel> newList = new List<RegisterViewModel>();
+            foreach (var user in users)
+            {
+                foreach (var userRole in userRoles)
+                {
+                    RegisterViewModel listItem = new RegisterViewModel();
+
+                    if (user.Id == userRole.UserId)
+                    {
+                        if (userRole.RoleId == "a3cba8ab-6194-4b5f-b4c0-8bc2cb7776ba")
+                        {
+                            listItem.Email = user.Email;
+                            listItem.UserId = user.Id;
+                            newList.Add(listItem);
+                        }
+                    }
+                }
+            }
+            return View(newList);
         }
 
         [HttpPost]
-        public async Task<IActionResult> UnblockEmployee(RegisterViewModel model)
+        public async Task<IActionResult> UnblockEmployee(List<RegisterViewModel> model)
         {
-            
             string blockedEmployee = "BLOCKEDEMPLOYEE";
             string employee = "EMPLOYEE";
 
-            var roleUnlocked = await roleManager.FindByIdAsync(employee);
-            var roleBlocked = await roleManager.FindByIdAsync(blockedEmployee);
-            var user = await userManager.FindByEmailAsync(model.Email);
-
-            var currentRoles = await userManager.GetRolesAsync(user);
-
-            if (roleUnlocked != null)
+            for (int i = 0; i < model.Count; i++)
             {
-                await userManager.RemoveFromRolesAsync(user, currentRoles);
+                model[i].Role = blockedEmployee;
+                var users = await userManager.GetUsersInRoleAsync(blockedEmployee);
+                var user = await userManager.FindByEmailAsync(model[i].Email);
+                //var user = await userManager.FindByIdAsync(model[i].UserId);
+                IdentityResult result = null;
+                // 
+                if (model[i].IsSelected && !(await userManager.IsInRoleAsync(user, employee)))
+                {
+                    await userManager.RemoveFromRoleAsync(user, blockedEmployee);
+                    result = await userManager.AddToRoleAsync(user, employee);
+                }
+                else if (model[i].IsSelected && model[i].Role == null)
+                {
+                    await userManager.AddToRoleAsync(user, employee);
+                }
+                //  else if (!model[i].IsSelected && await userManager.IsInRoleAsync(user, role.Name))
+                //  {
+                //      result2 = await userManager.RemoveFromRoleAsync(user, role.Name);
+                //      // usunac go z roli, to ten if powinien trafic do unblock
+                //  }
+                else
+                {
+                    continue;
+                }
+                if (result.Succeeded)
+                {
+                    if (i < (model.Count - 1))
+                        continue;
+                    else
+                        return RedirectToAction("UnblockEmployee", "Admin");
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError("", error.Description);
+                }
             }
-            var users = userManager.Users;
-            var allUsers = context.Users.ToList();
-            if(ModelState.IsValid)
-            {
 
-            }
-
-            return View(users);
+            return View(model);
         }
+    
         // register employee
         [HttpGet]
         public IActionResult RegisterEmployee()

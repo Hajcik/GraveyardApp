@@ -5,35 +5,57 @@
 
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@if (User.IsInRole("Administrator")) {
-<h2>@ViewData["Title"]</h2>
-<div class="row">
-    <div class="col-md-4">
+@if (User.IsInRole("Administrator"))
+{
+    <a asp-action="Index" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Strona główna admina
+    </a>
+    <a asp-action="RegisterAdmin" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Nowy admin
+    </a>
+    <a asp-action="RegisterEmployee" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Nowy pracownik
+    </a>
+    <a asp-action="BlockEmployee" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Zablokuj pracownika
+    </a>
+    <a asp-action="UnblockEmployee" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Odblokuj pracownika
+    </a>
 
-        <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
-            <h4>Stwórz nowego użytkownika.</h4>
-            <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Email"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ConfirmPassword"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-            </div>
-            <button type="submit" class="btn btn-default">Stwórz pracownika</button>
-        </form>
+    <h2>@ViewData["Title"]</h2>
+    <div class="row">
+        <div class="col-md-4">
+
+            <form asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+                <h4>Stwórz nowego użytkownika.</h4>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Email"></label>
+                    <input asp-for="Email" class="form-control" />
+                    <span asp-validation-for="Email" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password"></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ConfirmPassword"></label>
+                    <input asp-for="ConfirmPassword" class="form-control" />
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                </div>
+                <button type="submit" class="btn btn-default">Stwórz pracownika</button>
+            </form>
+        </div>
     </div>
-</div>
 }
 

@@ -1,10 +1,28 @@
-﻿@{
+﻿@model RegisterViewModel
+@{
     ViewData["Title"] = "Panel sterowania administratora";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-@if(User.IsInRole("Administrator"))
+@if (User.IsInRole("Administrator"))
 {
-    <div>By zarejestrować administratora, przejdź do: </div>
-    <div>By zarejestrować pracownika, przejdź do: </div>
-    <div>By zablokować pracownika, przejdź do: </div>
+    <a asp-action="Index" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Strona główna admina
+    </a>
+    <a asp-action="RegisterAdmin" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Nowy admin
+    </a>
+    <a asp-action="RegisterEmployee" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Nowy pracownik
+    </a>
+    <a asp-action="BlockEmployee" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Zablokuj pracownika
+    </a>
+    <a asp-action="UnblockEmployee" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Odblokuj pracownika
+    </a>
 }

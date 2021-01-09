@@ -1,49 +1,71 @@
 ﻿@model IEnumerable<IdentityRole>
 
-@{ 
+@{
     ViewBag.Title = "Wszystkie role w serwisie";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @if (User.IsInRole("Administrator"))
 {
-<h1> Wszystkie role</h1>
+    <a asp-action="Index" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Strona główna admina
+    </a>
+    <a asp-action="RegisterAdmin" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Nowy admin
+    </a>
+    <a asp-action="RegisterEmployee" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Nowy pracownik
+    </a>
+    <a asp-action="BlockEmployee" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Zablokuj pracownika
+    </a>
+    <a asp-action="UnblockEmployee" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Odblokuj pracownika
+    </a>
 
-@if (Model.Any())
-{
-    foreach (var role in Model)
+
+    <h1> Wszystkie role</h1>
+
+    @if (Model.Any())
     {
-        <a class="btn btn-primary mb-3" style="width:auto" asp-action="CreateRole"
-           asp-controller="admin">Dodaj nową rolę</a>
-        <div class="card mb-3">
+        foreach (var role in Model)
+        {
+            <a class="btn btn-primary mb-3" style="width:auto" asp-action="CreateRole"
+               asp-controller="admin">Dodaj nową rolę</a>
+            <div class="card mb-3">
+                <div class="card-header">
+                    Role Id: @role.Id
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">@role.Name</h5>
+                </div>
+                <div class="card-footer">
+                    <a href="#" class="btn btn-primary">Edit</a>
+                    <a href="#" class="btn btn-danger">Delete</a>
+                </div>
+            </div>
+        }
+    }
+
+    else
+    {
+        <div class="card">
             <div class="card-header">
-                Role Id: @role.Id
+                Brak ról
             </div>
             <div class="card-body">
-                <h5 class="card-title">@role.Name</h5>
-            </div>
-            <div class="card-footer">
-                <a href="#" class="btn btn-primary">Edit</a>
-                <a href="#" class="btn btn-danger">Delete</a>
+                <h5 class="card-title">
+                    Użyj przycisku by stworzyc rolę
+                </h5>
+                <a class="btn btn-primary" style="width:auto"
+                   asp-controller="admin" asp-action="CreateRole">
+                    Stwórz rolę
+                </a>"
             </div>
         </div>
     }
-}
-
-else
-{
-    <div class="card">
-        <div class="card-header">
-            Brak ról
-            </div>
-        <div class="card-body">
-            <h5 class="card-title">
-                Użyj przycisku by stworzyc rolę
-            </h5>
-            <a class="btn btn-primary" style="width:auto"
-               asp-controller="admin" asp-action="CreateRole">
-                Stwórz rolę
-            </a>"
-        </div>
-    </div>
-}
 }
