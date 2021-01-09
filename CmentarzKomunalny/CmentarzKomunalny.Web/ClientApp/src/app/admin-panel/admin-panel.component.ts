@@ -1,7 +1,9 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { SelectionModel } from '@angular/cdk/collections';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { SelectionModel } from '@angular/cdk/collections';
 import { SharedService } from '../shared.service';
 
 export interface Articles {
@@ -30,10 +32,18 @@ export interface Workers {
   styleUrls: ['./admin-panel.component.css']
 })
 export class AdminPanelComponent implements OnInit {
-
+  @ViewChild(MatPaginator, { static: false }) paginator
+  @ViewChild(MatSort, { static: false }) sort
   // fb: FormBuilder
   constructor(fb: FormBuilder, private service: SharedService) { }
-
+  ngAfterViewInit() {
+    this.dataSourcePracownicy.paginator = this.paginator;
+    this.dataSourcePracownicy.sort = this.sort;
+    this.dataSourceNekrologi.paginator = this.paginator;
+    this.dataSourceNekrologi.sort = this.sort;
+    this.dataSourceAktualnosci.paginator = this.paginator;
+    this.dataSourceAktualnosci.sort = this.sort;
+  }
   refreshAktualnosciList() {
     this.service.getAktualnosciList().subscribe(res => {
       this.dataSourceAktualnosci.data = res as Articles[];
@@ -52,6 +62,19 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
+  public applyFilterPracownicy(value: Event) {
+    const valueFilter = (event.target as HTMLInputElement).value;
+    this.dataSourcePracownicy.filter = valueFilter.trim().toLowerCase();
+  }
+  public applyFilterAktualnosci(value: Event) {
+    const valueFilter = (event.target as HTMLInputElement).value;
+    this.dataSourceAktualnosci.filter = valueFilter.trim().toLowerCase();
+  }
+  public applyFilterNekrologi(value: Event) {
+    const valueFilter = (event.target as HTMLInputElement).value;
+    this.dataSourceNekrologi.filter = valueFilter.trim().toLowerCase();
+  }
+
   //TABELA AKTUALNOŚCI
   displayedColumnsAktualnosci: string[] = ['select', 'Id', 'Title', 'NewsContent', 'DateOfPublication'];
   dataSourceAktualnosci = new MatTableDataSource<Articles>();
@@ -67,7 +90,7 @@ export class AdminPanelComponent implements OnInit {
   dataSourcePracownicy = new MatTableDataSource<Workers>();
   selectionPracownicy = new SelectionModel<Workers>(true, []);
 
-  
+
 
   /*ModalTitle: string;
   //aktualnosc: any;
@@ -119,10 +142,10 @@ export class AdminPanelComponent implements OnInit {
     this.refreshPracownicyList();
 
     // aktualnosc
-//    this.NewsId = this.aktualnosc.Id;
-//    this.NewsTitle = this.aktualnosc.NewsTitle;
-//    this.NewsContent = this.aktualnosc.NewsContent;
-//    this.NewsDateOfPublication = this.aktualnosc.NewsDateOfPublication;
+    //    this.NewsId = this.aktualnosc.Id;
+    //    this.NewsTitle = this.aktualnosc.NewsTitle;
+    //    this.NewsContent = this.aktualnosc.NewsContent;
+    //    this.NewsDateOfPublication = this.aktualnosc.NewsDateOfPublication;
   }
 
 
