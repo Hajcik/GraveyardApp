@@ -4,14 +4,15 @@
     var roleId = ViewBag.roleId;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
+@if (User.IsInRole("Administrator"))
+{
 <form method="post">
     <div class="card">
         <div class="card-header">
             <h2>Dodaj lub usun uzytkownika z danej roli</h2>
         </div>
         <div class="card-body">
-            @for (int i=0; i<Model.Count; i++)
+            @for (int i = 0; i < Model.Count; i++)
             {
                 <div class="form-check m-1">
                     <input asp-for="@Model[i].IsSelected" class="form-check-input" />
@@ -27,3 +28,4 @@
         </div>
     </div>
 </form>
+}

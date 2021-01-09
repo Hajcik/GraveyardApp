@@ -4,11 +4,13 @@
     ViewBag.Title = "Wszystkie role w serwisie";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@if (User.IsInRole("Administrator"))
+{
 <h1> Wszystkie role</h1>
 
 @if (Model.Any())
 {
-    foreach(var role in Model)
+    foreach (var role in Model)
     {
         <a class="btn btn-primary mb-3" style="width:auto" asp-action="CreateRole"
            asp-controller="admin">Dodaj nową rolę</a>
@@ -43,4 +45,5 @@ else
             </a>"
         </div>
     </div>
+}
 }

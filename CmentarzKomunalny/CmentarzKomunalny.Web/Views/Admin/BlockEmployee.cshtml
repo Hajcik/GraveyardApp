@@ -1,0 +1,42 @@
+﻿@model List<RegisterViewModel>
+
+@{
+    ViewData["Title"] = "Stwórz nowego administratora w serwisie Cmentarza";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@{
+
+}
+@if (User.IsInRole("Administrator"))
+{
+    <a asp-action="RegisterAdmin" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Nowy admin
+    </a>
+    <a asp-action="RegisterEmployee" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Nowy pracownik
+    </a>
+    
+    foreach (var user in Model)
+    {
+    
+        <div class="card mb-3">
+            <div class="card-header">
+                User Id: @user.UserId
+            </div>
+            <div>
+                <div class="card-body">
+                    <h5 class="card-title">@user.Email</h5>
+                </div>
+                <div class="card-footer">
+                    <a asp-action="BlockEmployee" class="btn btn-danger">Zablokuj</a>
+                    <a asp-action="" class="btn btn-danger">Edytuj</a>
+                </div>
+            </div>
+        </div>
+    }
+    
+
+}

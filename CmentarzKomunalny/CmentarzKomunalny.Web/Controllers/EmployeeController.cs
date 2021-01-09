@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
@@ -11,6 +12,8 @@ namespace CmentarzKomunalny.Web.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Policy = "RequireAdministratorRole")]
+ //   [Authorize(Policy = "RequireEmployeeRole")]
     public class EmployeeController : Controller
     {
         private readonly IConfiguration _configuration;

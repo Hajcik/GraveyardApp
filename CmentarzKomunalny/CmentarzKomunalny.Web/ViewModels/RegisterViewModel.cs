@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -23,9 +24,17 @@ namespace CmentarzKomunalny.Web.ViewModels
         [Compare("Password", ErrorMessage = "Hasło oraz potwierdzenie są niezgodne.")]
         public string ConfirmPassword { get; set; }
 
-        [Required]
+        // nie musi byc required bo jest ustalane przez kontroler AdminController
         [Display(Name = "Rola użytkownika")]
         public string Role { get; set; }
-        public IEnumerable<SelectListItem> Roles { get; set; }
+
+
+        public IEnumerable<IdentityRole> Roles { get; set; }
+        public IEnumerable<IdentityUser> Users { get; set; }
+   
+        public bool IsSelected { get; set; }
+        
+        public string UserId { get; set; }
+    
     }
 }

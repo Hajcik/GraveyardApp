@@ -9,6 +9,7 @@ using CmentarzKomunalny.Web.Data.Interfaces;
 using CmentarzKomunalny.Web.Data.Repositories;
 using CmentarzKomunalny.Web.DTOs.DeadPersonDtos;
 using CmentarzKomunalny.Web.Models.Cmentarz;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -17,6 +18,8 @@ namespace CmentarzKomunalny.Web.Controllers
     [Route("api/[controller]")] // tutaj chyba nazwa "wyszukiwarka-grobow"
     [ApiController]
     // currently without views
+    [Authorize(Policy = "RequireAdministratorRole")]
+    [Authorize(Policy = "RequireEmployeeRole")]
     public class DeadPersonController : ControllerBase
     {
         private readonly MockDeadPeopleRepo _mockRepo = new MockDeadPeopleRepo();

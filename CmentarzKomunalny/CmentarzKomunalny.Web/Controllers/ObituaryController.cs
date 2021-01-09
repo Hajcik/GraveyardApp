@@ -9,12 +9,15 @@ using Microsoft.Extensions.Configuration;
 using CmentarzKomunalny.Web.DTOs.ObituaryDtos;
 using System.Data;
 using System.Data.SqlClient;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CmentarzKomunalny.Web.Controllers
 {
     // api/obituary
     [Route("api/[controller]")] // polaczyc z 'nekrologi'
     [ApiController]
+    [Authorize(Policy = "RequireAdministratorRole")]
+    [Authorize(Policy = "RequireEmployeeRole")]
     public class ObituaryController : ControllerBase
     {
         private readonly IConfiguration _configuration;

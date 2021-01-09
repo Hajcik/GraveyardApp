@@ -8,12 +8,15 @@ using CmentarzKomunalny.Web.Data.Interfaces;
 using CmentarzKomunalny.Web.Models.Cmentarz;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
 
 namespace CmentarzKomunalny.Web.Controllers
 {
     // api/news
     [Route("api/[controller]")] // polaczyc z 'aktualnosci'
     [ApiController]
+    [Authorize(Policy = "RequireAdministratorRole")]
+    [Authorize(Policy = "RequireEmployeeRole")]
     public class NewsController : ControllerBase
     {
         private readonly IConfiguration _configuration;

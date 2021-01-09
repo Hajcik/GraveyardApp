@@ -2,3 +2,9 @@
     ViewData["Title"] = "Panel sterowania administratora";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@if(User.IsInRole("Administrator"))
+{
+    <div>By zarejestrować administratora, przejdź do: </div>
+    <div>By zarejestrować pracownika, przejdź do: </div>
+    <div>By zablokować pracownika, przejdź do: </div>
+}

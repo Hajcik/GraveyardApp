@@ -18,7 +18,10 @@ using Newtonsoft.Json.Serialization;
 using System.Net.Http;
 using System.Net;
 using System;
-
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace CmentarzKomunalny.Web
 {
@@ -47,9 +50,18 @@ namespace CmentarzKomunalny.Web
                .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders()
                 .AddDefaultUI();
-        //    services.AddDefaultIdentity<IdentityUser>();    
+            //    services.AddDefaultIdentity<IdentityUser>();    
 
-            services.AddControllers().AddNewtonsoftJson(s => 
+            services.AddControllers(config =>
+            {
+                // using ... .Mvc.Authorization and Authorization
+                var policy = new AuthorizationPolicyBuilder()
+                                .RequireAuthenticatedUser()
+                                .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            });
+
+            services.AddControllers().AddNewtonsoftJson(s =>
             {   // needed to get PATCH working
                 s.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
             });
@@ -61,7 +73,7 @@ namespace CmentarzKomunalny.Web
 
                 .AddNewtonsoftJson(options => options.SerializerSettings.ContractResolver
                                     = new DefaultContractResolver());
-            
+
             // enable CORS
             services.AddCors(c =>
             {
@@ -79,7 +91,7 @@ namespace CmentarzKomunalny.Web
             services.AddScoped<IObituaryRepo, SqlObituaryRepo>();
             // DTOs
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
-            
+
             // check page https://kenhaggerty.com/articles/article/aspnet-core-31-admin-role
 
             // Configuring Identity services
@@ -106,23 +118,26 @@ namespace CmentarzKomunalny.Web
                 // user settings
                 options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
                 options.User.RequireUniqueEmail = true; // check it later
-              
+
             });
 
             services.AddAuthorization(options =>
             {
+            options.FallbackPolicy = new AuthorizationPolicyBuilder()
+            .RequireAuthenticatedUser()
+            .Build();
+
                 options.AddPolicy("RequireAdministratorRole",
                     policy => policy.RequireRole("Administrator"));
-
                 options.AddPolicy("RequireEmployeeRole",
                     policy => policy.RequireRole("Employee"));
             });
 
 
-           services.AddAuthentication()
-                .AddIdentityServerJwt();
+            services.AddAuthentication()
+                 .AddIdentityServerJwt();
 
-            
+
             services.AddControllersWithViews();
             services.AddRazorPages();
             // In production, the Angular files will be served from this directory
@@ -131,11 +146,13 @@ namespace CmentarzKomunalny.Web
                 configuration.RootPath = "ClientApp/dist";
             });
 
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider serviceProvider)
         {
+            
 
             if (env.IsDevelopment())
             {
@@ -158,25 +175,25 @@ namespace CmentarzKomunalny.Web
 
             app.UseCors(options => options.WithOrigins("https://localhost:44357/api").AllowAnyMethod().AllowAnyHeader());
             app.UseRouting();
-            
+
 
             app.UseAuthentication();
-          //  app.UseIdentityServer();
+            //  app.UseIdentityServer();
 
-           
+
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute( // configure later for our main page
                     name: "default",
                     pattern: "{controller}/{action=Index}/{id?}" //,
-                 //   defaults: new {controller = "Home", action = "Index"}
+                                                                 //   defaults: new {controller = "Home", action = "Index"}
                     );
                 endpoints.MapControllerRoute(
                     name: "api",
                     pattern: "api/{controller}/{id?}"
                     );
-                
+
                 endpoints.MapRazorPages();
             });
 
@@ -192,6 +209,46 @@ namespace CmentarzKomunalny.Web
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+         //   serviceProvider = app.ApplicationServices.GetService<IServiceProvider>();
+         //   CreateRoles(serviceProvider).Wait();
+        //    ApplicationDbContext.CreateAdminAccount(serviceProvider, Configuration).Wait();
+        }
+
+        private async Task CreateRoles(IServiceProvider serviceProvider)
+        {
+            var RoleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var UserManager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+            string[] roleNames = { "Administrator", "Employee", "BlockedEmployee" };
+            IdentityResult roleResult;
+
+            foreach (var roleName in roleNames)
+            {
+                var roleExist = await RoleManager.RoleExistsAsync(roleName);
+                if (!roleExist)
+                {
+                    // if role doesnt exist, create one
+                    roleResult = await RoleManager.CreateAsync(new IdentityRole(roleName));
+                }
+            }
+            // maintain the app by power user
+            var powerUser = new IdentityUser
+            {
+                UserName = Configuration["AppSettings:UserName"],
+                Email = Configuration["AppSettings:UserEmail"],
+            };
+
+            string userPWD = Configuration["AppSettings:UserPassword"];
+            var _user = await UserManager.FindByEmailAsync(Configuration["AppSettings:AdminUserEmail"]);
+
+            if(_user == null)
+            {
+                var createPowerUser = await UserManager.CreateAsync(powerUser, userPWD);
+                if(createPowerUser.Succeeded)
+                {
+                    await UserManager.AddToRoleAsync(powerUser, "Administrator");
+                }
+            }
         }
     }
 }

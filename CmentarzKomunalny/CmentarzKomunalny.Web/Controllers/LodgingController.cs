@@ -6,6 +6,7 @@ using AutoMapper;
 using CmentarzKomunalny.Web.Data.Interfaces;
 using CmentarzKomunalny.Web.DTOs.LodgingDtos;
 using CmentarzKomunalny.Web.Models.Cmentarz;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -15,6 +16,8 @@ namespace CmentarzKomunalny.Web.Controllers
     // api/lodging
     [Route("api/[controller]")] // to tez trzeba z wyszukiwarka grobow polaczyc
     [ApiController]
+    [Authorize(Policy = "RequireAdministratorRole")]
+    [Authorize(Policy = "RequireEmployeeRole")]
     public class LodgingController : ControllerBase
     {
         private readonly ILodgingsRepo _repository; // dependency injection

@@ -4,12 +4,14 @@ using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using System;
 
 namespace CmentarzKomunalny.Web.Data
 {
     //  public class ApplicationDbContext : ApiAuthorizationDbContext<ApplicationUser>
-    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
+    public class ApplicationDbContext : IdentityDbContext<IdentityUser, IdentityRole, string>
     {
         public ApplicationDbContext(
             DbContextOptions options) : base(options)
@@ -19,12 +21,7 @@ namespace CmentarzKomunalny.Web.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            // fluent API commands
-      //      modelBuilder.Entity<ApplicationUser>()
-      //          .ToTable("AspNetUsers")
-      //          .HasDiscriminator<int>("UserType")
-      //          .HasValue<Employee>((int)RoleValue.Employee);
-                
+             
         }
 
     }
