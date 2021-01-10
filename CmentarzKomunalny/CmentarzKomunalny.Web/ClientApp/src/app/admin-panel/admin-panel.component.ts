@@ -20,6 +20,14 @@ export interface Necrologs {
   DateOfDeath_Obituary: string;
 }
 
+export interface DeadPerson {
+  Id: number;
+  Name: string;
+  LodgingId: number;
+  DateOfBirth: string;
+  DateOfDeath: string;
+}
+
 export interface Workers {
   Id: string;
   UserName: string;
@@ -32,6 +40,14 @@ export interface Workers {
   styleUrls: ['./admin-panel.component.css']
 })
 export class AdminPanelComponent implements OnInit {
+  public aktualnosciDelete: any = [];
+  public aktualnosciEdit: any = [];
+  public nekrologDelete: any = [];
+  public nekrologEdit: any = [];
+  public pracownikTable: any = [];
+  public ZmarliTable: any = [];
+  public ZmarliEdit: any = [];
+
   @ViewChild(MatPaginator, { static: false }) paginator
   @ViewChild(MatSort, { static: false }) sort
   // fb: FormBuilder
@@ -43,6 +59,8 @@ export class AdminPanelComponent implements OnInit {
     this.dataSourceNekrologi.sort = this.sort;
     this.dataSourceAktualnosci.paginator = this.paginator;
     this.dataSourceAktualnosci.sort = this.sort;
+    this.dataSourceZmarli.paginator = this.paginator;
+    this.dataSourceZmarli.sort = this.sort;
   }
   refreshAktualnosciList() {
     this.service.getAktualnosciList().subscribe(res => {
@@ -62,6 +80,12 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
+  refreshZmarliList() {
+    this.service.getZmarliList().subscribe(res => {
+      this.dataSourceZmarli.data = res as DeadPerson[];
+    });
+  }
+
   public applyFilterPracownicy(value: Event) {
     const valueFilter = (event.target as HTMLInputElement).value;
     this.dataSourcePracownicy.filter = valueFilter.trim().toLowerCase();
@@ -73,6 +97,10 @@ export class AdminPanelComponent implements OnInit {
   public applyFilterNekrologi(value: Event) {
     const valueFilter = (event.target as HTMLInputElement).value;
     this.dataSourceNekrologi.filter = valueFilter.trim().toLowerCase();
+  }
+  public applyFilterZmarli(value: Event) {
+    const valueFilter = (event.target as HTMLInputElement).value;
+    this.dataSourceZmarli.filter = valueFilter.trim().toLowerCase();
   }
 
   //TABELA AKTUALNOŚCI
@@ -89,6 +117,170 @@ export class AdminPanelComponent implements OnInit {
   displayedColumnsPracownicy: string[] = ['select', 'Id', 'UserName', 'Email'];
   dataSourcePracownicy = new MatTableDataSource<Workers>();
   selectionPracownicy = new SelectionModel<Workers>(true, []);
+
+  //TABELA Zmarli
+  displayedColumnsZmarli: string[] = ['select', 'Id', 'Name', 'LodgingId', 'DateOfBirth', 'DateOfDeath'];
+  dataSourceZmarli = new MatTableDataSource<DeadPerson>();
+  selectionZmarli = new SelectionModel<DeadPerson>(true, []);
+
+  //Dodaj "Aktualnosci"
+  GetInputFromDodajaktualnosc() {
+    //pobierz tytuł
+    let inputDodajAktualnosciTytul = (document.getElementById("dodajAktualnoscTytul") as HTMLInputElement).value;
+    //pobierz treść wiadomości
+    let inputDodajAktualnosciTresc = (document.getElementById("dodajAktualnoscTresc") as HTMLTextAreaElement).value;
+    //pobierz tytuł
+    let inputDodajAktualnosciData = (document.getElementById("dodajAktualnoscData") as HTMLInputElement).value;
+
+
+    //Sprawdzenie
+    console.log(inputDodajAktualnosciTytul);
+    console.log(inputDodajAktualnosciTresc);
+    console.log(inputDodajAktualnosciData);
+  }
+
+  //Usun "Aktualnosci"
+  GetCheckedUsunAktualnosci() {
+    //Wczytanie wszystkich danych do tablicy
+    this.aktualnosciDelete = this.selectionAktualnosci.selected;
+
+    //Sprawdzenie
+    console.log(this.aktualnosciDelete);
+  }
+
+  //Edytuj "Aktualności"
+  GetDataFromEdytujaktualnosc() {
+    //pobierz tytuł
+    let inputEdytujAktualnosciTytul = (document.getElementById("edytujAktualnoscTytul") as HTMLInputElement).value;
+    //pobierz treść wiadomości
+    let inputEdytujAktualnosciTresc = (document.getElementById("edytujAktualnoscTresc") as HTMLTextAreaElement).value;
+    //pobierz tytuł
+    let inputEdytujAktualnosciData = (document.getElementById("edytujAktualnoscData") as HTMLInputElement).value;
+
+    //Wczytanie wszystkich danych do tablicy
+    this.aktualnosciEdit = this.selectionAktualnosci.selected;
+
+    //Sprawdzenie
+    console.log(inputEdytujAktualnosciTytul);
+    console.log(inputEdytujAktualnosciTresc);
+    console.log(inputEdytujAktualnosciData);
+    console.log(this.aktualnosciDelete);
+  }
+
+  //Dodaj "Nekrolog"
+  GetInputFromDodajnekrolog() {
+    //pobierz imię i nazwisko
+    let inputDodajNekrologImieINazwisko = (document.getElementById("dodajNekrologImieINazwisko") as HTMLInputElement).value;
+    //pobierz treść wiadomości
+    let inputDodajNekrologTresc = (document.getElementById("dodajNekrologTresc") as HTMLTextAreaElement).value;
+    //pobierz tytuł
+    let inputDodajNekrologData = (document.getElementById("dodajNekrologData") as HTMLInputElement).value;
+
+
+    //Sprawdzenie
+    console.log(inputDodajNekrologImieINazwisko);
+    console.log(inputDodajNekrologTresc);
+    console.log(inputDodajNekrologData);
+  }
+
+  //Usun "Nekrolog"
+  GetCheckedUsunNekrolog() {
+    //Wczytanie wszystkich danych do tablicy
+    this.nekrologDelete = this.selectionNekrologi.selected;
+
+    //Sprawdzenie
+    console.log(this.nekrologDelete);
+  }
+
+  //Edytuj "Aktualności"
+  GetDataFromEdytujnekrolog() {
+    //pobierz tytuł
+    let inputEdytujNekrologImieINazwisko = (document.getElementById("edytujNekrologImieINazwisko") as HTMLInputElement).value;
+
+    //pobierz treść wiadomości
+    let inputEdytujNekrologTresc = (document.getElementById("edytujNekrologTresc") as HTMLTextAreaElement).value;
+
+    //pobierz date
+    let inputEdytujNekrologData = (document.getElementById("edytujNekrologData") as HTMLInputElement).value;
+
+    //Wczytanie wszystkich danych do tablicy
+    this.nekrologEdit = this.selectionNekrologi.selected;
+
+    //Sprawdzenie
+    console.log(inputEdytujNekrologImieINazwisko);
+    console.log(inputEdytujNekrologTresc);
+    console.log(inputEdytujNekrologData);
+    console.log(this.nekrologEdit);
+  }
+
+  //"Pracownicy"
+  GetCheckedUsunPracownik() {
+    //Wczytanie wszystkich danych do tablicy
+    this.pracownikTable = this.selectionPracownicy.selected;
+
+    //Sprawdzenie
+    console.log(this.pracownikTable);
+  }
+
+  //"Pracownicy"
+  GetCheckedZablokujPracownik() {
+    //Wczytanie wszystkich danych do tablicy
+    this.pracownikTable = this.selectionPracownicy.selected;
+
+    //Sprawdzenie
+    console.log(this.pracownikTable);
+  }
+
+  //Dodaj "Zmarłego"
+  GetInputFromDodajzmarlego() {
+    //pobierz imię i nazwisko
+    let inputDodajZmarlegoImieINazwisko = (document.getElementById("dodajZmarlegoImieINazwisko") as HTMLInputElement).value;
+    //pobierz treść wiadomości
+    let inputDodajZmarlegoNumerGrobu = (document.getElementById("dodajZmarlegoNumerGrobu") as HTMLInputElement).value;
+    //pobierz datę śmierci
+    let inputDodajZmarlegoDataSmierci = (document.getElementById("dodajZmarlegoDataSmierci") as HTMLInputElement).value;
+    //pobierz datę śmierci
+    let inputDodajZmarlegoDataUrodzenia = (document.getElementById("dodajZmarlegoDataUrodzenia") as HTMLInputElement).value;
+
+    //Sprawdzenie
+    console.log(inputDodajZmarlegoImieINazwisko);
+    console.log(inputDodajZmarlegoNumerGrobu);
+    console.log(inputDodajZmarlegoDataSmierci);
+    console.log(inputDodajZmarlegoDataUrodzenia);
+  }
+
+  //Usuń "Zmarłego"
+  GetCheckedUsunZmarlego() {
+    //Wczytanie wszystkich danych do tablicy
+    this.ZmarliTable = this.selectionZmarli.selected;
+
+    //Sprawdzenie
+    console.log(this.ZmarliTable);
+  }
+
+  //Edytuj "Aktualności"
+  GetDataFromEdytujzmarlego() {
+    //pobierz imię i nazwisko
+    let inputEdytujZmarlegoImieINazwisko = (document.getElementById("edytujZmarlegoImieINazwisko") as HTMLInputElement).value;
+    //pobierz numer
+    let inputEdytujZmarlegoNumerGrobu = (document.getElementById("edytujZmarlegoNumerGrobu") as HTMLInputElement).value;
+    //pobierz datę śmierci
+    let inputEdytujZmarlegoDataSmierci = (document.getElementById("edytujZmarlegoDataUrodzenia") as HTMLInputElement).value;
+    //pobierz datę śmierci
+    let inputEdytujZmarlegoDataUrodzenia = (document.getElementById("edytujZmarlegoDataSmierci") as HTMLInputElement).value;
+
+    //Wczytanie wszystkich danych do tablicy
+    this.ZmarliEdit = this.selectionZmarli.selected;
+
+    //Sprawdzenie
+    console.log(inputEdytujZmarlegoImieINazwisko);
+    console.log(inputEdytujZmarlegoNumerGrobu);
+    console.log(inputEdytujZmarlegoDataSmierci);
+    console.log(inputEdytujZmarlegoDataUrodzenia);
+
+    console.log(this.ZmarliEdit);
+  }
+
 
 
 
@@ -140,6 +332,7 @@ export class AdminPanelComponent implements OnInit {
     this.refreshAktualnosciList();
     this.refreshNekrologiList();
     this.refreshPracownicyList();
+    this.refreshZmarliList();
 
     // aktualnosc
     //    this.NewsId = this.aktualnosc.Id;
@@ -165,6 +358,11 @@ export class AdminPanelComponent implements OnInit {
     const numRowsPracownicy = this.dataSourcePracownicy.data.length;
     return numSelectedPracownicy === numRowsPracownicy;
   }
+  isAllSelectedZmarli() {
+    const numSelectedZmarli = this.selectionZmarli.selected.length;
+    const numRowsZmarli = this.dataSourceZmarli.data.length;
+    return numSelectedZmarli === numRowsZmarli;
+  }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggleAktualnosci() {
@@ -181,6 +379,11 @@ export class AdminPanelComponent implements OnInit {
     this.isAllSelectedPracownicy() ?
       this.selectionPracownicy.clear() :
       this.dataSourcePracownicy.data.forEach(row => this.selectionPracownicy.select(row));
+  }
+  masterToggleZmarli() {
+    this.isAllSelectedZmarli() ?
+      this.selectionZmarli.clear() :
+      this.dataSourceZmarli.data.forEach(row => this.selectionZmarli.select(row));
   }
 
   /** The label for the checkbox on the passed row */
@@ -201,6 +404,12 @@ export class AdminPanelComponent implements OnInit {
       return `${this.isAllSelectedPracownicy() ? 'select' : 'deselect'} all`;
     }
     return `${this.selectionPracownicy.isSelected(row) ? 'deselect' : 'select'} row ${row.Id}`;
+  }
+  checkboxLabelZmarli(row?: DeadPerson): string {
+    if (!row) {
+      return `${this.isAllSelectedZmarli() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selectionZmarli.isSelected(row) ? 'deselect' : 'select'} row ${row.Id}`;
   }
 
 }
