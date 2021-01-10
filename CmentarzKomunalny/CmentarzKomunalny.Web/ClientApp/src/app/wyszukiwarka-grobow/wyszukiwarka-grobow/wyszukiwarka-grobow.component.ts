@@ -19,14 +19,10 @@ export interface DeadPerson {
 })
 export class WyszukiwarkaGrobowComponent implements OnInit {
   panelOpenState = false;
-<<<<<<< HEAD
-
-=======
   public selectedPerson: any = [];
   sektor: number = 0;
   numer: any = 0;
   image: string = "../../../assets/map.png";
->>>>>>> origin/Kamil
   refreshZmarliList() {
     this.service.getZmarliList().subscribe(res => {
       this.dataSource.data = res as DeadPerson[];
@@ -41,11 +37,6 @@ export class WyszukiwarkaGrobowComponent implements OnInit {
   }
   public dataSource = new MatTableDataSource<DeadPerson>();
 
-<<<<<<< HEAD
-
-  displayedColumns: string[] = ['Name', 'DateOfBirth', 'DateOfDeath'];
-=======
->>>>>>> origin/Kamil
 
   displayedColumns: string[] = ['LodgingId', 'Name', 'DateOfBirth', 'DateOfDeath'];
   selection = new SelectionModel<DeadPerson>(false, []);
