@@ -18,7 +18,9 @@ export interface DeadPerson {
 })
 export class WyszukiwarkaGrobowComponent implements OnInit {
   panelOpenState = false;
-
+  public selectedPerson: any = [];
+  sektor: number = 0;
+  numer: number = 0;
   refreshZmarliList() {
     this.service.getZmarliList().subscribe(res => {
       this.dataSource.data = res as DeadPerson[];
@@ -44,6 +46,12 @@ export class WyszukiwarkaGrobowComponent implements OnInit {
 
   ngOnInit() {
     this.refreshZmarliList();
+  }
+  updateCheckedList() {
+    this.selectedPerson = this.selection.selected;
+
+    console.log(this.selectedPerson);
+
   }
 
 }

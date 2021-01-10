@@ -55,10 +55,12 @@
     </table>
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
     <br><br>
+    <button mat-raised-button color="primary" (click)="updateCheckedList()">Szukaj</button>
+    <br>
   </mat-card-content>
 </mat-card>
 <br>
-<p style="font-size: 24px;text-align: center;">Sektor x numer x.</p>
+<p style="font-size: 24px;text-align: center;">Sektor {{sektor}} numer {{numer}}.</p>
 <mat-card class="card mat-elevation-z0" style="background-color: rgba(0,0,0,0); padding:
 0px;">
   <mat-card-header>
