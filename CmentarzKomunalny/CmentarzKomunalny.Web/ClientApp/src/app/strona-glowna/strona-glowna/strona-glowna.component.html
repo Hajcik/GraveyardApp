@@ -1,14 +1,63 @@
 <mat-card class="card mat-elevation-z0">
 
+    <!-- Galeria -->
+
+<div class='container-fluid'>
+    <div class="row" style="padding: 20px;">
+        <div class="col-sm-12 btn btn-success">
+            Use Bootstrap carousel in Angular 8 Project
+        </div>
+    </div>
+    <div class='col-12'>
+        <ngb-carousel>
+            <ng-template ngbSlide>
+                <img src="../assets/Images/m2.jpg" alt="Delhi Metro">
+                <div class="carousel-caption">
+                    <h3 style="color: yellow">Delhi Metro</h3>
+                </div>
+            </ng-template>
+            <ng-template ngbSlide>
+                <img src="../assets/Images/m1.jpg" alt="Bangalore Metro">
+                <div class="carousel-caption">
+                    <h3 style="color: yellow">Bangalore Metro</h3>
+                </div>
+            </ng-template>
+            <ng-template ngbSlide>
+                <img src="../assets/Images/m4.jpg" alt="Channai Metro">
+                <div class="carousel-caption">
+                    <h3 style="color: yellow">Channai Metro</h3>
+                </div>
+            </ng-template>
+            <ng-template ngbSlide>
+                <img src="../assets/Images/m5.jpg" alt="Jaipur Metro">
+                <div class="carousel-caption">
+                    <h3 style="color: yellow">Jaipur Metro</h3>
+                </div>
+            </ng-template>
+            <ng-template ngbSlide>
+                <img src="../assets/Images/m3.jpg" alt="Mumbai Metro">
+                <div class="carousel-caption">
+                    <h3 style="color: yellow">Mumbai Metro</h3>
+                </div>
+            </ng-template>
+        </ngb-carousel>
+    </div>
+
+</div>
+
+    <!-- Reszta strony -->
+
     <mat-card-content class="card-content">
         <div class="hello-text-container">
-            <p class="hello-text">Zadbamy o twoich bliskich</p>
+            <p class="text-1">Witamy na stronie cmentarza komunalnego "nazwa" w "miejscowości".</p>
+            <p class="text-1">Nie możesz znaleźć nagrobka zmarłego? Skorzystaj z wyszukiwarki grobów!</p>
+            <p class="text-1">Jeśli znalazłeś a nie potrafisz go zlokalizować skorzystaj z mapy cmentarza.</p>
+            <p class="text-1">Po dodatkowe informacje zapraszamy do zakładki "Kontakt" gdzie będziesz mógł się z nami skontaktować telefonicznie lub w wiadomości email.</p>
         </div>
     </mat-card-content>
     <mat-card-footer style="justify-content: center">
         <mat-divider style="border-top-color: white; border-top-width: 2px;"></mat-divider>
         <br>
-        <button mat-stroked-button class="button" [routerLink]="['/kontakt']">Skontaktuj
-            się</button>
+        <button mat-stroked-button class="button" [routerLink]="['/kontakt']">Skontaktuj się</button>
     </mat-card-footer>
 </mat-card>

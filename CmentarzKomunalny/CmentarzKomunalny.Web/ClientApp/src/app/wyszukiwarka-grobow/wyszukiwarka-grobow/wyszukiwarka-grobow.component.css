@@ -8,7 +8,18 @@
     padding: 20px;
     background-color: rgba(0, 0, 0, 0.8);
 }
-
+mat-expansion-panel{
+  background-color: rgba(0, 0, 0, 0.8);
+}
+mat-panel-title {
+  color: white;
+}
+mat-panel-description{
+  color: white;
+}
+::ng-deep .specific-class > .mat-expansion-indicator:after {
+  color: white;
+}
 .stepper{
     background-color: rgba(0, 0, 0, 0);
 }

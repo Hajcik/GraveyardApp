@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
+import { NgbCarouselConfig } from '@ng-bootstrap/ng-bootstrap';  
+
 
 @Component({
   selector: 'app-strona-glowna',
@@ -6,8 +8,13 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./strona-glowna.component.css']
 })
 export class StronaGlownaComponent implements OnInit {
-
-  constructor() { }
+ 
+  constructor(config: NgbCarouselConfig) {  
+    config.interval = 2000;  
+    config.wrap = true;  
+    config.keyboard = false;  
+    config.pauseOnHover = false;  
+  } 
 
   ngOnInit() {
   }

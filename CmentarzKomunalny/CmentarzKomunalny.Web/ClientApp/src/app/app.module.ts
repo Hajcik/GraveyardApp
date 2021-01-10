@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
@@ -30,6 +31,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MapaComponent } from './mapa/mapa/mapa.component';
 import { SharedService } from './shared.service';
 import { RoczniceComponent } from './rocznice/rocznice/rocznice.component';
+import { AdminPanelComponent } from './admin-panel/admin-panel.component';
+import { WorkerPanelComponent } from './worker-panel/worker-panel.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 
 @NgModule({
@@ -43,16 +47,20 @@ import { RoczniceComponent } from './rocznice/rocznice/rocznice.component';
     InformacjeComponent,
     KontaktComponent,
     MapaComponent,
-    RoczniceComponent
+    RoczniceComponent,
+    AdminPanelComponent,
+    WorkerPanelComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     HttpClientModule,
+    NgbModule, // dodane - jak coś to usunąć
     MatIconModule,
     MatCardModule,
     MatDividerModule,
     MatStepperModule,
     MatFormFieldModule,
+    MatExpansionModule,
     MatInputModule,
     MatButtonModule,
     MatTableModule,
@@ -70,13 +78,15 @@ import { RoczniceComponent } from './rocznice/rocznice/rocznice.component';
       { path: 'mapa', component: MapaComponent },
       { path: 'kontakt', component: KontaktComponent },
       { path: 'rocznice', component: RoczniceComponent },
+      { path: 'panelpracownika', component: WorkerPanelComponent },
+      { path: 'paneladministratora', component: AdminPanelComponent },
     ]),
     BrowserAnimationsModule
   ],
- // providers: [
- //   { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
- //   SharedService
- // ],
+  // providers: [
+  //   { provide: HTTP_INTERCEPTORS, useClass: AuthorizeInterceptor, multi: true },
+  //   SharedService
+  // ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
