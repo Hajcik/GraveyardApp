@@ -28,36 +28,14 @@ table {
   width: 100%;
 }
 
-.mat-row:nth-child(even){
-  background-color:#dbfeb8;
+.mat-row.hovered {
+  background: #eee;
 }
 
-.mat-row:nth-child(odd){
-  background-color:#c5edac;
-}
-.mat-header-row{
-  background-color:#99c2a2;
-}
-mat-header-cell{
-  color:"white";
-}
-.mat-cell{
-    color: black;
-}
-.mat-header-cell {
-  flex-direction: column;
-  justify-content: center;
-  text-align: center;
+.mat-row.highlighted {
+background: rgb(184, 184, 184);
 }
 
-.mat-cell {
-  text-align: center;
-  justify-content:center;
-}
-
-.mat-checkbox-inner-container {
-  margin: 2px 8px auto 0 !important;
-}
 
 .buttons{
   margin-top: 20px;

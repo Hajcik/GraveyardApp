@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { SharedService } from '../../shared.service'
+import { SelectionModel } from '@angular/cdk/collections';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 export interface DeadPerson {
   Name: string,
@@ -15,18 +18,26 @@ export interface DeadPerson {
 })
 export class WyszukiwarkaGrobowComponent implements OnInit {
   panelOpenState = false;
-
+  public selectedPerson: any = [];
+  sektor: number = 0;
+  numer: number = 0;
   refreshZmarliList() {
     this.service.getZmarliList().subscribe(res => {
       this.dataSource.data = res as DeadPerson[];
     });
   }
 
+  @ViewChild(MatPaginator, { static: false }) paginator
+  @ViewChild(MatSort, { static: false }) sort
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
   public dataSource = new MatTableDataSource<DeadPerson>();
 
 
   displayedColumns: string[] = ['Name', 'DateOfBirth', 'DateOfDeath'];
-
+  selection = new SelectionModel<DeadPerson>(false, []);
   public applyFilter(value: Event) {
     const valueFilter = (event.target as HTMLInputElement).value;
     this.dataSource.filter = valueFilter.trim().toLowerCase();
@@ -35,6 +46,12 @@ export class WyszukiwarkaGrobowComponent implements OnInit {
 
   ngOnInit() {
     this.refreshZmarliList();
+  }
+  updateCheckedList() {
+    this.selectedPerson = this.selection.selected;
+
+    console.log(this.selectedPerson);
+
   }
 
 }
