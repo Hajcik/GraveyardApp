@@ -48,19 +48,11 @@
     <!-- Reszta strony -->
 
     <mat-card-content class="card-content">
-<<<<<<< HEAD
         <div class="hello-text-container">
             <p class="text-1">Witamy na stronie cmentarza komunalnego "nazwa" w "miejscowości".</p>
             <p class="text-1">Nie możesz znaleźć nagrobka zmarłego? Skorzystaj z wyszukiwarki grobów!</p>
             <p class="text-1">Jeśli znalazłeś a nie potrafisz go zlokalizować skorzystaj z mapy cmentarza.</p>
             <p class="text-1">Po dodatkowe informacje zapraszamy do zakładki "Kontakt" gdzie będziesz mógł się z nami skontaktować telefonicznie lub w wiadomości email.</p>
-=======
-        <!-- Galeria -->
-
-        <div [@thumbState]="idx === counter ? 'active' : 'inactive'" class="tmb"
-            *ngFor="let img of images; let idx = index">
-            <img [src]="img" (click)="onClickThumb($event)" />
->>>>>>> origin/Kamil
         </div>
 
 
@@ -68,13 +60,6 @@
     <mat-card-footer style="justify-content: center">
         <mat-divider style="border-top-color: white; border-top-width: 2px;"></mat-divider>
         <br>
-<<<<<<< HEAD
         <button mat-stroked-button class="button" [routerLink]="['/kontakt']">Skontaktuj się</button>
-=======
-        <button mat-stroked-button class="button" [routerLink]="['/kontakt']">Skontaktuj
-            się</button>
-        <button mat-stroked-button type="button" (click)="onNext()">Next</button>
-        <button mat-stroked-button type="button" (click)="onPrevious()">Previous</button>
->>>>>>> origin/Kamil
     </mat-card-footer>
 </mat-card>
