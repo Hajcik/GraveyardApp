@@ -106,17 +106,17 @@ export class AdminPanelComponent implements OnInit {
   //TABELA AKTUALNOŚCI
   displayedColumnsAktualnosci: string[] = ['select', 'Id', 'Title', 'NewsContent', 'DateOfPublication'];
   dataSourceAktualnosci = new MatTableDataSource<Articles>();
-  selectionAktualnosci = new SelectionModel<Articles>(true, []);
+  selectionAktualnosci = new SelectionModel<Articles>(false, []);
 
   //TABELA NEKROLOGI
   displayedColumnsNekrologi: string[] = ['select', 'Id', 'Name', 'ObituaryContent', 'DateOfDeath_Obituary'];
   dataSourceNekrologi = new MatTableDataSource<Necrologs>();
-  selectionNekrologi = new SelectionModel<Necrologs>(true, []);
+  selectionNekrologi = new SelectionModel<Necrologs>(false, []);
 
   //TABELA Pracownicy
   displayedColumnsPracownicy: string[] = ['select', 'Id', 'UserName', 'Email'];
   dataSourcePracownicy = new MatTableDataSource<Workers>();
-  selectionPracownicy = new SelectionModel<Workers>(true, []);
+  selectionPracownicy = new SelectionModel<Workers>(false, []);
 
   //TABELA Zmarli
   displayedColumnsZmarli: string[] = ['select', 'Id', 'Name', 'LodgingId', 'DateOfBirth', 'DateOfDeath'];

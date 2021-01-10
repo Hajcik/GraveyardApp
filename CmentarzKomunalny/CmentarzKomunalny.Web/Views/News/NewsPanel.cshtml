@@ -1,5 +1,87 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using System.Collections.Generic
+@using System.Linq
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Authentication
+@using CmentarzKomunalny.Web.DTOs.NewsDtos
+
+@model IEnumerable<NewsReadDto>
 @{
+    ViewData["Title"] = "Panel aktualności";
+    ViewData["DefaultPage"] = "~/";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (User.IsInRole("Administrator") || User.IsInRole("Employee"))
+{
+@if (User.IsInRole("Administrator"))
+{
+    <a asp-action="Index" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Strona główna admina .NET
+    </a>
+    <a asp-action="RegisterAdmin" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Nowy admin
+    </a>
+    <a asp-action="RegisterEmployee" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Nowy pracownik
+    </a>
+    <a asp-action="BlockEmployee" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Zablokuj pracownika
+    </a>
+    <a asp-action="UnblockEmployee" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Odblokuj pracownika
+    </a>
+    <a asp-action="ListUsers" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Spis użytkowników
+    </a>
+    <a href="paneladministratora"
+       class="btn btn-primary mb-3" style="width:auto">
+        Panel administratora serwisu
+    </a>
+}
+
+@if (User.IsInRole("Employee"))
+{
+    <a asp-action="Home" asp-controller="Home"
+       class="btn btn-primary mb-3" style="width:auto">
+        Strona główna pracownika
+    </a>
+    <a href="paneladministratora"
+       class="btn btn-primary mb-3" style="width:auto">
+        Panel pracownika serwisu
+    </a>
+}
+
+    @if (Model.Any())
+    {
+        foreach (var news in Model)
+        {
+            <div class="card mb-3">
+                <div class="card-header">
+                    ID aktualności: @news.Id
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">Tytuł: @news.Title</h5>
+                    <h5 class="card-title">Treść: @news.NewsContent</h5>
+                    <h5 class="card-title">Data publikacji: @news.DateOfPublication</h5>
+                </div>
+                <div class="card-footer">
+
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+            <div class="card">
+                <div class="card-header">
+                    Brak aktualności
+                </div>
+            </div>
+        }
+    }
 }

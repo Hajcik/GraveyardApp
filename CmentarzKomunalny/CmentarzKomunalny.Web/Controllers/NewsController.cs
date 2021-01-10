@@ -171,8 +171,6 @@ namespace CmentarzKomunalny.Web.Controllers
             _repository.SaveChanges();
             return NoContent();
         }
-
-
     }
 }
 

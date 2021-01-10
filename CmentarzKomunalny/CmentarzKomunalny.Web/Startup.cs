@@ -198,6 +198,10 @@ namespace CmentarzKomunalny.Web
                     () => context.Response.Redirect("/", true, true)));
                 endpoints.MapPost("/Identity/Account/Register", context => Task.Factory.StartNew(
                     () => context.Response.Redirect("/", true, true)));
+                endpoints.MapGet("/Identity/Account/Login", context => Task.Factory.StartNew(
+                    () => context.Response.Redirect("/", true, true)));
+                endpoints.MapPost("/Identity/Account/Login", context => Task.Factory.StartNew(
+                    () => context.Response.Redirect("/", true, true)));
                 endpoints.MapRazorPages();
             });
 
