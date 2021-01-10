@@ -23,7 +23,6 @@
     "@angular/platform-browser-dynamic": "11.0.7",
     "@angular/platform-server": "11.0.7",
     "@angular/router": "11.0.7",
-    "@ng-bootstrap/ng-bootstrap": "^8.0.1",
     "@nguniversal/module-map-ngfactory-loader": "8.1.1",
     "aspnet-prerendering": "^3.0.1",
     "bootstrap": "^4.3.1",
