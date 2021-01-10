@@ -304,7 +304,40 @@ namespace CmentarzKomunalny.Web.Controllers
             return View(model);
         }
         
+        [HttpGet]
+        public IActionResult ListUsers()
+        {
+            var users = userManager.Users;
 
+            return View(users);
+        }
+
+   /*     [HttpPost]
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            if(ModelState.IsValid)
+            {
+                if(id == null)
+                {
+                    return View("NotFound");
+                }
+
+                var user = await userManager.FindByIdAsync(id);
+                var userNames = user.UserName;
+                var rolesForUser = await userManager.GetRolesAsync(user);
+
+                using (var transaction = context.Database.BeginTransaction())
+                {
+                    foreach (var userName in userNames)
+                    {
+                       // ...
+                    }
+                }
+            }
+
+            return View();
+        }
+   */
         [HttpGet]
         public IActionResult ListRoles()
         {

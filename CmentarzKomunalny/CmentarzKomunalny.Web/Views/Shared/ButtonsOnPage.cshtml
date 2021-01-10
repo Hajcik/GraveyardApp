@@ -1,7 +1,9 @@
-﻿@model RegisterViewModel
-@{
-    ViewData["Title"] = "Panel sterowania administratora";
+﻿@{
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+@{
+
 }
 @if (User.IsInRole("Administrator"))
 {
@@ -30,3 +32,16 @@
         Spis użytkowników
     </a>
 }
+
+@if (User.IsInRole("Employee"))
+{
+        <a asp-action="Home" asp-controller="Home"
+           class="btn btn-primary mb-3" style="width:auto">
+            Strona główna pracownika
+        </a>
+        <a href="paneladministratora"
+           class="btn btn-primary mb-3" style="width:auto">
+            Panel pracownika serwisu
+        </a>
+}
+

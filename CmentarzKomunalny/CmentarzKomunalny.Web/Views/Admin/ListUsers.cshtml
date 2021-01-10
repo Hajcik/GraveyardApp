@@ -1,7 +1,7 @@
-﻿@model IEnumerable<IdentityRole>
+﻿@model IEnumerable<IdentityUser>
 
 @{
-    ViewBag.Title = "Wszystkie role w serwisie";
+    ViewBag.Title = "Wszyscy użytkownicy w serwisie";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @if (User.IsInRole("Administrator"))
@@ -32,24 +32,21 @@
     </a>
 
 
-    <h1> Wszystkie role</h1>
+    <h1> Wszyscy użytkownicy</h1>
 
     @if (Model.Any())
     {
-        foreach (var role in Model)
+        foreach (var user in Model)
         {
-            <a class="btn btn-primary mb-3" style="width:auto" asp-action="CreateRole"
-               asp-controller="admin">Dodaj nową rolę</a>
             <div class="card mb-3">
                 <div class="card-header">
-                    Role Id: @role.Id
+                    User Id: @user.Id
                 </div>
                 <div class="card-body">
-                    <h5 class="card-title">@role.Name</h5>
+                    <h5 class="card-title">Email: @user.Email</h5>
+                    <h5 class="card-title">UserName: @user.UserName</h5>
                 </div>
                 <div class="card-footer">
-                    <a href="#" class="btn btn-primary">Edit</a>
-                    <a href="#" class="btn btn-danger">Delete</a>
                 </div>
             </div>
         }
@@ -63,7 +60,7 @@
             </div>
             <div class="card-body">
                 <h5 class="card-title">
-                    Użyj przycisku by stworzyc rolę
+                    Użyj przycisku by stworzyć rolę
                 </h5>
                 <a class="btn btn-primary" style="width:auto"
                    asp-controller="admin" asp-action="CreateRole">

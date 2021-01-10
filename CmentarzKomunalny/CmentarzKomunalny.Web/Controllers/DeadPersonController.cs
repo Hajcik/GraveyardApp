@@ -18,8 +18,7 @@ namespace CmentarzKomunalny.Web.Controllers
     [Route("api/[controller]")] // tutaj chyba nazwa "wyszukiwarka-grobow"
     [ApiController]
     // currently without views
-    [Authorize(Policy = "RequireAdministratorRole")]
-    [Authorize(Policy = "RequireEmployeeRole")]
+    
     public class DeadPersonController : ControllerBase
     {
         private readonly MockDeadPeopleRepo _mockRepo = new MockDeadPeopleRepo();
@@ -57,6 +56,8 @@ namespace CmentarzKomunalny.Web.Controllers
             }
         }
 
+        [Authorize(Policy = "RequireAdministratorRole")]
+        [Authorize(Policy = "RequireEmployeeRole")]
         [HttpPost]
         public JsonResult Post(DeadPerson deadp)
         {
@@ -84,6 +85,8 @@ namespace CmentarzKomunalny.Web.Controllers
         }
 
         // update
+        [Authorize(Policy = "RequireAdministratorRole")]
+        [Authorize(Policy = "RequireEmployeeRole")]
         [HttpPut]
         public JsonResult Put(DeadPerson deadp)
         {
@@ -113,6 +116,8 @@ namespace CmentarzKomunalny.Web.Controllers
             }
         }
 
+        [Authorize(Policy = "RequireAdministratorRole")]
+        [Authorize(Policy = "RequireEmployeeRole")]
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
@@ -138,6 +143,8 @@ namespace CmentarzKomunalny.Web.Controllers
             }
         }
 
+        [Authorize(Policy = "RequireAdministratorRole")]
+        [Authorize(Policy = "RequireEmployeeRole")]
         // SEARCHING DEAD PERSON BY ITS ID
         //GET api/deadperson
         [HttpGet("DeadPersonById/{id}", Name = "GetDeadPersonById")]
@@ -151,7 +158,8 @@ namespace CmentarzKomunalny.Web.Controllers
 
         // SEARCHING DEAD PEOPLE BY ITS LODGE ID
         //GET api/deadperson/{id} - lodge id
-
+        [Authorize(Policy = "RequireAdministratorRole")]
+        [Authorize(Policy = "RequireEmployeeRole")]
         [HttpGet("DeadPeopleByLodgeId/{id}", Name = "GetDeadPersonByLodgeId")]
         public ActionResult<DeadPersonReadDto> GetDeadPeopleByLodgeId(int id)
         {
@@ -161,6 +169,8 @@ namespace CmentarzKomunalny.Web.Controllers
             return NotFound();
         }
 
+        [Authorize(Policy = "RequireAdministratorRole")]
+        [Authorize(Policy = "RequireEmployeeRole")]
         // PATCH
         //PATCH api/deadPersonById/{id}
         [HttpPatch("DeadPersonById/{id}")]

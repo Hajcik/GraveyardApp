@@ -16,8 +16,7 @@ namespace CmentarzKomunalny.Web.Controllers
     // api/lodging
     [Route("api/[controller]")] // to tez trzeba z wyszukiwarka grobow polaczyc
     [ApiController]
-    [Authorize(Policy = "RequireAdministratorRole")]
-    [Authorize(Policy = "RequireEmployeeRole")]
+    
     public class LodgingController : ControllerBase
     {
         private readonly ILodgingsRepo _repository; // dependency injection
@@ -54,6 +53,8 @@ namespace CmentarzKomunalny.Web.Controllers
             }
         }
 
+        [Authorize(Policy = "RequireAdministratorRole")]
+        [Authorize(Policy = "RequireEmployeeRole")]
         // SEARCHING LODGING BY ITS ID
         //GET api/lodging/LodgeById
         [HttpGet("LodgeById/{id}")]
@@ -65,6 +66,8 @@ namespace CmentarzKomunalny.Web.Controllers
             return NotFound();
         }
 
+        [Authorize(Policy = "RequireAdministratorRole")]
+        [Authorize(Policy = "RequireEmployeeRole")]
         [HttpPost]
         public JsonResult Post(Lodging lodge)
         {
@@ -92,6 +95,8 @@ namespace CmentarzKomunalny.Web.Controllers
             }
         }
 
+        [Authorize(Policy = "RequireAdministratorRole")]
+        [Authorize(Policy = "RequireEmployeeRole")]
         [HttpPut]
         public JsonResult Put(Lodging lodge)
         {
@@ -121,6 +126,8 @@ namespace CmentarzKomunalny.Web.Controllers
             }
         }
 
+        [Authorize(Policy = "RequireAdministratorRole")]
+        [Authorize(Policy = "RequireEmployeeRole")]
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
@@ -146,6 +153,8 @@ namespace CmentarzKomunalny.Web.Controllers
             }
         }
 
+        [Authorize(Policy = "RequireAdministratorRole")]
+        [Authorize(Policy = "RequireEmployeeRole")]
         // PATCH
         //PATCH api/lodging/LodgeById
         [HttpPatch("LodgeById/{id}")]

@@ -15,8 +15,7 @@ namespace CmentarzKomunalny.Web.Controllers
     // api/news
     [Route("api/[controller]")] // polaczyc z 'aktualnosci'
     [ApiController]
-    [Authorize(Policy = "RequireAdministratorRole")]
-    [Authorize(Policy = "RequireEmployeeRole")]
+    
     public class NewsController : ControllerBase
     {
         private readonly IConfiguration _configuration;
@@ -53,6 +52,8 @@ namespace CmentarzKomunalny.Web.Controllers
             }
         }
 
+        [Authorize(Policy = "RequireAdministratorRole")]
+        [Authorize(Policy = "RequireEmployeeRole")]
         [HttpPost]
         public JsonResult Post(News news)
         {
@@ -79,6 +80,8 @@ namespace CmentarzKomunalny.Web.Controllers
             }
         }
 
+        [Authorize(Policy = "RequireAdministratorRole")]
+        [Authorize(Policy = "RequireEmployeeRole")]
         [HttpPut]
         public JsonResult Put(News news)
         {
@@ -107,6 +110,8 @@ namespace CmentarzKomunalny.Web.Controllers
             }
         }
 
+        [Authorize(Policy = "RequireAdministratorRole")]
+        [Authorize(Policy = "RequireEmployeeRole")]
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
@@ -132,7 +137,8 @@ namespace CmentarzKomunalny.Web.Controllers
             }
         }
 
-
+        [Authorize(Policy = "RequireAdministratorRole")]
+        [Authorize(Policy = "RequireEmployeeRole")]
         // search news by its ID
         //GET api/news
         [HttpGet("{id}", Name = "GetNewsById")]
@@ -146,7 +152,8 @@ namespace CmentarzKomunalny.Web.Controllers
 
 
 
-
+        [Authorize(Policy = "RequireAdministratorRole")]
+        [Authorize(Policy = "RequireEmployeeRole")]
         // PATCH
         //PATCH api/news
         [HttpPatch("{id}")]

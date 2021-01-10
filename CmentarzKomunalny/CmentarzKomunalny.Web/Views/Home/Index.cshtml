@@ -6,13 +6,68 @@
 @{
     ViewData["Title"] = "Home";
     ViewData["DefaultPage"] = "~/";
-    ViewData["PanelAdministratora"] = "~/paneladministratora";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@if (User.IsInRole("Administrator"))
+{
+    <a asp-action="Index" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Strona główna admina .NET
+    </a>
+    <a asp-action="RegisterAdmin" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Nowy admin
+    </a>
+    <a asp-action="RegisterEmployee" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Nowy pracownik
+    </a>
+    <a asp-action="BlockEmployee" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Zablokuj pracownika
+    </a>
+    <a asp-action="UnblockEmployee" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Odblokuj pracownika
+    </a>
+    <a asp-action="ListUsers" asp-controller="Admin"
+       class="btn btn-primary mb-3" style="width:auto">
+        Spis użytkowników
+    </a>
+    <a href="paneladministratora"
+       class="btn btn-primary mb-3" style="width:auto">
+        Panel administratora serwisu
+    </a>
 }
 
-<h1>"Welcome"</h1>
-<h3>"Continue" <a asp-area="Identity" asp-page="/Account/Login">"Login"</a></h3>
+@if (User.IsInRole("Employee"))
+{
+    <a asp-action="Home" asp-controller="Home"
+       class="btn btn-primary mb-3" style="width:auto">
+        Strona główna pracownika
+    </a>
+    <a href="paneladministratora"
+       class="btn btn-primary mb-3" style="width:auto">
+        Panel pracownika serwisu
+    </a>
+}
+
+<h1>Witaj @Context.User.Identity.Name!</h1>
+<h3> <a asp-area="Identity" asp-page="/Account/Logout">Wyloguj</a></h3>
 <div>Użytkownik: @Context.User.Identity.Name</div>
-<div>@if (User.IsInRole("Administrator")) { <div>Admin</div>}</div>
-<div>@if (User.IsInRole("Employee"))  {<div>Pracownik</div>}</div>
-<div>@if (User.IsInRole("BlockedEmployee"))  {<div>Zablokowany Pracownik</div>}</div>
-<div>@if (Context.User.Identity.Name == "admin@admin.pl") { <div>xD</div> }</div>
+<div>
+    @if (User.IsInRole("Administrator"))
+    {<div>Admin</div>}
+</div>
+<div>
+    @if (User.IsInRole("Employee"))
+    {<div>Pracownik</div>}
+</div>
+<div>
+    @if (User.IsInRole("BlockedEmployee"))
+    {<div>Zablokowany Pracownik</div>}
+</div>
+<div>
+    @if (Context.User.Identity.Name == "admin@admin.pl")
+    {<div>xD</div>}
+</div>

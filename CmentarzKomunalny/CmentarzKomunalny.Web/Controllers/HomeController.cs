@@ -4,10 +4,12 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using CmentarzKomunalny.Web.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CmentarzKomunalny.Web.Controllers
 {
+    
     public class HomeController : Controller
     {
         public IActionResult Index()

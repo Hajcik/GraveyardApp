@@ -16,8 +16,7 @@ namespace CmentarzKomunalny.Web.Controllers
     // api/obituary
     [Route("api/[controller]")] // polaczyc z 'nekrologi'
     [ApiController]
-    [Authorize(Policy = "RequireAdministratorRole")]
-    [Authorize(Policy = "RequireEmployeeRole")]
+    
     public class ObituaryController : ControllerBase
     {
         private readonly IConfiguration _configuration;
@@ -53,6 +52,8 @@ namespace CmentarzKomunalny.Web.Controllers
             }
         }
 
+        [Authorize(Policy = "RequireAdministratorRole")]
+        [Authorize(Policy = "RequireEmployeeRole")]
         [HttpPost]
         public JsonResult Post(Obituary ob)
         {
@@ -78,6 +79,8 @@ namespace CmentarzKomunalny.Web.Controllers
                 return new JsonResult("Dodano nekrolog pomyślnie");
             }
         }
+        [Authorize(Policy = "RequireAdministratorRole")]
+        [Authorize(Policy = "RequireEmployeeRole")]
         [HttpPut]
         public JsonResult Put(Obituary ob)
         {
@@ -105,6 +108,8 @@ namespace CmentarzKomunalny.Web.Controllers
                 return new JsonResult("Zaktualizowano nekrolog pomyślnie");
             }
         }
+        [Authorize(Policy = "RequireAdministratorRole")]
+        [Authorize(Policy = "RequireEmployeeRole")]
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
@@ -130,6 +135,8 @@ namespace CmentarzKomunalny.Web.Controllers
             }
         }
 
+        [Authorize(Policy = "RequireAdministratorRole")]
+        [Authorize(Policy = "RequireEmployeeRole")]
         // search obituary by its ID
         //GET api/obituary
         [HttpGet("{id}", Name = "GetObituaryById")]
@@ -141,6 +148,8 @@ namespace CmentarzKomunalny.Web.Controllers
             return NotFound();
         }
 
+        [Authorize(Policy = "RequireAdministratorRole")]
+        [Authorize(Policy = "RequireEmployeeRole")]
         // PATCH
         //PATCH api/obituary
         [HttpPatch("{id}")]
@@ -158,8 +167,6 @@ namespace CmentarzKomunalny.Web.Controllers
             _repository.SaveChanges();
             return NoContent();
         }
-
-
     }
 }
 
