@@ -36,6 +36,12 @@
       </ng-container>
 
       <!-- Weight Column -->
+      <ng-container matColumnDef="LodgingId">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header> Numer kwatery </th>
+        <td mat-cell *matCellDef="let element"> {{element.LodgingId}} </td>
+      </ng-container>
+
+      <!-- Weight Column -->
       <ng-container matColumnDef="DateOfDeath">
         <th mat-header-cell *matHeaderCellDef mat-sort-header> Data zgonu </th>
         <td mat-cell *matCellDef="let element"> {{element.DateOfDeath}} </td>
@@ -44,7 +50,7 @@
 
 
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row);getValue($event)"
         [ngClass]="{hovered: row.hovered, highlighted: selection.isSelected(row)}" (mouseover)="row.hovered = true"
         (mouseout)="row.hovered = false"></tr>
 
@@ -78,7 +84,7 @@
             Sektor: {{sektor}} numer: {{numer}}
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <img src="../../../assets/map.png" alt="">
+        <img src={{image}} alt="">
       </mat-expansion-panel>
     </mat-accordion>
 

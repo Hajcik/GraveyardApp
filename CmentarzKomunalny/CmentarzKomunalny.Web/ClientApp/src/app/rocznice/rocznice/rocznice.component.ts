@@ -48,7 +48,6 @@ export class RoczniceComponent implements OnInit {
     const curTimeDayMonth = this.DDMM(new Date());
     console.log(curTimeDayMonth);
 
-
     this.refreshRoczniceList();
     this.templateList = this.roczniceLists.slice(0, this.pageSize);
 
