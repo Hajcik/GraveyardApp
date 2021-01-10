@@ -49,7 +49,7 @@ export class WyszukiwarkaGrobowComponent implements OnInit {
   }
   updateCheckedList() {
     this.selectedPerson = this.selection.selected;
-
+    this.numer = 1;
     console.log(this.selectedPerson);
 
   }
