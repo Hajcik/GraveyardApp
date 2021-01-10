@@ -25,6 +25,7 @@ export class RoczniceComponent implements OnInit {
       + '/' + this.leftpad(date.getMonth() + 1, 2);
   }
 
+
   leftpad(val, resultLength = 2, leftpadChar = '0'): string {
     return (String(leftpadChar).repeat(resultLength)
       + String(val)).slice(String(val).length);
@@ -46,7 +47,6 @@ export class RoczniceComponent implements OnInit {
     //Wyciągamy DD/MM aby sprawdzić elementy
     const curTimeDayMonth = this.DDMM(new Date());
     console.log(curTimeDayMonth);
-
 
     this.refreshRoczniceList();
     this.templateList = this.roczniceLists.slice(0, this.pageSize);

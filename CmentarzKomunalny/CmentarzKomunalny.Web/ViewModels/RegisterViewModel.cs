@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace CmentarzKomunalny.Web.ViewModels
@@ -24,6 +25,7 @@ namespace CmentarzKomunalny.Web.ViewModels
 
         [Required]
         [Display(Name = "Rola użytkownika")]
-        public string RoleName { get; set; }
+        public string Role { get; set; }
+        public IEnumerable<SelectListItem> Roles { get; set; }
     }
 }

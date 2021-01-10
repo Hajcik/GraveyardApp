@@ -45,7 +45,8 @@ namespace CmentarzKomunalny.Web
 
             services.AddIdentity<IdentityUser, IdentityRole>()
                .AddEntityFrameworkStores<ApplicationDbContext>()
-                .AddDefaultTokenProviders();
+                .AddDefaultTokenProviders()
+                .AddDefaultUI();
         //    services.AddDefaultIdentity<IdentityUser>();    
 
             services.AddControllers().AddNewtonsoftJson(s => 

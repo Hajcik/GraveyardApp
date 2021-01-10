@@ -53,15 +53,88 @@ namespace CmentarzKomunalny.Web.Controllers
                 return new JsonResult(table);
             }
         }
-        // SEARCHING ALL DEAD PEOPLE IN DB
-        //GET api/deadperson
-  //      [HttpGet]
-  //      public ActionResult<IEnumerable<DeadPersonReadDto>> GetAllDeadPeople()
-  //      {
-  //          var deadPeople = _repository.GetAllDeadPeople();
-  //          return Ok(_mapper.Map<IEnumerable<DeadPersonReadDto>>(deadPeople));
-  //      }
-       
+
+        [HttpPost]
+        public JsonResult Post(DeadPerson deadp)
+        {
+            string query = @"
+                insert into dbo.DeadPeople values
+                (N'" + deadp.Name + @"', N'" + deadp.DateOfBirth + @"',
+                 N'" + deadp.DateOfDeath + @"', '" + deadp.LodgingId + @"')";
+
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("CmentarzConnectionTEST");
+            SqlDataReader myReader;
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (SqlCommand myCommand = new SqlCommand(query, myCon))
+                {
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader); ;
+
+                    myReader.Close();
+                    myCon.Close();
+                }
+                return new JsonResult("Dodano pomyślnie");
+            }
+        }
+
+        // update
+        [HttpPut]
+        public JsonResult Put(DeadPerson deadp)
+        {
+            string query = @"
+                update dbo.DeadPeople set
+                Name = N'" + deadp.Name + @"',
+                DateOfBirth = '" + deadp.DateOfBirth + @"',
+                DateOfDeath = '" + deadp.DateOfDeath + @"',
+                LodgingId = '" + deadp.LodgingId + @"'
+                where IdDeadPerson = " + deadp.IdDeadPerson + @"";
+
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("CmentarzConnectionTEST");
+            SqlDataReader myReader;
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (SqlCommand myCommand = new SqlCommand(query, myCon))
+                {
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader); ;
+
+                    myReader.Close();
+                    myCon.Close();
+                }
+                return new JsonResult("Zaktualizowano pomyślnie");
+            }
+        }
+
+        [HttpDelete("{id}")]
+        public JsonResult Delete(int id)
+        {
+            string query = @"
+                delete from dbo.DeadPeople
+                where IdDeadPerson = " + id + @"";
+
+            DataTable table = new DataTable();
+            string sqlDataSource = _configuration.GetConnectionString("CmentarzConnectionTEST");
+            SqlDataReader myReader;
+            using (SqlConnection myCon = new SqlConnection(sqlDataSource))
+            {
+                myCon.Open();
+                using (SqlCommand myCommand = new SqlCommand(query, myCon))
+                {
+                    myReader = myCommand.ExecuteReader();
+                    table.Load(myReader); ;
+
+                    myReader.Close();
+                    myCon.Close();
+                }
+                return new JsonResult("Zaktualizowano pomyślnie");
+            }
+        }
+
         // SEARCHING DEAD PERSON BY ITS ID
         //GET api/deadperson
         [HttpGet("DeadPersonById/{id}", Name = "GetDeadPersonById")]
@@ -75,7 +148,7 @@ namespace CmentarzKomunalny.Web.Controllers
 
         // SEARCHING DEAD PEOPLE BY ITS LODGE ID
         //GET api/deadperson/{id} - lodge id
-        
+
         [HttpGet("DeadPeopleByLodgeId/{id}", Name = "GetDeadPersonByLodgeId")]
         public ActionResult<DeadPersonReadDto> GetDeadPeopleByLodgeId(int id)
         {
@@ -83,34 +156,6 @@ namespace CmentarzKomunalny.Web.Controllers
             if (deadPeopleLodgeId != null)
                 return Ok(_mapper.Map<IEnumerable<DeadPersonReadDto>>(deadPeopleLodgeId));
             return NotFound();
-        }
-
-        // ADDING DEAD PERSON TO DATABASE
-        //POST api/deadperson
-        [HttpPost]
-        public ActionResult<DeadPersonAddDto> AddDeadPersonToDb(DeadPersonAddDto deadPersonAddDto)
-        {
-            var deadPersonModel = _mapper.Map<DeadPerson>(deadPersonAddDto);
-            _repository.AddDeadPersonToDb(deadPersonModel);
-            _repository.SaveChanges();
-            var deadPersonReadDto = _mapper.Map<DeadPersonReadDto>(deadPersonModel);
-
-            return CreatedAtRoute(nameof(GetDeadPersonById), new { Id = deadPersonReadDto.IdDeadPerson }, deadPersonReadDto);
-        }
-
-        // UPDATE DEAD PERSON CONTENT BY ITS DEAD PERSON ID
-        //PUT api/deadperson/DeadPersonById/{id}
-        [HttpPut("DeadPersonById/{id}")]
-        public ActionResult UpdateDeadPerson(int id, DeadPersonAddDto deadPersonAddDto)
-        {
-            var deadPersonFromRepo = _repository.GetDeadPersonById(id);
-            if (deadPersonFromRepo == null)
-                return NotFound();
-
-            _mapper.Map(deadPersonAddDto, deadPersonFromRepo);
-            _repository.UpdateDeadPerson(deadPersonFromRepo);
-            _repository.SaveChanges();
-            return NoContent();
         }
 
         // PATCH
@@ -135,19 +180,47 @@ namespace CmentarzKomunalny.Web.Controllers
             return NoContent();
         }
 
-        // DELETE DEAD PERSON FROM DATABASE BY ITS ID
-        //DELETE api/deadperson/DeadPersonById/{id}
-        [HttpDelete("DeadPersonById/{id}")]
-        public ActionResult DeleteDeadPersonFromDb(int id)
-        {
-            var deadPersonFromRepo = _repository.GetDeadPersonById(id);
-            if (deadPersonFromRepo == null)
-                return NotFound();
-
-            _repository.DeleteDeadPersonFromDb(deadPersonFromRepo);
-            _repository.SaveChanges();
-
-            return NoContent();
-        }
     }
 }
+
+// ADDING DEAD PERSON TO DATABASE
+//POST api/deadperson
+/*     [HttpPost]
+     public ActionResult<DeadPersonAddDto> AddDeadPersonToDb(DeadPersonAddDto deadPersonAddDto)
+     {
+         var deadPersonModel = _mapper.Map<DeadPerson>(deadPersonAddDto);
+         _repository.AddDeadPersonToDb(deadPersonModel);
+         _repository.SaveChanges();
+         var deadPersonReadDto = _mapper.Map<DeadPersonReadDto>(deadPersonModel);
+         return CreatedAtRoute(nameof(GetDeadPersonById), new { Id = deadPersonReadDto.IdDeadPerson }, deadPersonReadDto);
+     }
+*/
+// UPDATE DEAD PERSON CONTENT BY ITS DEAD PERSON ID
+//PUT api/deadperson/DeadPersonById/{id}
+/*     [HttpPut("DeadPersonById/{id}")]
+     public ActionResult UpdateDeadPerson(int id, DeadPersonAddDto deadPersonAddDto)
+     {
+         var deadPersonFromRepo = _repository.GetDeadPersonById(id);
+         if (deadPersonFromRepo == null)
+             return NotFound();
+         _mapper.Map(deadPersonAddDto, deadPersonFromRepo);
+         _repository.UpdateDeadPerson(deadPersonFromRepo);
+         _repository.SaveChanges();
+         return NoContent();
+     }
+*/
+
+// DELETE DEAD PERSON FROM DATABASE BY ITS ID
+//DELETE api/deadperson/DeadPersonById/{id}
+/*      [HttpDelete("DeadPersonById/{id}")]
+      public ActionResult DeleteDeadPersonFromDb(int id)
+      {
+          var deadPersonFromRepo = _repository.GetDeadPersonById(id);
+          if (deadPersonFromRepo == null)
+              return NotFound();
+          _repository.DeleteDeadPersonFromDb(deadPersonFromRepo);
+          _repository.SaveChanges();
+          return NoContent();
+      }
+  }
+*/

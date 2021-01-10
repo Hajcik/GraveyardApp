@@ -1,66 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { SelectionModel } from '@angular/cdk/collections';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
+import { SelectionModel } from '@angular/cdk/collections';
+import { SharedService } from '../shared.service';
 
 export interface Articles {
-  tytul: string;
-  position: number;
-  tresc: string;
-  data: string;
+  Id: number;
+  Title: string;
+  DateOfPublication: string;
+  NewsContent: string;
 }
 
 export interface Necrologs {
-  tytul: string;
-  position: number;
-  tresc: string;
-  data: string;
+  Id: number;
+  Name: string;
+  ObituaryContent: string;
+  DateOfDeath_Obituary: string;
+}
+
+export interface DeadPerson {
+  Id: number;
+  Name: string;
+  LodgingId: number;
+  DateOfBirth: string;
+  DateOfDeath: string;
 }
 
 export interface Workers {
-  position: number;
-  name: string;
-  surname: string;
+  Id: string;
+  UserName: string;
+  Email: string;
 }
-
-const ARTICLES_DATA: Articles[] = [
-  { position: 1, tytul: 'Hydrogen', tresc: "1.0079", data: '12/12/2020' },
-  { position: 2, tytul: 'Helium', tresc: "4.0026", data: '12/12/2020' },
-  { position: 3, tytul: 'Lithium', tresc: "6.941", data: '12/12/2020' },
-  { position: 4, tytul: 'Beryllium', tresc: "9.0122", data: '12/12/2020' },
-  { position: 5, tytul: 'Boron', tresc: "10.811", data: '12/12/2020' },
-  { position: 6, tytul: 'Carbon', tresc: "12.0107", data: '12/12/2020' },
-  { position: 7, tytul: 'Nitrogen', tresc: "14.0067", data: '12/12/2020' },
-  { position: 8, tytul: 'Oxygen', tresc: "15.9994", data: '12/12/2020' },
-  { position: 9, tytul: 'Fluorine', tresc: "18.9984", data: '12/12/2020' },
-  { position: 10, tytul: 'Neon', tresc: "20.1797", data: '12/12/2020' },
-];
-
-const NECROLOGS_DATA: Necrologs[] = [
-  { position: 1, tytul: 'Hydrogen', tresc: "1.0079", data: '12/12/2020' },
-  { position: 2, tytul: 'Helium', tresc: "4.0026", data: '12/12/2020' },
-  { position: 3, tytul: 'Lithium', tresc: "6.941", data: '12/12/2020' },
-  { position: 4, tytul: 'Beryllium', tresc: "9.0122", data: '12/12/2020' },
-  { position: 5, tytul: 'Boron', tresc: "10.811", data: '12/12/2020' },
-  { position: 6, tytul: 'Carbon', tresc: "12.0107", data: '12/12/2020' },
-  { position: 7, tytul: 'Nitrogen', tresc: "14.0067", data: '12/12/2020' },
-  { position: 8, tytul: 'Oxygen', tresc: "15.9994", data: '12/12/2020' },
-  { position: 9, tytul: 'Fluorine', tresc: "18.9984", data: '12/12/2020' },
-  { position: 10, tytul: 'Neon', tresc: "20.1797", data: '12/12/2020' },
-];
-
-const WORKERS_DATA: Workers[] = [
-  { position: 1, name: 'Hydrogen', surname: 'H' },
-  { position: 2, name: 'Helium', surname: 'He' },
-  { position: 3, name: 'Lithium', surname: 'Li' },
-  { position: 4, name: 'Beryllium', surname: 'Be' },
-  { position: 5, name: 'Boron', surname: 'B' },
-  { position: 6, name: 'Carbon', surname: 'C' },
-  { position: 7, name: 'Nitrogen', surname: 'N' },
-  { position: 8, name: 'Oxygen', surname: 'O' },
-  { position: 9, name: 'Fluorine', surname: 'F' },
-  { position: 10, name: 'Neon', surname: 'Ne' },
-];
 
 @Component({
   selector: 'app-admin-panel',
@@ -68,27 +40,307 @@ const WORKERS_DATA: Workers[] = [
   styleUrls: ['./admin-panel.component.css']
 })
 export class AdminPanelComponent implements OnInit {
+  public aktualnosciDelete: any = [];
+  public aktualnosciEdit: any = [];
+  public nekrologDelete: any = [];
+  public nekrologEdit: any = [];
+  public pracownikTable: any = [];
+  public ZmarliTable: any = [];
+  public ZmarliEdit: any = [];
 
+  @ViewChild(MatPaginator, { static: false }) paginator
+  @ViewChild(MatSort, { static: false }) sort
+  // fb: FormBuilder
+  constructor(fb: FormBuilder, private service: SharedService) { }
+  ngAfterViewInit() {
+    this.dataSourcePracownicy.paginator = this.paginator;
+    this.dataSourcePracownicy.sort = this.sort;
+    this.dataSourceNekrologi.paginator = this.paginator;
+    this.dataSourceNekrologi.sort = this.sort;
+    this.dataSourceAktualnosci.paginator = this.paginator;
+    this.dataSourceAktualnosci.sort = this.sort;
+    this.dataSourceZmarli.paginator = this.paginator;
+    this.dataSourceZmarli.sort = this.sort;
+  }
+  refreshAktualnosciList() {
+    this.service.getAktualnosciList().subscribe(res => {
+      this.dataSourceAktualnosci.data = res as Articles[];
+    });
+  }
 
-  constructor(fb: FormBuilder) { }
+  refreshNekrologiList() {
+    this.service.getNekrologiList().subscribe(res => {
+      this.dataSourceNekrologi.data = res as Necrologs[];
+    });
+  }
 
-  ngOnInit() {
+  refreshPracownicyList() {
+    this.service.getPracownicyList().subscribe(res => {
+      this.dataSourcePracownicy.data = res as Workers[];
+    });
+  }
+
+  refreshZmarliList() {
+    this.service.getZmarliList().subscribe(res => {
+      this.dataSourceZmarli.data = res as DeadPerson[];
+    });
+  }
+
+  public applyFilterPracownicy(value: Event) {
+    const valueFilter = (event.target as HTMLInputElement).value;
+    this.dataSourcePracownicy.filter = valueFilter.trim().toLowerCase();
+  }
+  public applyFilterAktualnosci(value: Event) {
+    const valueFilter = (event.target as HTMLInputElement).value;
+    this.dataSourceAktualnosci.filter = valueFilter.trim().toLowerCase();
+  }
+  public applyFilterNekrologi(value: Event) {
+    const valueFilter = (event.target as HTMLInputElement).value;
+    this.dataSourceNekrologi.filter = valueFilter.trim().toLowerCase();
+  }
+  public applyFilterZmarli(value: Event) {
+    const valueFilter = (event.target as HTMLInputElement).value;
+    this.dataSourceZmarli.filter = valueFilter.trim().toLowerCase();
   }
 
   //TABELA AKTUALNOŚCI
-  displayedColumnsAktualnosci: string[] = ['select', 'position', 'tytul', 'tresc', 'data'];
-  dataSourceAktualnosci = new MatTableDataSource<Articles>(ARTICLES_DATA);
+  displayedColumnsAktualnosci: string[] = ['select', 'Id', 'Title', 'NewsContent', 'DateOfPublication'];
+  dataSourceAktualnosci = new MatTableDataSource<Articles>();
   selectionAktualnosci = new SelectionModel<Articles>(true, []);
 
   //TABELA NEKROLOGI
-  displayedColumnsNekrologi: string[] = ['select', 'position', 'tytul', 'tresc', 'data'];
-  dataSourceNekrologi = new MatTableDataSource<Necrologs>(NECROLOGS_DATA);
+  displayedColumnsNekrologi: string[] = ['select', 'Id', 'Name', 'ObituaryContent', 'DateOfDeath_Obituary'];
+  dataSourceNekrologi = new MatTableDataSource<Necrologs>();
   selectionNekrologi = new SelectionModel<Necrologs>(true, []);
 
-  //TABELA NEKROLOGI
-  displayedColumnsPracownicy: string[] = ['select', 'position', 'name', 'surname'];
-  dataSourcePracownicy = new MatTableDataSource<Workers>(WORKERS_DATA);
+  //TABELA Pracownicy
+  displayedColumnsPracownicy: string[] = ['select', 'Id', 'UserName', 'Email'];
+  dataSourcePracownicy = new MatTableDataSource<Workers>();
   selectionPracownicy = new SelectionModel<Workers>(true, []);
+
+  //TABELA Zmarli
+  displayedColumnsZmarli: string[] = ['select', 'Id', 'Name', 'LodgingId', 'DateOfBirth', 'DateOfDeath'];
+  dataSourceZmarli = new MatTableDataSource<DeadPerson>();
+  selectionZmarli = new SelectionModel<DeadPerson>(true, []);
+
+  //Dodaj "Aktualnosci"
+  GetInputFromDodajaktualnosc() {
+    //pobierz tytuł
+    let inputDodajAktualnosciTytul = (document.getElementById("dodajAktualnoscTytul") as HTMLInputElement).value;
+    //pobierz treść wiadomości
+    let inputDodajAktualnosciTresc = (document.getElementById("dodajAktualnoscTresc") as HTMLTextAreaElement).value;
+    //pobierz tytuł
+    let inputDodajAktualnosciData = (document.getElementById("dodajAktualnoscData") as HTMLInputElement).value;
+
+
+    //Sprawdzenie
+    console.log(inputDodajAktualnosciTytul);
+    console.log(inputDodajAktualnosciTresc);
+    console.log(inputDodajAktualnosciData);
+  }
+
+  //Usun "Aktualnosci"
+  GetCheckedUsunAktualnosci() {
+    //Wczytanie wszystkich danych do tablicy
+    this.aktualnosciDelete = this.selectionAktualnosci.selected;
+
+    //Sprawdzenie
+    console.log(this.aktualnosciDelete);
+  }
+
+  //Edytuj "Aktualności"
+  GetDataFromEdytujaktualnosc() {
+    //pobierz tytuł
+    let inputEdytujAktualnosciTytul = (document.getElementById("edytujAktualnoscTytul") as HTMLInputElement).value;
+    //pobierz treść wiadomości
+    let inputEdytujAktualnosciTresc = (document.getElementById("edytujAktualnoscTresc") as HTMLTextAreaElement).value;
+    //pobierz tytuł
+    let inputEdytujAktualnosciData = (document.getElementById("edytujAktualnoscData") as HTMLInputElement).value;
+
+    //Wczytanie wszystkich danych do tablicy
+    this.aktualnosciEdit = this.selectionAktualnosci.selected;
+
+    //Sprawdzenie
+    console.log(inputEdytujAktualnosciTytul);
+    console.log(inputEdytujAktualnosciTresc);
+    console.log(inputEdytujAktualnosciData);
+    console.log(this.aktualnosciDelete);
+  }
+
+  //Dodaj "Nekrolog"
+  GetInputFromDodajnekrolog() {
+    //pobierz imię i nazwisko
+    let inputDodajNekrologImieINazwisko = (document.getElementById("dodajNekrologImieINazwisko") as HTMLInputElement).value;
+    //pobierz treść wiadomości
+    let inputDodajNekrologTresc = (document.getElementById("dodajNekrologTresc") as HTMLTextAreaElement).value;
+    //pobierz tytuł
+    let inputDodajNekrologData = (document.getElementById("dodajNekrologData") as HTMLInputElement).value;
+
+
+    //Sprawdzenie
+    console.log(inputDodajNekrologImieINazwisko);
+    console.log(inputDodajNekrologTresc);
+    console.log(inputDodajNekrologData);
+  }
+
+  //Usun "Nekrolog"
+  GetCheckedUsunNekrolog() {
+    //Wczytanie wszystkich danych do tablicy
+    this.nekrologDelete = this.selectionNekrologi.selected;
+
+    //Sprawdzenie
+    console.log(this.nekrologDelete);
+  }
+
+  //Edytuj "Aktualności"
+  GetDataFromEdytujnekrolog() {
+    //pobierz tytuł
+    let inputEdytujNekrologImieINazwisko = (document.getElementById("edytujNekrologImieINazwisko") as HTMLInputElement).value;
+
+    //pobierz treść wiadomości
+    let inputEdytujNekrologTresc = (document.getElementById("edytujNekrologTresc") as HTMLTextAreaElement).value;
+
+    //pobierz date
+    let inputEdytujNekrologData = (document.getElementById("edytujNekrologData") as HTMLInputElement).value;
+
+    //Wczytanie wszystkich danych do tablicy
+    this.nekrologEdit = this.selectionNekrologi.selected;
+
+    //Sprawdzenie
+    console.log(inputEdytujNekrologImieINazwisko);
+    console.log(inputEdytujNekrologTresc);
+    console.log(inputEdytujNekrologData);
+    console.log(this.nekrologEdit);
+  }
+
+  //"Pracownicy"
+  GetCheckedUsunPracownik() {
+    //Wczytanie wszystkich danych do tablicy
+    this.pracownikTable = this.selectionPracownicy.selected;
+
+    //Sprawdzenie
+    console.log(this.pracownikTable);
+  }
+
+  //"Pracownicy"
+  GetCheckedZablokujPracownik() {
+    //Wczytanie wszystkich danych do tablicy
+    this.pracownikTable = this.selectionPracownicy.selected;
+
+    //Sprawdzenie
+    console.log(this.pracownikTable);
+  }
+
+  //Dodaj "Zmarłego"
+  GetInputFromDodajzmarlego() {
+    //pobierz imię i nazwisko
+    let inputDodajZmarlegoImieINazwisko = (document.getElementById("dodajZmarlegoImieINazwisko") as HTMLInputElement).value;
+    //pobierz treść wiadomości
+    let inputDodajZmarlegoNumerGrobu = (document.getElementById("dodajZmarlegoNumerGrobu") as HTMLInputElement).value;
+    //pobierz datę śmierci
+    let inputDodajZmarlegoDataSmierci = (document.getElementById("dodajZmarlegoDataSmierci") as HTMLInputElement).value;
+    //pobierz datę śmierci
+    let inputDodajZmarlegoDataUrodzenia = (document.getElementById("dodajZmarlegoDataUrodzenia") as HTMLInputElement).value;
+
+    //Sprawdzenie
+    console.log(inputDodajZmarlegoImieINazwisko);
+    console.log(inputDodajZmarlegoNumerGrobu);
+    console.log(inputDodajZmarlegoDataSmierci);
+    console.log(inputDodajZmarlegoDataUrodzenia);
+  }
+
+  //Usuń "Zmarłego"
+  GetCheckedUsunZmarlego() {
+    //Wczytanie wszystkich danych do tablicy
+    this.ZmarliTable = this.selectionZmarli.selected;
+
+    //Sprawdzenie
+    console.log(this.ZmarliTable);
+  }
+
+  //Edytuj "Aktualności"
+  GetDataFromEdytujzmarlego() {
+    //pobierz imię i nazwisko
+    let inputEdytujZmarlegoImieINazwisko = (document.getElementById("edytujZmarlegoImieINazwisko") as HTMLInputElement).value;
+    //pobierz numer
+    let inputEdytujZmarlegoNumerGrobu = (document.getElementById("edytujZmarlegoNumerGrobu") as HTMLInputElement).value;
+    //pobierz datę śmierci
+    let inputEdytujZmarlegoDataSmierci = (document.getElementById("edytujZmarlegoDataUrodzenia") as HTMLInputElement).value;
+    //pobierz datę śmierci
+    let inputEdytujZmarlegoDataUrodzenia = (document.getElementById("edytujZmarlegoDataSmierci") as HTMLInputElement).value;
+
+    //Wczytanie wszystkich danych do tablicy
+    this.ZmarliEdit = this.selectionZmarli.selected;
+
+    //Sprawdzenie
+    console.log(inputEdytujZmarlegoImieINazwisko);
+    console.log(inputEdytujZmarlegoNumerGrobu);
+    console.log(inputEdytujZmarlegoDataSmierci);
+    console.log(inputEdytujZmarlegoDataUrodzenia);
+
+    console.log(this.ZmarliEdit);
+  }
+
+
+
+
+  /*ModalTitle: string;
+  //aktualnosc: any;
+  ActivateAddEditAktualnoscComp: boolean = false;
+
+  @Input() aktualnosc: any;
+  NewsId: string;
+  NewsTitle: string;
+  NewsContent: string;
+  NewsDateOfPublication: string;
+
+  addClickAktualnosc() {
+    this.aktualnosc = {
+      Id: 0,
+      Title: "",
+      NewsContent: "",
+      DateOfPublication: "",
+    }
+    this.ModalTitle = "Dodaj aktualnosc";
+    this.ActivateAddEditAktualnoscComp = true;
+  }
+
+  closeAddClickAktualnosc() {
+    this.ActivateAddEditAktualnoscComp = false;
+    this.refreshAktualnosciList();
+  }
+
+  delClickAktualnosc() {
+
+  }
+  editClickAktualnosc(item) {
+    this.aktualnosc = item;
+    this.ModalTitle = "Edytuj aktualnosc";
+    this.ActivateAddEditAktualnoscComp = true;
+  }
+  addClickNekrolog() {
+
+  }
+  delClickNekrolog() {
+
+  }
+  putClickNekrolog() {
+
+  }
+  */
+  ngOnInit() {
+    this.refreshAktualnosciList();
+    this.refreshNekrologiList();
+    this.refreshPracownicyList();
+    this.refreshZmarliList();
+
+    // aktualnosc
+    //    this.NewsId = this.aktualnosc.Id;
+    //    this.NewsTitle = this.aktualnosc.NewsTitle;
+    //    this.NewsContent = this.aktualnosc.NewsContent;
+    //    this.NewsDateOfPublication = this.aktualnosc.NewsDateOfPublication;
+  }
+
 
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelectedAktualnosci() {
@@ -105,6 +357,11 @@ export class AdminPanelComponent implements OnInit {
     const numSelectedPracownicy = this.selectionPracownicy.selected.length;
     const numRowsPracownicy = this.dataSourcePracownicy.data.length;
     return numSelectedPracownicy === numRowsPracownicy;
+  }
+  isAllSelectedZmarli() {
+    const numSelectedZmarli = this.selectionZmarli.selected.length;
+    const numRowsZmarli = this.dataSourceZmarli.data.length;
+    return numSelectedZmarli === numRowsZmarli;
   }
 
   /** Selects all rows if they are not all selected; otherwise clear selection. */
@@ -123,25 +380,36 @@ export class AdminPanelComponent implements OnInit {
       this.selectionPracownicy.clear() :
       this.dataSourcePracownicy.data.forEach(row => this.selectionPracownicy.select(row));
   }
+  masterToggleZmarli() {
+    this.isAllSelectedZmarli() ?
+      this.selectionZmarli.clear() :
+      this.dataSourceZmarli.data.forEach(row => this.selectionZmarli.select(row));
+  }
 
   /** The label for the checkbox on the passed row */
   checkboxLabelAktualnosci(row?: Articles): string {
     if (!row) {
       return `${this.isAllSelectedAktualnosci() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selectionAktualnosci.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+    return `${this.selectionAktualnosci.isSelected(row) ? 'deselect' : 'select'} row ${row.Id + 1}`;
   }
   checkboxLabelNekrologi(row?: Necrologs): string {
     if (!row) {
       return `${this.isAllSelectedNekrologi() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selectionNekrologi.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+    return `${this.selectionNekrologi.isSelected(row) ? 'deselect' : 'select'} row ${row.Id + 1}`;
   }
   checkboxLabelPracownicy(row?: Workers): string {
     if (!row) {
       return `${this.isAllSelectedPracownicy() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selectionPracownicy.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+    return `${this.selectionPracownicy.isSelected(row) ? 'deselect' : 'select'} row ${row.Id}`;
+  }
+  checkboxLabelZmarli(row?: DeadPerson): string {
+    if (!row) {
+      return `${this.isAllSelectedZmarli() ? 'select' : 'deselect'} all`;
+    }
+    return `${this.selectionZmarli.isSelected(row) ? 'deselect' : 'select'} row ${row.Id}`;
   }
 
 }

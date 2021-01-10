@@ -69,3 +69,7 @@ pre {
 .btn-dark {
   font-size: 90px;
 }
+h1,
+pre {
+  text-align: center;
+}

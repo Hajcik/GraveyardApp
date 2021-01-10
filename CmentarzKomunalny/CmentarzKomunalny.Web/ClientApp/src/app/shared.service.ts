@@ -23,15 +23,15 @@ export class SharedService {
   }
   /* METODA DODAJĄCA DANE DO BAZY */
   addAktualnosci(val: any) {
-    return this.http.post(this.APIUrl + 'api/news', val);
+    return this.http.post(this.APIUrl + '/news', val);
   }
   /* METODA AKTUALIZUJĄCA DANE DO BAZY */
   putAktualnosci(val: any) {
-    return this.http.put(this.APIUrl + 'api/news', val);
+    return this.http.put(this.APIUrl + '/news', val);
   }
   /* METODA AKTUALIZUJĄCA DANE DO BAZY (usuwanie po ID aktualnosci)*/
   deleteAktualnosci(val: any) {
-    return this.http.delete(this.APIUrl + 'api/news' + val);
+    return this.http.delete(this.APIUrl + '/news/' + val);
   }
 
   /* NEKROLOGI */
@@ -53,7 +53,26 @@ export class SharedService {
     return this.http.delete(this.APIUrl + '/nekrologi/' + val);
   }
 
+  /* ZMARLI */
+
   getZmarliList(): Observable<any[]> {
     return this.http.get<any>(this.APIUrl + '/deadperson');
+  }
+
+  addDeadPerson(val: any) {
+    return this.http.post(this.APIUrl + '/deadperson/', val);
+  }
+
+  putDeadPerson(val: any) {
+    return this.http.put(this.APIUrl + '/deadperson/', val);
+  }
+
+  deleteDeadPerson(val: any) {
+    return this.http.delete(this.APIUrl + '/deadperson/' + val);
+  }
+
+  /* PRACOWNICY */
+  getPracownicyList(): Observable<any[]> {
+    return this.http.get<any>(this.APIUrl + '/employee/');
   }
 }

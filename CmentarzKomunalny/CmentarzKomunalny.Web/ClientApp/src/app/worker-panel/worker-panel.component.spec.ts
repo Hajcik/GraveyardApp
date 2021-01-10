@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+=======
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+>>>>>>> origin/Kamil
 
 import { WorkerPanelComponent } from './worker-panel.component';
 
@@ -6,7 +10,11 @@ describe('WorkerPanelComponent', () => {
   let component: WorkerPanelComponent;
   let fixture: ComponentFixture<WorkerPanelComponent>;
 
+<<<<<<< HEAD
   beforeEach(waitForAsync(() => {
+=======
+  beforeEach(async(() => {
+>>>>>>> origin/Kamil
     TestBed.configureTestingModule({
       declarations: [ WorkerPanelComponent ]
     })
