@@ -1,29 +1,61 @@
 .card {
-  margin: 20px 0px 20px 0px;
-  padding: 0px;
-  background-color: rgba(0, 0, 0, 0);
-  height: 89vh;
-  border: 0px;
-  box-shadow: 0px;
-}
+    margin: 20px 0px 0px 0px;
+    padding: 0px;
+    background-color: rgba(0, 0, 0, 0);
+    height: 90vh;
+    border: 0px;
+    box-shadow: 0px;
+  }
+  .card-content {
+    height: 60vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  
+  .button {
+    display: block;
+    margin: 0 auto;
+    color: white;
+    border: 1px solid white;
+    background-color: rgba(0, 0, 0, 0.2);
+  }
+  
+  .hello-text-conatainer {
+    width: 95%;
+  }
+  
+  .text-1 {
+    font-size: 30px;
+    font-family: "Abril Fatface", cursive;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 1cm;
+    padding: 20px;
+  }
+  .text-2 {
+    font-size: 30px;
+    font-family: "Abril Fatface", cursive;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 1cm;
+    padding: 20px;
+  }
+  .text-3 {
+    font-size: 30px;
+    font-family: "Abril Fatface", cursive;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 1cm;
+    padding: 20px;
+  }
+  .text-4 {
+    font-size: 30px;
+    font-family: "Abril Fatface", cursive;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 1cm;
+    padding: 20px;
+  }
+  .tmb img { 
 
-.card-content {
-  height: 80%;
-  width: 100%;
-  display: flex;
-  flex-direction: column-reverse;
-}
+    width: 300px;
 
-.button {
-  display: block;
-  margin: 0 auto;
-  margin-bottom: 30px;
-  color: white;
-  border: 1px solid white;
-  background-color: rgba(0, 0, 0, 0.2);
 }
-
-#home {
-  min-height: 75%;
-  margin-bottom: 100px;
-}
+h1, pre { text-align: center }
