@@ -1,99 +1,28 @@
-<div class="container">
-    <div class="section-1">
-        <p>1</p>
-    </div>
-    <div class="section-2">
-        <p>2</p>
-    </div>
-    <div class="section-3">
-        <p>3</p>
-    </div>
-    <div class="section-4">
-        <p>4</p>
-    </div>
-    <div class="section-5">
-        <p>5</p>
-    </div>
-    <div class="section-6">
-        <p>6</p>
-    </div>
-    <div class="section-7">
-        <p>7</p>
-    </div>
-    <div class="section-8">
-        <p>8</p>
-    </div>
-    <div class="section-9">
-        <p>9</p>
-    </div>
-    <div class="section-10">
-        <p>10</p>
-    </div>
-    <div class="section-11">
-        <p>11</p>
-    </div>
-    <div class="section-12">
-        <p>12</p>
-    </div>
-    <div class="section-13">
-        <p>13</p>
-    </div>
-    <div class="section-14">
-        <p>14</p>
-    </div>
-    <div class="wejscie">
-        <mat-icon>
-            <p class="wejscie-icon">arrow_upward</p>
-        </mat-icon>
-    </div>
-</div>
+<mat-card class="card">
+    <mat-card-content>
+        <img src="../../../assets/map.png" alt="">
+    </mat-card-content>
+</mat-card>
 
-<div class="container">
-    <div class="section-1">
-        <p>1</p>
-    </div>
-    <div class="section-2">
-        <p>2</p>
-    </div>
-    <div class="section-3">
-        <p>3</p>
-    </div>
-    <div class="section-4">
-        <p>4</p>
-    </div>
-    <div class="section-5">
-        <p>5</p>
-    </div>
-    <div class="section-6">
-        <p>6</p>
-    </div>
-    <div class="section-7">
-        <p>7</p>
-    </div>
-    <div class="section-8">
-        <p>8</p>
-    </div>
-    <div class="section-9">
-        <p>9</p>
-    </div>
-    <div class="section-10">
-        <p>10</p>
-    </div>
-    <div class="section-11">
-        <p>11</p>
-    </div>
-    <div class="section-12">
-        <p>12</p>
-    </div>
-    <div class="section-13">
-        <p>13</p>
-    </div>
-    <div class="section-14">
-        <p>14</p>
-    </div>
-    <div class="wejscie">
-        <mat-icon>
-            <p class="wejscie-icon">arrow_upward</p>
-        </mat-icon>
-    </div>
-</div>
+<mat-card class="card">
+    <mat-card-content>
+        <mat-form-field appearance="fill">
+            <mat-label><strong>Wybierz sektor</strong></mat-label>
+            <mat-select [(value)]="selected">
+                <mat-option value="../../../assets/1.png">Sektor 1</mat-option>
+                <mat-option value="../../../assets/2.png">Sektor 2</mat-option>
+                <mat-option value="../../../assets/3.png">Sektor 3</mat-option>
+                <mat-option value="../../../assets/4.png">Sektor 4</mat-option>
+                <mat-option value="../../../assets/5.png">Sektor 5</mat-option>
+                <mat-option value="../../../assets/6.png">Sektor 6</mat-option>
+                <mat-option value="../../../assets/7.png">Sektor 7</mat-option>
+                <mat-option value="../../../assets/8.png">Sektor 8</mat-option>
+                <mat-option value="../../../assets/9.png">Sektor 9</mat-option>
+                <mat-option value="../../../assets/10.png">Sektor 10</mat-option>
+                <mat-option value="../../../assets/11.png">Sektor 11</mat-option>
+                <mat-option value="../../../assets/12.png">Sektor 12</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <img src={{selected}} alt="">
+    </mat-card-content>
+</mat-card>

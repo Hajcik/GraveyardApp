@@ -1,164 +1,60 @@
-p{
-    color: black;
-    text-align: center;
-    margin-top: 10%;
-    font-size: 20px;
-}
-.wejscie{
-    position: absolute;
-    bottom: 5%;
-    left: 0%;
-    width: 100%;
-    text-align: center;
-}
-.wejscie-icon{
-    font-size: 30px;
-    color: red;
-}
-.container{
-    background-color: rgb(204, 186, 97);
-    height: 80vh;
-    width: 90vw;
-    position: absolute;
-    border: 1px solid black;
+.label{
+    display: none;
+    color: white;
 }
 
-.section-1{
-    background-color: wheat;
-    width: 18.75%;
-    height: 12%;
-    position: absolute;
-    top: 5%;
-    left: 5%;
-    border: 1px solid black;
+.card{
+    margin: 20px 0px 20px 0px;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
-.section-2{
-    background-color: wheat;
-    width: 18.75%;
-    height: 12%;
-    position: absolute;
-    top: 5%;
-    left: 28.75%;
-    border: 1px solid black;
+
+img{
+  width: 100%;
+  height: auto;
 }
 
-.section-3{
-    background-color: wheat;
-    width: 18.75%;
-    height: 12%;
-    position: absolute;
-    top: 5%;
-    left: 52.5%;
-    border: 1px solid black;
+
+::ng-deep .mat-focused .mat-form-field-label {
+  /*change color of label*/
+  color: white !important;
 }
 
-.section-4{ 
-    background-color: wheat;
-    width: 18.75%;
-    height: 12%;
-    position: absolute;
-    top: 5%;
-    left: 76.25%;
-    border: 1px solid black;
+::ng-deep.mat-form-field-underline {
+  /*change color of underline*/
+  background-color: white !important;
 }
 
-.section-5{
-    background-color: wheat;
-    width: 18.75%;
-    height: 12%;
-    position: absolute;
-    top: 22%;
-    left: 5%;
-    border: 1px solid black;
+::ng-deep.mat-form-field-ripple {
+  /*change color of underline when focused*/
+  background-color: white !important;
+  ;
+}
+mat-panel-title {
+  color: white;
+}
+.opcja{
+  color: white;
+}
+mat-panel-description,ng-star-inserted {
+  color: white;
+}
+mat-select{
+  color: white;
+}
+span{
+  color: white;
+}
+::ng-deep .specific-class > .mat-expansion-indicator:after {
+  color: white;
+}
+.mat-form-field-appearance-legacy .mat-form-field-underline {
+  background-color: white;}
+strong {
+  color: white;
 }
 
-.section-6{
-    background-color: wheat;
-    width: 18.75%;
-    height: 12%;
-    position: absolute;
-    top: 22%;
-    left: 28.75%;
-    border: 1px solid black;
-}
-
-.section-7{
-    background-color: wheat;
-    width: 18.75%;
-    height: 12%;
-    position: absolute;
-    top: 22%;
-    left: 52.5%;
-    border: 1px solid black;
-}
-
-.section-8{ 
-    background-color: wheat;
-    width: 18.75%;
-    height: 12%;
-    position: absolute;
-    top: 22%;
-    left: 76.25%;
-    border: 1px solid black;
-}
-
-.section-9{
-    background-color: wheat;
-    width: 18.75%;
-    height: 12%;
-    position: absolute;
-    top: 39%;
-    left: 5%;
-    border: 1px solid black;
-}
-
-.section-10{
-    background-color: wheat;
-    width: 18.75%;
-    height: 12%;
-    position: absolute;
-    top: 39%;
-    left: 28.75%;
-    border: 1px solid black;
-}
-
-.section-11{
-    background-color: wheat;
-    width: 18.75%;
-    height: 12%;
-    position: absolute;
-    top: 39%;
-    left: 52.5%;
-    border: 1px solid black;
-}
-
-.section-12{ 
-    background-color: wheat;
-    width: 18.75%;
-    height: 12%;
-    position: absolute;
-    top: 39%;
-    left: 76.25%;
-    border: 1px solid black;
-}
-
-.section-13{ 
-    background-color: wheat;
-    width: 23.75%;
-    height: 18%;
-    position: absolute;
-    top: 58%;
-    left: 71.25%;
-    border: 1px solid black;
-}
-
-.section-14{ 
-    background-color: wheat;
-    width: 23.75%;
-    height: 18%;
-    position: absolute;
-    top: 58%;
-    left: 5%;
-    border: 1px solid black;
+input, textarea {
+  color: white;
 }

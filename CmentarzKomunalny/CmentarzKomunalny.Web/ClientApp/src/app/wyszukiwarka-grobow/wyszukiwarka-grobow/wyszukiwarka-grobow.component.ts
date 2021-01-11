@@ -22,18 +22,18 @@ export class WyszukiwarkaGrobowComponent implements OnInit {
   public selectedPerson: any = [];
   sektor: number = 0;
   numer: any = 0;
-  image: string = "../../../assets/map.png";
+  image: string = "../../../assets/1.png";
   refreshZmarliList() {
     this.service.getZmarliList().subscribe(res => {
       this.dataSource.data = res as DeadPerson[];
     });
   }
 
-  @ViewChild(MatPaginator, { static: false }) paginator
-  @ViewChild(MatSort, { static: false }) sort
+  @ViewChild(MatPaginator, { static: false }) paginatorZmarli
+  @ViewChild(MatSort, { static: false }) sortZmarli
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    this.dataSource.paginator = this.paginatorZmarli;
+    this.dataSource.sort = this.sortZmarli;
   }
   public dataSource = new MatTableDataSource<DeadPerson>();
 

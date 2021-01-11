@@ -19,6 +19,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
+import { MatSelectModule } from '@angular/material/select';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatStepperModule } from '@angular/material/stepper';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -55,6 +56,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
     HttpClientModule,
     MatIconModule,
     MatCardModule,
+    MatSelectModule,
     MatDividerModule,
     MatStepperModule,
     MatFormFieldModule,

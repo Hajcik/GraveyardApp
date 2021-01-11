@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -48,25 +48,20 @@ export class AdminPanelComponent implements OnInit {
   public ZmarliTable: any = [];
   public ZmarliEdit: any = [];
 
-  @ViewChild(MatPaginator, { static: false }) paginator
-  @ViewChild(MatSort, { static: false }) sort
+
+  @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
+  @ViewChildren(MatSort) sort = new QueryList<MatSort>();
+
+
   // fb: FormBuilder
   constructor(fb: FormBuilder, private service: SharedService) { }
-  ngAfterViewInit() {
-    this.dataSourcePracownicy.paginator = this.paginator;
-    this.dataSourcePracownicy.sort = this.sort;
-    this.dataSourceNekrologi.paginator = this.paginator;
-    this.dataSourceNekrologi.sort = this.sort;
-    this.dataSourceAktualnosci.paginator = this.paginator;
-    this.dataSourceAktualnosci.sort = this.sort;
-    this.dataSourceZmarli.paginator = this.paginator;
-    this.dataSourceZmarli.sort = this.sort;
-  }
+
   refreshAktualnosciList() {
     this.service.getAktualnosciList().subscribe(res => {
       this.dataSourceAktualnosci.data = res as Articles[];
     });
   }
+
 
   refreshNekrologiList() {
     this.service.getNekrologiList().subscribe(res => {
@@ -87,20 +82,36 @@ export class AdminPanelComponent implements OnInit {
   }
 
   public applyFilterPracownicy(value: Event) {
-    const valueFilter = (event.target as HTMLInputElement).value;
-    this.dataSourcePracownicy.filter = valueFilter.trim().toLowerCase();
+    const valueFilterPracownicy = (event.target as HTMLInputElement).value;
+    this.dataSourcePracownicy.filter = valueFilterPracownicy.trim().toLowerCase();
+
+    if (this.dataSourcePracownicy.paginator) {
+      this.dataSourcePracownicy.paginator.firstPage();
+    }
   }
   public applyFilterAktualnosci(value: Event) {
-    const valueFilter = (event.target as HTMLInputElement).value;
-    this.dataSourceAktualnosci.filter = valueFilter.trim().toLowerCase();
+    const valueFilterAktualnosci = (event.target as HTMLInputElement).value;
+    this.dataSourceAktualnosci.filter = valueFilterAktualnosci.trim().toLowerCase();
+
+    if (this.dataSourceAktualnosci.paginator) {
+      this.dataSourceAktualnosci.paginator.firstPage();
+    }
   }
   public applyFilterNekrologi(value: Event) {
-    const valueFilter = (event.target as HTMLInputElement).value;
-    this.dataSourceNekrologi.filter = valueFilter.trim().toLowerCase();
+    const valueFilterNekrologi = (event.target as HTMLInputElement).value;
+    this.dataSourceNekrologi.filter = valueFilterNekrologi.trim().toLowerCase();
+
+    if (this.dataSourceNekrologi.paginator) {
+      this.dataSourceNekrologi.paginator.firstPage();
+    }
   }
   public applyFilterZmarli(value: Event) {
-    const valueFilter = (event.target as HTMLInputElement).value;
-    this.dataSourceZmarli.filter = valueFilter.trim().toLowerCase();
+    const valueFilterZmarli = (event.target as HTMLInputElement).value;
+    this.dataSourceZmarli.filter = valueFilterZmarli.trim().toLowerCase();
+
+    if (this.dataSourceZmarli.paginator) {
+      this.dataSourceZmarli.paginator.firstPage();
+    }
   }
 
   //TABELA AKTUALNOŚCI
@@ -410,6 +421,17 @@ export class AdminPanelComponent implements OnInit {
       return `${this.isAllSelectedZmarli() ? 'select' : 'deselect'} all`;
     }
     return `${this.selectionZmarli.isSelected(row) ? 'deselect' : 'select'} row ${row.Id}`;
+  }
+  ngAfterViewInit() {
+    this.dataSourceAktualnosci.paginator = this.paginator.toArray()[0];
+    this.dataSourceAktualnosci.sort = this.sort.toArray()[0];
+
+    this.dataSourceNekrologi.paginator = this.paginator.toArray()[1];
+    this.dataSourceNekrologi.sort = this.sort.toArray()[1];
+
+    this.dataSourceZmarli.paginator = this.paginator.toArray()[2];
+    this.dataSourceZmarli.sort = this.sort.toArray()[2];
+
   }
 
 }

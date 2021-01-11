@@ -14,6 +14,10 @@ mat-panel-description {
   color: white;
 }
 
+button{
+  margin-right: 6px;
+}
+
 .example-form {
   min-width: 150px;
   max-width: 500px;

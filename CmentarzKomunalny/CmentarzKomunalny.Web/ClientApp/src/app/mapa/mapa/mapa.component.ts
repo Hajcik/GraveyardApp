@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./mapa.component.css']
 })
 export class MapaComponent implements OnInit {
-
+  selected = '../../../assets/1.png';
   constructor() { }
 
   ngOnInit() {
