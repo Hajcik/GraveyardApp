@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class SharedService {
-  readonly APIUrl = "https://localhost:44357/api"; /*Adres API - Adres po uruchomieniu przez .net*/
+  readonly APIUrl = "https://localhost:44361/api"; /*Adres API - Adres po uruchomieniu przez .net*/
 
   constructor(private http: HttpClient) { }
 

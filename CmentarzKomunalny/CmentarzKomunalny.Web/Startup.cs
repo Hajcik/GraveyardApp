@@ -109,7 +109,7 @@ namespace CmentarzKomunalny.Web
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequiredLength = 8;
                 options.Password.RequiredUniqueChars = 1;
-
+                
                 // lockout settings
                 options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(4); // 4 minutes to logout
                 options.Lockout.MaxFailedAccessAttempts = 3;

@@ -240,6 +240,8 @@ export class AdminPanelComponent implements OnInit {
       //Sprawdzenie
       console.log(this.nekrologDelete);
     }
+
+    this.refreshAktualnosciList();
   }
 
   inputEdytujNekrologImieINazwisko: any;
@@ -280,11 +282,10 @@ export class AdminPanelComponent implements OnInit {
       ObituaryContent:this.inputEdytujNekrologTresc,
     };
 
-    if (this.nekrologEdit == "") { alert("Nie wybrano żadnego nekrologu, spróbuj ponownie") }
-    else if (confirm) {
-      alert("Czy na pewno?")
+  //  if (this.nekrologEdit == "") { alert("Nie wybrano żadnego nekrologu, spróbuj ponownie") }
+  //  else if (confirm) {
+  //    alert("Czy na pewno?")
       this.service.putNekrologi(nekrologjson).subscribe();
-    
     
         this.refreshNekrologiList();
         alert("Zaktualizowano pomyślnie")
@@ -295,8 +296,7 @@ export class AdminPanelComponent implements OnInit {
         console.log(this.inputEdytujNekrologData);
         console.log(this.nekrologEdit);
         console.log(this.service.putNekrologi(nekrologjson).subscribe(akt => this.service.putNekrologi(nekrologjson), this.nekrologEdit));
-    }
-    this.refreshNekrologiList();
+   // }
   }
 
   //Dodaj "Zmarłego"

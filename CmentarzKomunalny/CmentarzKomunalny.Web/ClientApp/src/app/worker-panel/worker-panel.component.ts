@@ -274,7 +274,7 @@ export class WorkerPanelComponent implements OnInit {
       LodgingId: inputDodajZmarlegoNumerGrobu
     };
 
-    this.service.addDeadPerson(zmarlyjson).subscribe(akt => this.service.addDeadPerson(zmarlyjson));
+    this.service.addDeadPerson(zmarlyjson).subscribe();
     alert("Dodano zmarłą osobę");
     this.refreshZmarliList();
     //Sprawdzenie

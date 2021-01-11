@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output, OnInit } from '@angular/core';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { SharedService } from '../../shared.service'
 
 @Component({
   selector: 'app-strona-glowna',
