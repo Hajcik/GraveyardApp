@@ -28,7 +28,7 @@
         <input matInput [matDatepicker]="dp" id="dodajAktualnoscData" disabled>
         <mat-hint align="start"><strong>Podaj datę aktualności</strong> </mat-hint>
         <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-        <mat-datepicker #dp disabled="false"></mat-datepicker>
+        <mat-datepicker touchUi #dp disabled="false"></mat-datepicker>
       </mat-form-field>
     </form>
     <br>
@@ -67,7 +67,7 @@
         <input matInput [matDatepicker]="dp2" id="edytujAktualnoscData" disabled>
         <mat-hint align="start"><strong>Podaj datę aktualności</strong> </mat-hint>
         <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
-        <mat-datepicker #dp2 disabled="false"></mat-datepicker>
+        <mat-datepicker touchUi #dp2 disabled="false"></mat-datepicker>
       </mat-form-field>
     </form>
 
@@ -127,8 +127,9 @@
     </table>
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
     <br><br>
-    <button mat-raised-button color="primary" (click)="GetDataFromEdytujaktualnosc()">Dodaj</button>
     <button mat-raised-button color="warn" (click)="GetCheckedUsunAktualnosci()">Usuń</button>
+    <button mat-raised-button color="accent" (click)="GetDataFromEdytujaktualnosc()">Edytuj</button>
+
   </mat-expansion-panel>
 </mat-accordion>
 <br>
@@ -163,7 +164,7 @@
         <input matInput [matDatepicker]="dp3" id="dodajNekrologData" disabled>
         <mat-hint align="start"><strong>Podaj datę śmierci</strong> </mat-hint>
         <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
-        <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+        <mat-datepicker touchUi #dp3 disabled="false"></mat-datepicker>
       </mat-form-field>
     </form>
     <br>
@@ -201,7 +202,7 @@
         <input matInput [matDatepicker]="dp4" id="edytujNekrologData" disabled>
         <mat-hint align="start"><strong>Podaj datę śmierci</strong> </mat-hint>
         <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
-        <mat-datepicker #dp4 disabled="false"></mat-datepicker>
+        <mat-datepicker touchUi #dp4 disabled="false"></mat-datepicker>
       </mat-form-field>
     </form>
     <br>
@@ -258,8 +259,8 @@
     </table>
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
     <br>
-    <button mat-raised-button color="primary" (click)="GetDataFromEdytujnekrolog()">Edytuj</button>
     <button mat-raised-button color="warn" (click)="GetCheckedUsunNekrolog()">Usuń</button>
+    <button mat-raised-button color="accent" (click)="GetDataFromEdytujnekrolog()">Edytuj</button>
   </mat-expansion-panel>
 </mat-accordion>
 <br>
@@ -289,7 +290,7 @@
         <input matInput [matDatepicker]="dp5" id="dodajZmarlegoDataUrodzenia" disabled>
         <mat-hint align="start"><strong>Data urodzenia</strong> </mat-hint>
         <mat-datepicker-toggle matSuffix [for]="dp5"></mat-datepicker-toggle>
-        <mat-datepicker #dp5 disabled="false"></mat-datepicker>
+        <mat-datepicker touchUi #dp5 disabled="false"></mat-datepicker>
       </mat-form-field>
     </form>
     <br>
@@ -299,7 +300,7 @@
         <input matInput [matDatepicker]="dp6" id="dodajZmarlegoDataSmierci" disabled>
         <mat-hint align="start"><strong>Data śmierci</strong> </mat-hint>
         <mat-datepicker-toggle matSuffix [for]="dp6"></mat-datepicker-toggle>
-        <mat-datepicker #dp6 disabled="false"></mat-datepicker>
+        <mat-datepicker touchUi #dp6 disabled="false"></mat-datepicker>
       </mat-form-field>
     </form>
 
@@ -333,7 +334,7 @@
         <input matInput [matDatepicker]="dp7" id="edytujZmarlegoDataUrodzenia" disabled>
         <mat-hint align="start"><strong>Data urodzenia</strong> </mat-hint>
         <mat-datepicker-toggle matSuffix [for]="dp7"></mat-datepicker-toggle>
-        <mat-datepicker #dp7 disabled="false"></mat-datepicker>
+        <mat-datepicker touchUi #dp7 disabled="false"></mat-datepicker>
       </mat-form-field>
     </form>
     <br>
@@ -343,7 +344,7 @@
         <input matInput [matDatepicker]="dp8" id="edytujZmarlegoDataSmierci" disabled>
         <mat-hint align="start"><strong>Data śmierci</strong> </mat-hint>
         <mat-datepicker-toggle matSuffix [for]="dp8"></mat-datepicker-toggle>
-        <mat-datepicker #dp8 disabled="false"></mat-datepicker>
+        <mat-datepicker touchUi #dp8 disabled="false"></mat-datepicker>
       </mat-form-field>
     </form>
     <br><br>
