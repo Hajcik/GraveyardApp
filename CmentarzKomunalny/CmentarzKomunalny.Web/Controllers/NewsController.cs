@@ -15,7 +15,7 @@ namespace CmentarzKomunalny.Web.Controllers
     // api/news
     [Route("api/[controller]")] // polaczyc z 'aktualnosci'
     [ApiController]
-    
+
     public class NewsController : ControllerBase
     {
         private readonly IConfiguration _configuration;
@@ -52,8 +52,8 @@ namespace CmentarzKomunalny.Web.Controllers
             }
         }
 
-        [Authorize(Policy = "RequireAdministratorRole")]
-        [Authorize(Policy = "RequireEmployeeRole")]
+        //   [Authorize(Policy = "RequireAdministratorRole")]
+        //   [Authorize(Policy = "RequireEmployeeRole")]
         [HttpPost]
         public JsonResult Post(News news)
         {
@@ -80,8 +80,8 @@ namespace CmentarzKomunalny.Web.Controllers
             }
         }
 
-        [Authorize(Policy = "RequireAdministratorRole")]
-        [Authorize(Policy = "RequireEmployeeRole")]
+        //   [Authorize(Policy = "RequireAdministratorRole")]
+        //   [Authorize(Policy = "RequireEmployeeRole")]
         [HttpPut]
         public JsonResult Put(News news)
         {
@@ -89,8 +89,8 @@ namespace CmentarzKomunalny.Web.Controllers
                 update dbo.News set
                 Title = N'" + news.Title + @"',
                 DateOfPublication = '" + news.DateOfPublication + @"',
-                NewsContent = '" + news.NewsContent + @"'
-                where Id = " + news.Id + @"";
+                NewsContent = N'" + news.NewsContent + @"'
+                where Id = '" + news.Id + @"'";
 
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("CmentarzConnectionTEST");
@@ -110,8 +110,8 @@ namespace CmentarzKomunalny.Web.Controllers
             }
         }
 
-        [Authorize(Policy = "RequireAdministratorRole")]
-        [Authorize(Policy = "RequireEmployeeRole")]
+        //   [Authorize(Policy = "RequireAdministratorRole")]
+        //   [Authorize(Policy = "RequireEmployeeRole")]
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
@@ -136,27 +136,28 @@ namespace CmentarzKomunalny.Web.Controllers
                 return new JsonResult("Usunięto aktualność pomyślnie");
             }
         }
-
-        [Authorize(Policy = "RequireAdministratorRole")]
-        [Authorize(Policy = "RequireEmployeeRole")]
+    }
+}
+     //   [Authorize(Policy = "RequireAdministratorRole")]
+     //   [Authorize(Policy = "RequireEmployeeRole")]
         // search news by its ID
         //GET api/news
-        [HttpGet("{id}", Name = "GetNewsById")]
-        public ActionResult<NewsReadDto> GetNewsById(int id)
-        {
-            var newsId = _repository.GetNewsById(id);
-            if (newsId != null)
-                return Ok(_mapper.Map<NewsReadDto>(newsId));
-            return NotFound();
-        }
+    //    [HttpGet("{id}", Name = "GetNewsById")]
+    //    public ActionResult<NewsReadDto> GetNewsById(int id)
+    //    {
+    //        var newsId = _repository.GetNewsById(id);
+    //        if (newsId != null)
+    //            return Ok(_mapper.Map<NewsReadDto>(newsId));
+    //        return NotFound();
+    //    }
 
 
 
-        [Authorize(Policy = "RequireAdministratorRole")]
-        [Authorize(Policy = "RequireEmployeeRole")]
+     //   [Authorize(Policy = "RequireAdministratorRole")]
+     //   [Authorize(Policy = "RequireEmployeeRole")]
         // PATCH
         //PATCH api/news
-        [HttpPatch("{id}")]
+    /*    [HttpPatch("{id}")]
         public ActionResult PartialNewsUpdate(int id, JsonPatchDocument<NewsAddDto> patchDoc)
         {
             var newsFromRepo = _repository.GetNewsById(id);
@@ -172,7 +173,8 @@ namespace CmentarzKomunalny.Web.Controllers
             return NoContent();
         }
     }
-}
+    */
+
 
 /*
  * // get all news

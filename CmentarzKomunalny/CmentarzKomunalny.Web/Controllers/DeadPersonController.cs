@@ -37,7 +37,7 @@ namespace CmentarzKomunalny.Web.Controllers
         public JsonResult Get()
         {
             string query = @"
-                select LodgingId, Name, DateOfBirth, DateOfDeath from dbo.DeadPeople";
+                select IdDeadPerson, LodgingId, Name, DateOfBirth, DateOfDeath from dbo.DeadPeople";
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("CmentarzConnectionTEST");
             SqlDataReader myReader;
@@ -56,8 +56,8 @@ namespace CmentarzKomunalny.Web.Controllers
             }
         }
 
-        [Authorize(Policy = "RequireAdministratorRole")]
-        [Authorize(Policy = "RequireEmployeeRole")]
+    //    [Authorize(Policy = "RequireAdministratorRole")]
+    //    [Authorize(Policy = "RequireEmployeeRole")]
         [HttpPost]
         public JsonResult Post(DeadPerson deadp)
         {
@@ -85,8 +85,8 @@ namespace CmentarzKomunalny.Web.Controllers
         }
 
         // update
-        [Authorize(Policy = "RequireAdministratorRole")]
-        [Authorize(Policy = "RequireEmployeeRole")]
+    //    [Authorize(Policy = "RequireAdministratorRole")]
+    //    [Authorize(Policy = "RequireEmployeeRole")]
         [HttpPut]
         public JsonResult Put(DeadPerson deadp)
         {
@@ -96,7 +96,7 @@ namespace CmentarzKomunalny.Web.Controllers
                 DateOfBirth = '" + deadp.DateOfBirth + @"',
                 DateOfDeath = '" + deadp.DateOfDeath + @"',
                 LodgingId = '" + deadp.LodgingId + @"'
-                where IdDeadPerson = " + deadp.IdDeadPerson + @"";
+                where IdDeadPerson = '" + deadp.IdDeadPerson + @"'";
 
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("CmentarzConnectionTEST");
@@ -116,8 +116,8 @@ namespace CmentarzKomunalny.Web.Controllers
             }
         }
 
-        [Authorize(Policy = "RequireAdministratorRole")]
-        [Authorize(Policy = "RequireEmployeeRole")]
+    //    [Authorize(Policy = "RequireAdministratorRole")]
+    //    [Authorize(Policy = "RequireEmployeeRole")]
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
@@ -143,8 +143,8 @@ namespace CmentarzKomunalny.Web.Controllers
             }
         }
 
-        [Authorize(Policy = "RequireAdministratorRole")]
-        [Authorize(Policy = "RequireEmployeeRole")]
+    //    [Authorize(Policy = "RequireAdministratorRole")]
+    //    [Authorize(Policy = "RequireEmployeeRole")]
         // SEARCHING DEAD PERSON BY ITS ID
         //GET api/deadperson
         [HttpGet("DeadPersonById/{id}", Name = "GetDeadPersonById")]
@@ -169,8 +169,8 @@ namespace CmentarzKomunalny.Web.Controllers
             return NotFound();
         }
 
-        [Authorize(Policy = "RequireAdministratorRole")]
-        [Authorize(Policy = "RequireEmployeeRole")]
+    //    [Authorize(Policy = "RequireAdministratorRole")]
+    //    [Authorize(Policy = "RequireEmployeeRole")]
         // PATCH
         //PATCH api/deadPersonById/{id}
         [HttpPatch("DeadPersonById/{id}")]

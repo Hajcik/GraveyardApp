@@ -42,15 +42,15 @@ export class SharedService {
   }
   /* METODA DODAJĄCA DANE DO BAZY */
   addNekrologi(val: any) {
-    return this.http.post(this.APIUrl + '/nekrologi', val);
+    return this.http.post(this.APIUrl + '/obituary', val);
   }
   /* METODA AKTUALIZUJĄCA DANE DO BAZY */
   putNekrologi(val: any) {
-    return this.http.put(this.APIUrl + '/nekrologi', val);
+    return this.http.put(this.APIUrl + '/obituary', val);
   }
   /* METODA AKTUALIZUJĄCA DANE DO BAZY (usuwanie po ID aktualnosci)*/
   deleteNekrologi(val: any) {
-    return this.http.delete(this.APIUrl + '/nekrologi/' + val);
+    return this.http.delete(this.APIUrl + '/obituary/' + val);
   }
 
   /* ZMARLI */
@@ -69,10 +69,5 @@ export class SharedService {
 
   deleteDeadPerson(val: any) {
     return this.http.delete(this.APIUrl + '/deadperson/' + val);
-  }
-
-  /* PRACOWNICY */
-  getPracownicyList(): Observable<any[]> {
-    return this.http.get<any>(this.APIUrl + '/employee/');
   }
 }

@@ -1,10 +1,11 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { SharedService } from '../shared.service';
+
 
 export interface Articles {
   Id: number;
@@ -21,18 +22,13 @@ export interface Necrologs {
 }
 
 export interface DeadPerson {
-  Id: number;
+  IdDeadPerson: number;
   Name: string;
   LodgingId: number;
   DateOfBirth: string;
   DateOfDeath: string;
 }
 
-export interface Workers {
-  Id: string;
-  UserName: string;
-  Email: string;
-}
 
 @Component({
   selector: 'app-admin-panel',
@@ -44,24 +40,14 @@ export class AdminPanelComponent implements OnInit {
   public aktualnosciEdit: any = [];
   public nekrologDelete: any = [];
   public nekrologEdit: any = [];
-  public pracownikTable: any = [];
   public ZmarliTable: any = [];
   public ZmarliEdit: any = [];
 
-  @ViewChild(MatPaginator, { static: false }) paginator
-  @ViewChild(MatSort, { static: false }) sort
+  @ViewChildren(MatPaginator) paginator = new QueryList<MatPaginator>();
+  @ViewChildren(MatSort) sort = new QueryList<MatSort>();
   // fb: FormBuilder
   constructor(fb: FormBuilder, private service: SharedService) { }
-  ngAfterViewInit() {
-    this.dataSourcePracownicy.paginator = this.paginator;
-    this.dataSourcePracownicy.sort = this.sort;
-    this.dataSourceNekrologi.paginator = this.paginator;
-    this.dataSourceNekrologi.sort = this.sort;
-    this.dataSourceAktualnosci.paginator = this.paginator;
-    this.dataSourceAktualnosci.sort = this.sort;
-    this.dataSourceZmarli.paginator = this.paginator;
-    this.dataSourceZmarli.sort = this.sort;
-  }
+  
   refreshAktualnosciList() {
     this.service.getAktualnosciList().subscribe(res => {
       this.dataSourceAktualnosci.data = res as Articles[];
@@ -74,33 +60,35 @@ export class AdminPanelComponent implements OnInit {
     });
   }
 
-  refreshPracownicyList() {
-    this.service.getPracownicyList().subscribe(res => {
-      this.dataSourcePracownicy.data = res as Workers[];
-    });
-  }
-
   refreshZmarliList() {
     this.service.getZmarliList().subscribe(res => {
       this.dataSourceZmarli.data = res as DeadPerson[];
     });
   }
 
-  public applyFilterPracownicy(value: Event) {
-    const valueFilter = (event.target as HTMLInputElement).value;
-    this.dataSourcePracownicy.filter = valueFilter.trim().toLowerCase();
-  }
   public applyFilterAktualnosci(value: Event) {
-    const valueFilter = (event.target as HTMLInputElement).value;
-    this.dataSourceAktualnosci.filter = valueFilter.trim().toLowerCase();
+    const valueFilterAktualnosci = (event.target as HTMLInputElement).value;
+    this.dataSourceAktualnosci.filter = valueFilterAktualnosci.trim().toLowerCase();
+
+    if (this.dataSourceAktualnosci.paginator) {
+      this.dataSourceAktualnosci.paginator.firstPage();
+    }
   }
   public applyFilterNekrologi(value: Event) {
-    const valueFilter = (event.target as HTMLInputElement).value;
-    this.dataSourceNekrologi.filter = valueFilter.trim().toLowerCase();
+    const valueFilterNekrologi = (event.target as HTMLInputElement).value;
+    this.dataSourceNekrologi.filter = valueFilterNekrologi.trim().toLowerCase();
+
+    if (this.dataSourceNekrologi.paginator) {
+      this.dataSourceNekrologi.paginator.firstPage();
+    }
   }
   public applyFilterZmarli(value: Event) {
-    const valueFilter = (event.target as HTMLInputElement).value;
-    this.dataSourceZmarli.filter = valueFilter.trim().toLowerCase();
+    const valueFilterZmarli = (event.target as HTMLInputElement).value;
+    this.dataSourceZmarli.filter = valueFilterZmarli.trim().toLowerCase();
+
+    if (this.dataSourceZmarli.paginator) {
+      this.dataSourceZmarli.paginator.firstPage();
+    }
   }
 
   //TABELA AKTUALNOŚCI
@@ -113,15 +101,11 @@ export class AdminPanelComponent implements OnInit {
   dataSourceNekrologi = new MatTableDataSource<Necrologs>();
   selectionNekrologi = new SelectionModel<Necrologs>(false, []);
 
-  //TABELA Pracownicy
-  displayedColumnsPracownicy: string[] = ['select', 'Id', 'UserName', 'Email'];
-  dataSourcePracownicy = new MatTableDataSource<Workers>();
-  selectionPracownicy = new SelectionModel<Workers>(false, []);
-
   //TABELA Zmarli
-  displayedColumnsZmarli: string[] = ['select', 'Id', 'Name', 'LodgingId', 'DateOfBirth', 'DateOfDeath'];
+  displayedColumnsZmarli: string[] = ['select', 'IdDeadPerson', 'Name', 'LodgingId', 'DateOfBirth', 'DateOfDeath'];
   dataSourceZmarli = new MatTableDataSource<DeadPerson>();
   selectionZmarli = new SelectionModel<DeadPerson>(true, []);
+
 
   //Dodaj "Aktualnosci"
   GetInputFromDodajaktualnosc() {
@@ -132,7 +116,16 @@ export class AdminPanelComponent implements OnInit {
     //pobierz tytuł
     let inputDodajAktualnosciData = (document.getElementById("dodajAktualnoscData") as HTMLInputElement).value;
 
+    const aktualnoscjson = {
+      Title: inputDodajAktualnosciTytul,
+      DateOfPublication: inputDodajAktualnosciData,
+      NewsContent: inputDodajAktualnosciTresc
+    };
 
+    this.service.addAktualnosci(aktualnoscjson).subscribe(akt => this.service.addAktualnosci(aktualnoscjson));
+    alert("Dodano aktualność");
+    this.refreshAktualnosciList();
+    
     //Sprawdzenie
     console.log(inputDodajAktualnosciTytul);
     console.log(inputDodajAktualnosciTresc);
@@ -142,33 +135,74 @@ export class AdminPanelComponent implements OnInit {
   //Usun "Aktualnosci"
   GetCheckedUsunAktualnosci() {
     //Wczytanie wszystkich danych do tablicy
-    this.aktualnosciDelete = this.selectionAktualnosci.selected;
 
+    this.aktualnosciDelete = this.selectionAktualnosci.selected.map(x => x.Id);
+
+    if (confirm("Czy jesteś pewny?"))
+    {
+      if (this.aktualnosciDelete == "") { alert("Nie zaznaczono aktualności, spróbuj ponownie") }
+      else {
+      this.service.deleteAktualnosci(this.aktualnosciDelete).subscribe();
+      this.refreshAktualnosciList();
+      alert("Usunięto aktualność")
     //Sprawdzenie
-    console.log(this.aktualnosciDelete);
+        console.log(this.aktualnosciDelete);
+        console.log(this.service.deleteAktualnosci(this.aktualnosciDelete).subscribe());
+      }
+    }
   }
+
+  inputEdytujAktualnosciTytul: any;
+  inputEdytujAktualnosciTresc: any;
+  inputEdytujAktualnosciData: any;
 
   //Edytuj "Aktualności"
   GetDataFromEdytujaktualnosc() {
     //pobierz tytuł
-    let inputEdytujAktualnosciTytul = (document.getElementById("edytujAktualnoscTytul") as HTMLInputElement).value;
+    this.inputEdytujAktualnosciTytul = (document.getElementById("edytujAktualnoscTytul") as HTMLInputElement).value;
     //pobierz treść wiadomości
-    let inputEdytujAktualnosciTresc = (document.getElementById("edytujAktualnoscTresc") as HTMLTextAreaElement).value;
+    this.inputEdytujAktualnosciTresc = (document.getElementById("edytujAktualnoscTresc") as HTMLTextAreaElement).value;
     //pobierz tytuł
-    let inputEdytujAktualnosciData = (document.getElementById("edytujAktualnoscData") as HTMLInputElement).value;
+    this.inputEdytujAktualnosciData = (document.getElementById("edytujAktualnoscData") as HTMLInputElement).value;
 
     //Wczytanie wszystkich danych do tablicy
-    this.aktualnosciEdit = this.selectionAktualnosci.selected;
+    this.aktualnosciEdit = this.selectionAktualnosci.selected.map(x => x.Id).join("");
 
-    //Sprawdzenie
-    console.log(inputEdytujAktualnosciTytul);
-    console.log(inputEdytujAktualnosciTresc);
-    console.log(inputEdytujAktualnosciData);
-    console.log(this.aktualnosciDelete);
+    if (this.inputEdytujAktualnosciTytul == "") {
+      this.inputEdytujAktualnosciTytul = this.selectionAktualnosci.selected.map(x => x.Title).join("");
+    }
+
+    if (this.inputEdytujAktualnosciTresc == "") {
+      this.inputEdytujAktualnosciTresc = this.selectionAktualnosci.selected.map(x => x.NewsContent).join("");
+    }
+
+    if (this.inputEdytujAktualnosciData == "") {
+      this.inputEdytujAktualnosciData = this.selectionAktualnosci.selected.map(x => x.DateOfPublication).join("");
+    }
+
+    const aktualnoscjson = {
+      Id:this.aktualnosciEdit,
+      Title:this.inputEdytujAktualnosciTytul,
+      NewsContent:this.inputEdytujAktualnosciTresc,
+      DateOfPublication:this.inputEdytujAktualnosciData,
+    };
+    if (this.aktualnosciEdit == "") { alert("Nie wybrano żadnej aktualności, spróbuj ponownie") }
+    else if (confirm) {
+      alert("Czy na pewno?")
+      this.service.putAktualnosci(aktualnoscjson).subscribe();
+    
+    this.refreshAktualnosciList();
+      //Sprawdzenie
+      console.log(this.inputEdytujAktualnosciTytul);
+      console.log(this.inputEdytujAktualnosciTresc);
+      console.log(this.inputEdytujAktualnosciData);
+    }
+    this.refreshAktualnosciList();
   }
 
   //Dodaj "Nekrolog"
   GetInputFromDodajnekrolog() {
+   // let inputDodajNekrologImieINazwisko = "";
     //pobierz imię i nazwisko
     let inputDodajNekrologImieINazwisko = (document.getElementById("dodajNekrologImieINazwisko") as HTMLInputElement).value;
     //pobierz treść wiadomości
@@ -176,7 +210,15 @@ export class AdminPanelComponent implements OnInit {
     //pobierz tytuł
     let inputDodajNekrologData = (document.getElementById("dodajNekrologData") as HTMLInputElement).value;
 
+    const nekrologjson = {
+      Name: inputDodajNekrologImieINazwisko,
+      ObituaryContent: inputDodajNekrologTresc,
+      DateOfDeath_Obituary: inputDodajNekrologData
+    };
 
+    this.service.addNekrologi(nekrologjson).subscribe(akt => this.service.addNekrologi(nekrologjson));
+    alert("Dodano nekrolog");
+    this.refreshNekrologiList();
     //Sprawdzenie
     console.log(inputDodajNekrologImieINazwisko);
     console.log(inputDodajNekrologTresc);
@@ -186,49 +228,75 @@ export class AdminPanelComponent implements OnInit {
   //Usun "Nekrolog"
   GetCheckedUsunNekrolog() {
     //Wczytanie wszystkich danych do tablicy
-    this.nekrologDelete = this.selectionNekrologi.selected;
+    this.nekrologDelete = this.selectionNekrologi.selected.map(x => x.Id);
 
-    //Sprawdzenie
-    console.log(this.nekrologDelete);
+    if (this.nekrologDelete == "") {
+      alert("Nie wybrano żadnego nekrologu, spróbuj ponownie");
+    }
+    else if (confirm("Czy jesteś pewny?")) {
+      this.service.deleteNekrologi(this.nekrologDelete).subscribe();
+      this.refreshNekrologiList();
+      alert("Usunięto nekrolog");
+      //Sprawdzenie
+      console.log(this.nekrologDelete);
+    }
   }
 
-  //Edytuj "Aktualności"
+  inputEdytujNekrologImieINazwisko: any;
+  inputEdytujNekrologTresc: any;
+  inputEdytujNekrologData: any;
+
+  //Edytuj "Nekrolog"
   GetDataFromEdytujnekrolog() {
     //pobierz tytuł
-    let inputEdytujNekrologImieINazwisko = (document.getElementById("edytujNekrologImieINazwisko") as HTMLInputElement).value;
+    this.inputEdytujNekrologImieINazwisko = (document.getElementById("edytujNekrologImieINazwisko") as HTMLInputElement).value;
 
     //pobierz treść wiadomości
-    let inputEdytujNekrologTresc = (document.getElementById("edytujNekrologTresc") as HTMLTextAreaElement).value;
+    this.inputEdytujNekrologTresc = (document.getElementById("edytujNekrologTresc") as HTMLTextAreaElement).value;
 
     //pobierz date
-    let inputEdytujNekrologData = (document.getElementById("edytujNekrologData") as HTMLInputElement).value;
+     this.inputEdytujNekrologData = (document.getElementById("edytujNekrologData") as HTMLInputElement).value;
 
+    
     //Wczytanie wszystkich danych do tablicy
-    this.nekrologEdit = this.selectionNekrologi.selected;
+    this.nekrologEdit = this.selectionNekrologi.selected.map(x => x.Id).join("");
 
-    //Sprawdzenie
-    console.log(inputEdytujNekrologImieINazwisko);
-    console.log(inputEdytujNekrologTresc);
-    console.log(inputEdytujNekrologData);
-    console.log(this.nekrologEdit);
-  }
+    if (this.inputEdytujNekrologData == "") {
+      this.inputEdytujNekrologData = this.selectionNekrologi.selected.map(x => x.DateOfDeath_Obituary).join("");
+    }
 
-  //"Pracownicy"
-  GetCheckedUsunPracownik() {
-    //Wczytanie wszystkich danych do tablicy
-    this.pracownikTable = this.selectionPracownicy.selected;
+    if (this.inputEdytujNekrologImieINazwisko == "") {
+      this.inputEdytujNekrologImieINazwisko = this.selectionNekrologi.selected.map(x => x.Name).join("");
+    }
 
-    //Sprawdzenie
-    console.log(this.pracownikTable);
-  }
+    if (this.inputEdytujNekrologTresc == "") {
+      this.inputEdytujNekrologTresc = this.selectionNekrologi.selected.map(x => x.ObituaryContent).join("");
+    }
 
-  //"Pracownicy"
-  GetCheckedZablokujPracownik() {
-    //Wczytanie wszystkich danych do tablicy
-    this.pracownikTable = this.selectionPracownicy.selected;
+    const nekrologjson = {
+      Id:this.nekrologEdit,
+      Name: this.inputEdytujNekrologImieINazwisko,
+      DateOfDeath_Obituary: this.inputEdytujNekrologData,
+      ObituaryContent:this.inputEdytujNekrologTresc,
+    };
 
-    //Sprawdzenie
-    console.log(this.pracownikTable);
+    if (this.nekrologEdit == "") { alert("Nie wybrano żadnego nekrologu, spróbuj ponownie") }
+    else if (confirm) {
+      alert("Czy na pewno?")
+      this.service.putNekrologi(nekrologjson).subscribe();
+    
+    
+        this.refreshNekrologiList();
+        alert("Zaktualizowano pomyślnie")
+        
+        //Sprawdzenie
+        console.log(this.inputEdytujNekrologImieINazwisko);
+        console.log(this.inputEdytujNekrologTresc);
+        console.log(this.inputEdytujNekrologData);
+        console.log(this.nekrologEdit);
+        console.log(this.service.putNekrologi(nekrologjson).subscribe(akt => this.service.putNekrologi(nekrologjson), this.nekrologEdit));
+    }
+    this.refreshNekrologiList();
   }
 
   //Dodaj "Zmarłego"
@@ -242,6 +310,18 @@ export class AdminPanelComponent implements OnInit {
     //pobierz datę śmierci
     let inputDodajZmarlegoDataUrodzenia = (document.getElementById("dodajZmarlegoDataUrodzenia") as HTMLInputElement).value;
 
+
+
+    const zmarlyjson = {
+      Name: inputDodajZmarlegoImieINazwisko,
+      DateOfBirth: inputDodajZmarlegoDataUrodzenia,
+      DateOfDeath: inputDodajZmarlegoDataSmierci,
+      LodgingId: inputDodajZmarlegoNumerGrobu
+    };
+
+    this.service.addDeadPerson(zmarlyjson).subscribe(akt => this.service.addDeadPerson(zmarlyjson));
+    alert("Dodano zmarłą osobę");
+    this.refreshZmarliList();
     //Sprawdzenie
     console.log(inputDodajZmarlegoImieINazwisko);
     console.log(inputDodajZmarlegoNumerGrobu);
@@ -252,93 +332,90 @@ export class AdminPanelComponent implements OnInit {
   //Usuń "Zmarłego"
   GetCheckedUsunZmarlego() {
     //Wczytanie wszystkich danych do tablicy
-    this.ZmarliTable = this.selectionZmarli.selected;
+    this.ZmarliTable = this.selectionZmarli.selected.map(x => x.IdDeadPerson);
 
-    //Sprawdzenie
-    console.log(this.ZmarliTable);
+    if (this.ZmarliTable == "") {
+      alert("Nie wybrano żadnej zmarłej osoby, spróbuj ponownie");
+    }
+    else if (confirm("Czy jesteś pewny?")) {
+      for (let item of this.ZmarliTable) {
+        this.service.deleteDeadPerson(item).subscribe();
+      }
+
+      this.refreshZmarliList();
+      alert("Usunięto zmarłego");
+
+      //Sprawdzenie
+      console.log(this.ZmarliTable);
+    }
   }
 
-  //Edytuj "Aktualności"
+  inputEdytujZmarlegoImieINazwisko: any;
+  inputEdytujZmarlegoNumerGrobu: any;
+  inputEdytujZmarlegoDataSmierci: any;
+  inputEdytujZmarlegoDataUrodzenia: any;
+
+  //Edytuj "Zmarly"
   GetDataFromEdytujzmarlego() {
     //pobierz imię i nazwisko
-    let inputEdytujZmarlegoImieINazwisko = (document.getElementById("edytujZmarlegoImieINazwisko") as HTMLInputElement).value;
+    this.inputEdytujZmarlegoImieINazwisko = (document.getElementById("edytujZmarlegoImieINazwisko") as HTMLInputElement).value;
     //pobierz numer
-    let inputEdytujZmarlegoNumerGrobu = (document.getElementById("edytujZmarlegoNumerGrobu") as HTMLInputElement).value;
+    this.inputEdytujZmarlegoNumerGrobu = (document.getElementById("edytujZmarlegoNumerGrobu") as HTMLInputElement).value;
     //pobierz datę śmierci
-    let inputEdytujZmarlegoDataSmierci = (document.getElementById("edytujZmarlegoDataUrodzenia") as HTMLInputElement).value;
+    this.inputEdytujZmarlegoDataSmierci = (document.getElementById("edytujZmarlegoDataUrodzenia") as HTMLInputElement).value;
     //pobierz datę śmierci
-    let inputEdytujZmarlegoDataUrodzenia = (document.getElementById("edytujZmarlegoDataSmierci") as HTMLInputElement).value;
+    this.inputEdytujZmarlegoDataUrodzenia = (document.getElementById("edytujZmarlegoDataSmierci") as HTMLInputElement).value;
 
     //Wczytanie wszystkich danych do tablicy
-    this.ZmarliEdit = this.selectionZmarli.selected;
+    this.ZmarliEdit = this.selectionZmarli.selected.map(x => x.IdDeadPerson).join("");
 
-    //Sprawdzenie
-    console.log(inputEdytujZmarlegoImieINazwisko);
-    console.log(inputEdytujZmarlegoNumerGrobu);
-    console.log(inputEdytujZmarlegoDataSmierci);
-    console.log(inputEdytujZmarlegoDataUrodzenia);
-
-    console.log(this.ZmarliEdit);
-  }
-
-
-
-
-  /*ModalTitle: string;
-  //aktualnosc: any;
-  ActivateAddEditAktualnoscComp: boolean = false;
-
-  @Input() aktualnosc: any;
-  NewsId: string;
-  NewsTitle: string;
-  NewsContent: string;
-  NewsDateOfPublication: string;
-
-  addClickAktualnosc() {
-    this.aktualnosc = {
-      Id: 0,
-      Title: "",
-      NewsContent: "",
-      DateOfPublication: "",
+    if (this.inputEdytujZmarlegoImieINazwisko == "") {
+      this.inputEdytujZmarlegoImieINazwisko = this.selectionZmarli.selected.map(x => x.Name).join("");
     }
-    this.ModalTitle = "Dodaj aktualnosc";
-    this.ActivateAddEditAktualnoscComp = true;
+
+    if (this.inputEdytujZmarlegoNumerGrobu == "") {
+      this.inputEdytujZmarlegoNumerGrobu = this.selectionZmarli.selected.map(x => x.LodgingId).join("");
+    }
+
+    if (this.inputEdytujZmarlegoDataSmierci == "") {
+      this.inputEdytujZmarlegoDataSmierci = this.selectionZmarli.selected.map(x => x.DateOfDeath).join("");
+    }
+
+    if (this.inputEdytujZmarlegoDataUrodzenia == "") {
+      this.inputEdytujZmarlegoDataUrodzenia = this.selectionZmarli.selected.map(x => x.DateOfBirth).join("");
+    }
+
+
+    const zmarlyjson = {
+      IdDeadPerson:this.ZmarliEdit,
+      Name:this.inputEdytujZmarlegoImieINazwisko,
+      DateOfBirth:this.inputEdytujZmarlegoDataUrodzenia,
+      DateOfDeath:this.inputEdytujZmarlegoDataSmierci,
+      LodgingId:this.inputEdytujZmarlegoNumerGrobu
+    };
+
+    if (this.ZmarliEdit == "") { alert("Nie wybrano zmarłego, spróbuj ponownie") }
+    else if (confirm) {
+      alert("Czy na pewno?")
+      this.service.putDeadPerson(zmarlyjson).subscribe();
+    
+    this.refreshZmarliList();
+      alert("Zaktualizowano pomyślnie");
+      //Sprawdzenie
+      console.log(this.inputEdytujZmarlegoImieINazwisko);
+      console.log(this.inputEdytujZmarlegoNumerGrobu);
+      console.log(this.inputEdytujZmarlegoDataSmierci);
+      console.log(this.inputEdytujZmarlegoDataUrodzenia);
+
+      console.log(this.ZmarliEdit);
+    }
+    this.refreshZmarliList();
   }
 
-  closeAddClickAktualnosc() {
-    this.ActivateAddEditAktualnoscComp = false;
-    this.refreshAktualnosciList();
-  }
-
-  delClickAktualnosc() {
-
-  }
-  editClickAktualnosc(item) {
-    this.aktualnosc = item;
-    this.ModalTitle = "Edytuj aktualnosc";
-    this.ActivateAddEditAktualnoscComp = true;
-  }
-  addClickNekrolog() {
-
-  }
-  delClickNekrolog() {
-
-  }
-  putClickNekrolog() {
-
-  }
-  */
   ngOnInit() {
     this.refreshAktualnosciList();
     this.refreshNekrologiList();
-    this.refreshPracownicyList();
     this.refreshZmarliList();
-
-    // aktualnosc
-    //    this.NewsId = this.aktualnosc.Id;
-    //    this.NewsTitle = this.aktualnosc.NewsTitle;
-    //    this.NewsContent = this.aktualnosc.NewsContent;
-    //    this.NewsDateOfPublication = this.aktualnosc.NewsDateOfPublication;
   }
 
 
@@ -353,11 +430,7 @@ export class AdminPanelComponent implements OnInit {
     const numRowsNekrologi = this.dataSourceNekrologi.data.length;
     return numSelectedNekrologi === numRowsNekrologi;
   }
-  isAllSelectedPracownicy() {
-    const numSelectedPracownicy = this.selectionPracownicy.selected.length;
-    const numRowsPracownicy = this.dataSourcePracownicy.data.length;
-    return numSelectedPracownicy === numRowsPracownicy;
-  }
+  
   isAllSelectedZmarli() {
     const numSelectedZmarli = this.selectionZmarli.selected.length;
     const numRowsZmarli = this.dataSourceZmarli.data.length;
@@ -375,11 +448,7 @@ export class AdminPanelComponent implements OnInit {
       this.selectionNekrologi.clear() :
       this.dataSourceNekrologi.data.forEach(row => this.selectionNekrologi.select(row));
   }
-  masterTogglePracownicy() {
-    this.isAllSelectedPracownicy() ?
-      this.selectionPracownicy.clear() :
-      this.dataSourcePracownicy.data.forEach(row => this.selectionPracownicy.select(row));
-  }
+  
   masterToggleZmarli() {
     this.isAllSelectedZmarli() ?
       this.selectionZmarli.clear() :
@@ -399,17 +468,23 @@ export class AdminPanelComponent implements OnInit {
     }
     return `${this.selectionNekrologi.isSelected(row) ? 'deselect' : 'select'} row ${row.Id + 1}`;
   }
-  checkboxLabelPracownicy(row?: Workers): string {
-    if (!row) {
-      return `${this.isAllSelectedPracownicy() ? 'select' : 'deselect'} all`;
-    }
-    return `${this.selectionPracownicy.isSelected(row) ? 'deselect' : 'select'} row ${row.Id}`;
-  }
+  
   checkboxLabelZmarli(row?: DeadPerson): string {
     if (!row) {
       return `${this.isAllSelectedZmarli() ? 'select' : 'deselect'} all`;
     }
-    return `${this.selectionZmarli.isSelected(row) ? 'deselect' : 'select'} row ${row.Id}`;
+    return `${this.selectionZmarli.isSelected(row) ? 'deselect' : 'select'} row ${row.IdDeadPerson}`;
   }
 
+  ngAfterViewInit() {
+    this.dataSourceAktualnosci.paginator = this.paginator.toArray()[0];
+    this.dataSourceAktualnosci.sort = this.sort.toArray()[0];
+
+    this.dataSourceNekrologi.paginator = this.paginator.toArray()[1];
+    this.dataSourceNekrologi.sort = this.sort.toArray()[1];
+
+    this.dataSourceZmarli.paginator = this.paginator.toArray()[2];
+    this.dataSourceZmarli.sort = this.sort.toArray()[2];
+
+  }
 }

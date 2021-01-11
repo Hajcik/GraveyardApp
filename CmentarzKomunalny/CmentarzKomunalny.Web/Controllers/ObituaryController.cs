@@ -52,8 +52,8 @@ namespace CmentarzKomunalny.Web.Controllers
             }
         }
 
-        [Authorize(Policy = "RequireAdministratorRole")]
-        [Authorize(Policy = "RequireEmployeeRole")]
+    //    [Authorize(Policy = "RequireAdministratorRole")]
+    //    [Authorize(Policy = "RequireEmployeeRole")]
         [HttpPost]
         public JsonResult Post(Obituary ob)
         {
@@ -79,8 +79,8 @@ namespace CmentarzKomunalny.Web.Controllers
                 return new JsonResult("Dodano nekrolog pomyślnie");
             }
         }
-        [Authorize(Policy = "RequireAdministratorRole")]
-        [Authorize(Policy = "RequireEmployeeRole")]
+    //    [Authorize(Policy = "RequireAdministratorRole")]
+    //    [Authorize(Policy = "RequireEmployeeRole")]
         [HttpPut]
         public JsonResult Put(Obituary ob)
         {
@@ -88,8 +88,8 @@ namespace CmentarzKomunalny.Web.Controllers
                 update dbo.Obituaries set
                 Name = N'" + ob.Name + @"',
                 DateOfDeath_Obituary = '" + ob.DateOfDeath_Obituary + @"',
-                ObituaryContent = '" + ob.ObituaryContent + @"'
-                where Id = " + ob.Id + @"";
+                ObituaryContent = N'" + ob.ObituaryContent + @"'
+                where Id = '" + ob.Id + @"'";
 
             DataTable table = new DataTable();
             string sqlDataSource = _configuration.GetConnectionString("CmentarzConnectionTEST");
@@ -108,8 +108,8 @@ namespace CmentarzKomunalny.Web.Controllers
                 return new JsonResult("Zaktualizowano nekrolog pomyślnie");
             }
         }
-        [Authorize(Policy = "RequireAdministratorRole")]
-        [Authorize(Policy = "RequireEmployeeRole")]
+    //    [Authorize(Policy = "RequireAdministratorRole")]
+    //    [Authorize(Policy = "RequireEmployeeRole")]
         [HttpDelete("{id}")]
         public JsonResult Delete(int id)
         {
@@ -135,8 +135,8 @@ namespace CmentarzKomunalny.Web.Controllers
             }
         }
 
-        [Authorize(Policy = "RequireAdministratorRole")]
-        [Authorize(Policy = "RequireEmployeeRole")]
+    //    [Authorize(Policy = "RequireAdministratorRole")]
+    //    [Authorize(Policy = "RequireEmployeeRole")]
         // search obituary by its ID
         //GET api/obituary
         [HttpGet("{id}", Name = "GetObituaryById")]
@@ -148,8 +148,8 @@ namespace CmentarzKomunalny.Web.Controllers
             return NotFound();
         }
 
-        [Authorize(Policy = "RequireAdministratorRole")]
-        [Authorize(Policy = "RequireEmployeeRole")]
+     //   [Authorize(Policy = "RequireAdministratorRole")]
+     //   [Authorize(Policy = "RequireEmployeeRole")]
         // PATCH
         //PATCH api/obituary
         [HttpPatch("{id}")]

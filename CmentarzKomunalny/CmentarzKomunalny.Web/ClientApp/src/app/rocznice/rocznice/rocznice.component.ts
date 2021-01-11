@@ -20,9 +20,9 @@ export class RoczniceComponent implements OnInit {
     return date.getFullYear()
   }
 
-  DDMM(date): string {
-    return this.leftpad(date.getDate(), 2)
-      + '/' + this.leftpad(date.getMonth() + 1, 2);
+  MMDD(date): string {
+    return this.leftpad(date.getMonth() + 1, 2)
+      + '/' + this.leftpad(date.getDate(), 2);
   }
 
 
@@ -45,9 +45,8 @@ export class RoczniceComponent implements OnInit {
     const curTimeYear = this.YYYY(new Date());
     console.log(curTimeYear);
     //Wyciągamy DD/MM aby sprawdzić elementy
-    const curTimeDayMonth = this.DDMM(new Date());
+    const curTimeDayMonth = this.MMDD(new Date());
     console.log(curTimeDayMonth);
-
 
     this.refreshRoczniceList();
     this.templateList = this.roczniceLists.slice(0, this.pageSize);
