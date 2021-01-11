@@ -17,6 +17,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatIconModule } from '@angular/material/icon';
 import { MatCardModule } from '@angular/material/card';
 import { MatSelectModule } from '@angular/material/select';
@@ -34,8 +35,8 @@ import { RoczniceComponent } from './rocznice/rocznice/rocznice.component';
 import { AdminPanelComponent } from './admin-panel/admin-panel.component';
 import { WorkerPanelComponent } from './worker-panel/worker-panel.component';
 import { MatExpansionModule } from '@angular/material/expansion';
-
-
+import { MatMomentDateModule } from '@angular/material-moment-adapter'
+import { MatNativeDateModule } from '@angular/material'
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,7 +63,10 @@ import { MatExpansionModule } from '@angular/material/expansion';
     MatFormFieldModule,
     MatExpansionModule,
     MatInputModule,
-    MatButtonModule,
+    MatButtonModule,            // <----- this module will be deprecated in the future version.
+    MatDatepickerModule,        // <----- import(must)
+    MatNativeDateModule,        // <----- import for date formating(optional)
+    MatMomentDateModule,
     MatTableModule,
     MatCheckboxModule,
     MatPaginatorModule,

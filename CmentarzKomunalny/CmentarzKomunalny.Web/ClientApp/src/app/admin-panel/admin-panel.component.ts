@@ -5,6 +5,12 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectionModel } from '@angular/cdk/collections';
 import { SharedService } from '../shared.service';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import {
+  MAT_MOMENT_DATE_FORMATS,
+  MomentDateAdapter,
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+} from '@angular/material-moment-adapter';
 
 export interface Articles {
   Id: number;
@@ -37,7 +43,22 @@ export interface Workers {
 @Component({
   selector: 'app-admin-panel',
   templateUrl: './admin-panel.component.html',
-  styleUrls: ['./admin-panel.component.css']
+  styleUrls: ['./admin-panel.component.css'],
+  providers: [
+    // The locale would typically be provided on the root module of your application. We do it at
+    // the component level here, due to limitations of our example generation script.
+    { provide: MAT_DATE_LOCALE, useValue: 'ja-JP' },
+
+    // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
+    // `MatMomentDateModule` in your applications root module. We provide it at the component level
+    // here, due to limitations of our example generation script.
+    {
+      provide: DateAdapter,
+      useClass: MomentDateAdapter,
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS]
+    },
+    { provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS },
+  ],
 })
 export class AdminPanelComponent implements OnInit {
   public aktualnosciDelete: any = [];
@@ -54,7 +75,7 @@ export class AdminPanelComponent implements OnInit {
 
 
   // fb: FormBuilder
-  constructor(fb: FormBuilder, private service: SharedService) { }
+  constructor(fb: FormBuilder, private service: SharedService, private _adapter: DateAdapter<any>) { }
 
   refreshAktualnosciList() {
     this.service.getAktualnosciList().subscribe(res => {

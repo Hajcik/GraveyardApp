@@ -5,11 +5,15 @@ mat-expansion-panel {
 mat-panel-title {
   color: white;
 }
-
+input[disabled] {
+  color: white;
+}
 mat-panel-description {
   color: white;
 }
-
+.mat-datepicker-toggle {
+  color: white;
+}
 ::ng-deep .specific-class > .mat-expansion-indicator:after {
   color: white;
 }
@@ -17,7 +21,9 @@ mat-panel-description {
 button{
   margin-right: 6px;
 }
-
+svg{
+  color: white;
+}
 .example-form {
   min-width: 150px;
   max-width: 500px;

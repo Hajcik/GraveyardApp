@@ -25,8 +25,10 @@
     <form class="example-form">
       <mat-form-field class="example-full-width">
         <mat-label>Data</mat-label>
-        <input matInput #message id="dodajAktualnoscData">
+        <input matInput [matDatepicker]="dp" id="dodajAktualnoscData" disabled>
         <mat-hint align="start"><strong>Podaj datę aktualności</strong> </mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+        <mat-datepicker #dp disabled="false"></mat-datepicker>
       </mat-form-field>
     </form>
     <br>
@@ -62,10 +64,13 @@
     <form class="example-form">
       <mat-form-field class="example-full-width">
         <mat-label>Data</mat-label>
-        <input matInput #message id="edytujAktualnoscData">
+        <input matInput [matDatepicker]="dp2" id="edytujAktualnoscData" disabled>
         <mat-hint align="start"><strong>Podaj datę aktualności</strong> </mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="dp2"></mat-datepicker-toggle>
+        <mat-datepicker #dp2 disabled="false"></mat-datepicker>
       </mat-form-field>
     </form>
+
     <br><br>
     <mat-form-field style="margin-left: 30px;">
       <mat-label>Szukaj</mat-label>
@@ -154,9 +159,11 @@
     <br>
     <form class="example-form">
       <mat-form-field class="example-full-width">
-        <mat-label>Data śmierci</mat-label>
-        <input matInput #message id="dodajNekrologData">
+        <mat-label>Data</mat-label>
+        <input matInput [matDatepicker]="dp3" id="dodajNekrologData" disabled>
         <mat-hint align="start"><strong>Podaj datę śmierci</strong> </mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+        <mat-datepicker #dp3 disabled="false"></mat-datepicker>
       </mat-form-field>
     </form>
     <br>
@@ -190,9 +197,11 @@
     <br>
     <form class="example-form">
       <mat-form-field class="example-full-width">
-        <mat-label>Data śmierci</mat-label>
-        <input matInput #message id="edytujNekrologData">
+        <mat-label>Data</mat-label>
+        <input matInput [matDatepicker]="dp4" id="edytujNekrologData" disabled>
         <mat-hint align="start"><strong>Podaj datę śmierci</strong> </mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="dp4"></mat-datepicker-toggle>
+        <mat-datepicker #dp4 disabled="false"></mat-datepicker>
       </mat-form-field>
     </form>
     <br>
@@ -274,15 +283,26 @@
     </mat-form-field>
 
     <br>
-    <mat-form-field id="dodaj-zmarłego">
-      <mat-label>Data urodzenia</mat-label>
-      <input matInput id="dodajZmarlegoDataUrodzenia">
-    </mat-form-field>
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>Data urodzenia</mat-label>
+        <input matInput [matDatepicker]="dp5" id="dodajZmarlegoDataUrodzenia" disabled>
+        <mat-hint align="start"><strong>Data urodzenia</strong> </mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="dp5"></mat-datepicker-toggle>
+        <mat-datepicker #dp5 disabled="false"></mat-datepicker>
+      </mat-form-field>
+    </form>
     <br>
-    <mat-form-field id="dodaj-zmarłego">
-      <mat-label>Data śmierci</mat-label>
-      <input matInput id="dodajZmarlegoDataSmierci">
-    </mat-form-field>
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>Data śmierci</mat-label>
+        <input matInput [matDatepicker]="dp6" id="dodajZmarlegoDataSmierci" disabled>
+        <mat-hint align="start"><strong>Data śmierci</strong> </mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="dp6"></mat-datepicker-toggle>
+        <mat-datepicker #dp6 disabled="false"></mat-datepicker>
+      </mat-form-field>
+    </form>
+
     <br><br>
     <button mat-raised-button color="primary" (click)="GetInputFromDodajzmarlego()">Dodaj</button>
   </mat-expansion-panel>
@@ -307,15 +327,25 @@
     </mat-form-field>
 
     <br>
-    <mat-form-field id="dodaj-zmarłego">
-      <mat-label>Data urodzenia</mat-label>
-      <input matInput id="edytujZmarlegoDataUrodzenia">
-    </mat-form-field>
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>Data urodzenia</mat-label>
+        <input matInput [matDatepicker]="dp7" id="edytujZmarlegoDataUrodzenia" disabled>
+        <mat-hint align="start"><strong>Data urodzenia</strong> </mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="dp7"></mat-datepicker-toggle>
+        <mat-datepicker #dp7 disabled="false"></mat-datepicker>
+      </mat-form-field>
+    </form>
     <br>
-    <mat-form-field id="dodaj-zmarłego">
-      <mat-label>Data śmierci</mat-label>
-      <input matInput id="edytujZmarlegoDataSmierci">
-    </mat-form-field>
+    <form class="example-form">
+      <mat-form-field class="example-full-width">
+        <mat-label>Data śmierci</mat-label>
+        <input matInput [matDatepicker]="dp8" id="edytujZmarlegoDataSmierci" disabled>
+        <mat-hint align="start"><strong>Data śmierci</strong> </mat-hint>
+        <mat-datepicker-toggle matSuffix [for]="dp8"></mat-datepicker-toggle>
+        <mat-datepicker #dp8 disabled="false"></mat-datepicker>
+      </mat-form-field>
+    </form>
     <br><br>
 
     <mat-form-field style="margin-left: 30px;">
