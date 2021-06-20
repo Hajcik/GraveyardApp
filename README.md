@@ -1,7 +1,8 @@
-# Projekt zespołowy dyplomowy - spec. IO / grupa lab. 2
+# Municipal Graveyard Application
 
-<b>Członkowie grupy:</b>\
+Application specifically made to represent cemetery on a website. App was made for team project during our time at University of Technology in Częstochowa.
+
+## Group members
 Mariusz Jędrzejewski\
 Kamil Grodzki\
-Piotr Bednarek\
 Wiktor Powązka
